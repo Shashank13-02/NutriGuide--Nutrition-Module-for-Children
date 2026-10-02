@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriGuide SLM + Meal Photo Companion</title>
+  <meta name="description" content="Local, auditable Small Language & Vision Model application for pediatric nutrition (0–59 months) grounded in WHO and CDC guidelines.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="glow-orb glow-orb-1" aria-hidden="true"></div>
+  <div class="glow-orb glow-orb-2" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a9 9 0 0 1 9 9c0 3.6-2.1 6.7-5.2 8.1l-.8.4V22H9v-2.5l-.8-.4A9 9 0 0 1 12 2z"/>
+            <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path d="M12 12v4"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="logo-title">NutriGuide <span class="logo-badge">SLM + Vision</span></h1>
+          <p class="logo-subtitle">Evidence-Grounded Local AI for Child Nutrition (0–59 Months)</p>
+        </div>
+      </div>
+
+      <!-- MAIN APP TABS -->
+      <nav class="app-nav" aria-label="Application Sections">
+        <button type="button" class="nav-tab active" id="tab-btn-chat" data-target="view-chat">
+          <span class="nav-tab-icon">💬</span>
+          <span class="nav-tab-label">Nutrition Assistant</span>
+          <span class="nav-tab-badge">SmolLM2-360M</span>
+        </button>
+        <button type="button" class="nav-tab" id="tab-btn-photo" data-target="view-photo">
+          <span class="nav-tab-icon">📸</span>
+          <span class="nav-tab-label">Meal Photo Companion</span>
+          <span class="nav-tab-badge">SmolVLM-500M</span>
+        </button>
+      </nav>
+
+      <!-- SYSTEM STATUS & TAXONOMY MODAL TRIGGER -->
+      <div class="system-status-pills">
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-open-taxonomy">
+          <span>📋</span> Framework Taxonomy
+        </button>
+        <div class="status-pill status-ready" id="status-lm-indicator" title="Language Model Status">
+          <span class="status-dot"></span>
+          <span id="status-lm-text">SmolLM2-360M</span>
+        </div>
+        <div class="status-pill status-ready" id="status-vlm-indicator" title="Vision Model Status">
+          <span class="status-dot"></span>
+          <span id="status-vlm-text">SmolVLM-500M</span>
+        </div>
+        <div class="status-pill status-offline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>100% Local</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 1: NUTRITION ASSISTANT (SLM CHAT) -->
+  <!-- ========================================================================= -->
+  <main class="app-layout tab-view" id="view-chat">
+    <!-- LEFT PANEL: Controls, Age Selector, Curated Evidence Preview -->
+    <aside class="panel controls-panel" aria-label="Child Profile and Guidelines">
+      <section class="card age-selector-card">
+        <div class="card-header">
+          <div class="header-icon-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h2 class="card-title">Completed Age</h2>
+            <p class="card-desc">Select child age to retrieve verified guidelines</p>
+          </div>
+        </div>
+
+        <div class="age-display-badge">
+          <span class="age-number" id="age-number-display">9</span>
+          <span class="age-unit">Months Old</span>
+          <span class="age-band-tag" id="age-band-tag">9–11 Months</span>
+        </div>
+
+        <div class="slider-wrapper">
+          <input 
+            type="range" 
+            id="age-slider" 
+            name="age-slider"
+            min="0" 
+            max="59" 
+            value="9" 
+            step="1"
+            aria-label="Completed child age in months"
+            aria-valuemin="0" 
+            aria-valuemax="59" 
+            aria-valuenow="9"
+          >
+          <div class="slider-ticks" aria-hidden="true">
+            <span>0m (Birth)</span>
+            <span>6m</span>
+            <span>12m (1y)</span>
+            <span>24m (2y)</span>
+            <span>59m (5y)</span>
+          </div>
+        </div>
+
+        <div class="quick-bands" role="group" aria-label="Quick Age Category Selectors">
+          <button type="button" class="band-btn" data-age="2" id="btn-band-0">0–5m <small>Milk</small></button>
+          <button type="button" class="band-btn" data-age="7" id="btn-band-1">6–8m <small>Solids</small></button>
+          <button type="button" class="band-btn active" data-age="10" id="btn-band-2">9–11m <small>Textures</small></button>
+          <button type="button" class="band-btn" data-age="18" id="btn-band-3">12–23m <small>Family</small></button>
+          <button type="button" class="band-btn" data-age="36" id="btn-band-4">24–59m <small>Varied</small></button>
+        </div>
+      </section>
+
+      <!-- AGE-WISE FOOD CATEGORIZATION & VARIETY CARD -->
+      <section class="card evidence-preview-card" id="evidence-preview-card">
+        <div class="card-header">
+          <div class="header-icon-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5h-2v-2h2zm0-4h-2V7h2z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="card-title">Food & Variety Guidelines</h2>
+            <p class="card-desc" id="ev-stage-title">Age-appropriate dietary diversity (WHO & UNICEF)</p>
+          </div>
+        </div>
+
+        <div class="evidence-body">
+          <!-- DIETARY VARIETY TARGET -->
+          <div class="variety-target-banner" id="ev-variety-banner">
+            <span class="variety-icon">🎯</span>
+            <div class="variety-content">
+              <strong>Dietary Variety Target:</strong>
+              <p id="ev-variety-target">Loading variety targets...</p>
+            </div>
+          </div>
+
+          <!-- MEAL CADENCE / PATTERN -->
+          <div class="cadence-box">
+            <span class="cadence-icon">⏰</span>
+            <div>
+              <strong>Daily Meal & Snack Cadence:</strong>
+              <span id="ev-cadence">Loading cadence...</span>
+            </div>
+          </div>
+
+          <!-- AGE-SPECIFIC FOOD CATEGORIES & NUTRIENTS -->
+          <div class="food-categories-section">
+            <h3 class="evidence-label">Recommended Food Groups for this Age</h3>
+            <div class="food-categories-grid" id="ev-food-categories">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- SAFE TEXTURE MILESTONES -->
+          <div class="evidence-block">
+            <h3 class="evidence-label">Developmental Texture Milestones</h3>
+            <p class="evidence-text" id="ev-skills">Loading textures...</p>
+          </div>
+
+          <!-- FOODS TO AVOID / SAFETY LIMITS -->
+          <div class="evidence-block safety-block">
+            <h3 class="evidence-label">Foods to Avoid, Limit, or Prepare Safely</h3>
+            <p class="evidence-text" id="ev-avoid">Loading safety limits...</p>
+          </div>
+
+          <!-- CORE WHO GUIDANCE -->
+          <div class="evidence-block subtle-block">
+            <h3 class="evidence-label">Core WHO & CDC Principles</h3>
+            <p class="evidence-text" id="ev-core">Loading...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAMPLE PROMPTS -->
+      <section class="card prompt-suggestions-card">
+        <h2 class="card-title-sm">Suggested Questions</h2>
+        <div class="chip-container" id="prompt-chips">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="safety-test-area">
+          <div class="safety-test-label">Test Guardrails:</div>
+          <button type="button" class="chip chip-danger" id="btn-test-emergency">
+            ⚠️ "My child is lethargic and having difficulty breathing"
+          </button>
+        </div>
+      </section>
+    </aside>
+
+    <!-- RIGHT PANEL: Chat, Inference & Answer Presentation -->
+    <section class="panel interaction-panel" aria-label="Nutrition Assistant Chat">
+      <div class="card main-chat-card">
+        <!-- MODE SELECTOR -->
+        <div class="mode-bar">
+          <div class="mode-toggles" role="radiogroup" aria-label="Inference Mode">
+            <label class="mode-radio active" id="label-mode-slm">
+              <input type="radio" name="inference-mode" id="mode-slm" value="slm" checked>
+              <span class="mode-icon">🤖</span>
+              <span class="mode-info">
+                <strong>SmolLM2-360M</strong>
+                <small>Local SLM Generation</small>
+              </span>
+            </label>
+            <label class="mode-radio" id="label-mode-context">
+              <input type="radio" name="inference-mode" id="mode-context" value="context">
+              <span class="mode-icon">⚡</span>
+              <span class="mode-info">
+                <strong>Curated Evidence</strong>
+                <small>Deterministic (Instant)</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="model-meta-tag">
+            <span>Grounding:</span> <code>WHO/CDC Curated KB</code>
+          </div>
+        </div>
+
+        <!-- INPUT FORM -->
+        <form id="question-form" class="question-form" onsubmit="return false;">
+          <div class="input-wrapper">
+            <label for="question-input" class="visually-hidden">Ask a child nutrition question</label>
+            <textarea 
+              id="question-input" 
+              name="question" 
+              rows="3" 
+              placeholder="Ask about textures, feeding frequency, foods to avoid, or dietary diversity..." 
+              required
+              enterkeyhint="send"
+            ></textarea>
+            
+            <div class="input-footer">
+              <span class="input-hint">Press <kbd>⌘</kbd>+<kbd>Enter</kbd> or <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to submit</span>
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="btn-clear" aria-label="Clear question">Clear</button>
+                <button type="submit" class="btn btn-primary" id="btn-submit">
+                  <span class="btn-text">Ask NutriGuide</span>
+                  <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                  <span class="spinner" id="btn-spinner" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- ANSWER / RESULTS CONTAINER -->
+        <div class="results-area" id="results-area">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-illustration" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <path d="M8 9h8"></path>
+                <path d="M8 13h6"></path>
+              </svg>
+            </div>
+            <h3>Ready for your question</h3>
+            <p>Select your child's age on the left and ask any question, or pick one of the sample prompt chips above.</p>
+          </div>
+
+          <div class="loading-state hidden" id="loading-state" aria-live="polite">
+            <div class="loader-pulse"></div>
+            <p class="loading-title" id="loading-text">Running local SLM inference on SmolLM2-360M...</p>
+            <p class="loading-sub">Retrieving age guidelines → Checking red flags → Generating constrained response</p>
+          </div>
+
+          <article class="response-card hidden" id="response-card" aria-live="polite">
+            <div class="red-flag-banner hidden" id="red-flag-banner" role="alert">
+              <div class="alert-icon" aria-hidden="true">🚨</div>
+              <div class="alert-content">
+                <h3 class="alert-title">Clinical / Emergency Red Flag Detected</h3>
+                <p class="alert-message" id="red-flag-message"></p>
+              </div>
+            </div>
+
+            <div class="response-header" id="normal-response-header">
+              <div class="response-meta">
+                <span class="response-badge" id="response-mode-badge">SmolLM2-360M Generated</span>
+                <span class="response-age" id="response-age-badge">For 9–11 Months</span>
+              </div>
+              <button type="button" class="btn-copy" id="btn-copy" aria-label="Copy response to clipboard">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copy-label">Copy</span>
+              </button>
+            </div>
+
+            <div class="response-body" id="response-body"></div>
+
+            <details class="context-drawer" id="context-drawer">
+              <summary class="context-summary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                <span>Auditable Grounding Context passed to model</span>
+              </summary>
+              <pre class="context-pre" id="context-pre"></pre>
+            </details>
+
+            <div class="sources-section">
+              <h4 class="sources-title">Verified Authoritative Sources:</h4>
+              <div class="sources-grid" id="sources-grid"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 2: MEAL PHOTO COMPANION (VLM VISION ASSISTANT) -->
+  <!-- ========================================================================= -->
+  <main class="app-layout tab-view hidden" id="view-photo">
+    <!-- FULL POLICY BANNER -->
+    <div class="policy-banner" role="note">
+      <div class="policy-icon" aria-hidden="true">🛡️</div>
+      <div class="policy-content">
+        <h3 class="policy-title">Meal Photo Safety & Privacy Policy</h3>
+        <p class="policy-text">
+          Upload only a photo of the <strong>meal, plate, bowl, or tray—never the child</strong>. 
+          This tool does not assess a child’s body, face, health, growth, feeding ability, or nutritional status. 
+          Vision-model observations are drafts that the caregiver must confirm or correct before guidance is displayed.
+        </p>
+      </div>
+    </div>
+
+    <!-- LEFT COLUMN: Image Upload, Vision AI Processing -->
+    <aside class="panel photo-left-panel" aria-label="Meal Photo Upload">
+      <section class="card upload-card">
+        <div class="card-header">
+          <div class="header-icon-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h2 class="card-title">1. Meal Photo</h2>
+            <p class="card-desc">Upload a high-chair tray, bowl, or plate photo</p>
+          </div>
+        </div>
+
+        <!-- DROPZONE / PREVIEW -->
+        <div class="dropzone" id="photo-dropzone">
+          <input type="file" id="photo-input" accept="image/*" class="visually-hidden">
+          <div class="dropzone-content" id="dropzone-prompt">
+            <div class="upload-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <p class="upload-title">Drop meal photo here, or <span>browse</span></p>
+            <p class="upload-sub">Plate, bowl, or tray only • JPG, PNG, WebP</p>
+          </div>
+
+          <div class="preview-container hidden" id="preview-container">
+            <img id="preview-img" src="" alt="Uploaded meal preview">
+            <button type="button" class="btn-remove-photo" id="btn-remove-photo" title="Remove photo">✕</button>
+          </div>
+        </div>
+
+        <!-- PRESET SAMPLES -->
+        <div class="sample-meals-section">
+          <span class="sample-label">Or try sample test meal:</span>
+          <div class="sample-buttons">
+            <button type="button" class="sample-btn" id="btn-sample-1">
+              🥣 Mashed Lentils & Rice
+            </button>
+            <button type="button" class="sample-btn" id="btn-sample-2">
+              🥑 Steamed Carrots, Avocado & Oats
+            </button>
+          </div>
+        </div>
+
+        <!-- ANALYZE BUTTON -->
+        <button type="button" class="btn btn-primary btn-block" id="btn-analyze-photo">
+          <span class="btn-text">1. Analyze Meal with SmolVLM-500M</span>
+          <span class="spinner" id="photo-spinner" aria-hidden="true"></span>
+        </button>
+
+        <!-- VISION STATUS / CHILD PRESENT ALERT -->
+        <div class="vlm-status-box hidden" id="vlm-status-box">
+          <div class="vlm-status-header">
+            <span class="vlm-status-badge" id="vlm-status-badge">Draft Observations</span>
+          </div>
+          <p class="vlm-status-message" id="vlm-status-message"></p>
+          <details class="vlm-raw-details" id="vlm-raw-details">
+            <summary>Raw model observation output</summary>
+            <pre id="vlm-raw-text"></pre>
+          </details>
+        </div>
+      </section>
+    </aside>
+
+    <!-- RIGHT COLUMN: Caregiver Confirmation Form & Guidance Output -->
+    <section class="panel photo-right-panel" aria-label="Caregiver Review Form">
+      <div class="card meal-form-card">
+        <div class="card-header">
+          <div class="header-icon-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="card-title">Caregiver Review & Educational Guidance</h2>
+            <p class="card-desc">Confirm or correct all model observations before viewing guidance</p>
+          </div>
+        </div>
+
+        <form id="meal-review-form" onsubmit="return false;">
+          <!-- 1. FOODS INPUT -->
+          <div class="form-group">
+            <label for="meal-foods-input" class="form-label">
+              <strong>2. Confirm or correct visible foods</strong>
+              <small class="form-help">Edit or type ordinary food names shown on the tray</small>
+            </label>
+            <input 
+              type="text" 
+              id="meal-foods-input" 
+              class="form-input" 
+              placeholder="Example: mashed yellow lentils, soft white rice"
+            >
+          </div>
+
+          <!-- 2. CHILD AGE -->
+          <div class="form-group">
+            <div class="form-label-row">
+              <label for="meal-age-slider" class="form-label">
+                <strong>Child Age in completed months:</strong>
+              </label>
+              <span class="meal-age-badge" id="meal-age-badge">12 Months</span>
+            </div>
+            <input 
+              type="range" 
+              id="meal-age-slider" 
+              min="0" 
+              max="59" 
+              value="12" 
+              step="1"
+            >
+          </div>
+
+          <!-- 3. FOOD GROUPS IN MEAL -->
+          <div class="form-group">
+            <label class="form-label">
+              <strong>3. Confirm food groups visible in this meal:</strong>
+            </label>
+            <div class="checkbox-grid" id="meal-groups-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- 4. TEXTURES -->
+          <div class="form-group">
+            <label class="form-label">
+              <strong>4. Confirm texture(s):</strong>
+            </label>
+            <div class="pill-checkbox-group" id="meal-textures-group">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- 5. PREPARATION & SAFETY STEPS -->
+          <div class="form-group">
+            <label class="form-label">
+              <strong>5. Confirm preparation & safety steps:</strong>
+            </label>
+            <div class="checkbox-grid" id="meal-prep-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- 6. ALLERGENS -->
+          <div class="form-group">
+            <label class="form-label">
+              <strong>6. Potential allergens present (select only if caregiver confirms):</strong>
+            </label>
+            <div class="checkbox-grid-sm" id="meal-allergens-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- 7. DAY-LEVEL DIETARY DIVERSITY -->
+          <div class="form-group">
+            <div class="form-label-row">
+              <label class="form-label" style="margin-bottom: 0;">
+                <strong>7. Caregiver-reported food groups offered over the day:</strong>
+              </label>
+              <span class="diversity-counter-pill" id="diversity-counter">0 / 8 Groups</span>
+            </div>
+            <small class="form-help" style="margin-bottom: 0.5rem;">WHO/UNICEF Minimum Dietary Diversity Indicator uses 8 groups. Goal for 6–23 months: at least 5 of 8 daily.</small>
+            <div class="diversity-indicator-bar" id="diversity-indicator-bar">
+              <div class="diversity-progress-fill" id="diversity-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="checkbox-grid" id="meal-daily-groups-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- 8. MANDATORY CAREGIVER CONFIRMATION -->
+          <div class="confirmation-box">
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="chk-caregiver-confirmed" required>
+              <span class="checkbox-custom"></span>
+              <span class="confirmation-text">
+                I reviewed and corrected the photo observations; this is a meal-only photo.
+              </span>
+            </label>
+          </div>
+
+          <!-- SUBMIT GUIDANCE BUTTON -->
+          <button type="submit" class="btn btn-primary btn-block" id="btn-get-guidance">
+            <span class="btn-text">8. Get Age-Specific Educational Guidance</span>
+            <span class="spinner" id="guidance-spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- GUIDANCE RESULTS DISPLAY -->
+        <article class="guidance-result-card hidden" id="guidance-result-card">
+          <div class="guidance-header">
+            <span class="guidance-badge">Educational Meal Guidance</span>
+            <button type="button" class="btn-copy" id="btn-copy-guidance">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span id="copy-guidance-label">Copy Guidance</span>
+            </button>
+          </div>
+          <div class="guidance-body" id="guidance-body"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- TAXONOMY ARCHITECTURE MODAL -->
+  <div class="modal-overlay hidden" id="taxonomy-modal" role="dialog" aria-modal="true" aria-labelledby="taxonomy-title">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 class="modal-title" id="taxonomy-title">📋 Pediatric Nutrition Taxonomy & Variety Architecture</h2>
+          <p class="modal-sub">8 core dimensions derived from WHO, UNICEF, and CDC clinical standards</p>
+        </div>
+        <button type="button" class="btn-close-modal" id="btn-close-taxonomy" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="taxonomy-table">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Examples & Formats</th>
+                <th scope="col">Why It Matters in Pediatric Care</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tax-tag">Age / development</span></td>
+                <td><code>0–5</code>, <code>6–8</code>, <code>9–11</code>, <code>12–23</code>, <code>24–59</code> months</td>
+                <td>Determines whether complementary feeding and certain textures are developmentally appropriate.</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Food groups</span></td>
+                <td>Breast milk; grains/roots/tubers; pulses/nuts/seeds; dairy; flesh foods; eggs; vitamin-A-rich fruit/veg; other fruit/veg</td>
+                <td>WHO/UNICEF’s 6–23-month dietary-diversity framework uses <strong>8 distinct groups</strong> to prevent micronutrient deficiencies.</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Texture</span></td>
+                <td>Purée, mashed, lumpy/soft pieces, safe finger food, family-food texture</td>
+                <td>Must fit feeding skill—<strong>not age alone</strong>. Prevents choking while advancing oral motor feeding development.</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Preparation / safety</span></td>
+                <td>Cooked, peeled, mashed, thinly spread, cut lengthwise/quartered</td>
+                <td>Directly identifies possible choking risks or food-safety hazards (e.g. quartering round grapes).</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Allergen flag</span></td>
+                <td>Egg, dairy, peanut/tree nut, wheat, soy, fish/shellfish</td>
+                <td>Enables prompts to check infant history and seek clinician guidance for severe eczema or existing reactions.</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Added ingredients</span></td>
+                <td>Honey (&lt;12m), added sugar, excess salt, unpasteurized/raw foods</td>
+                <td>Supports age-specific safety warnings (e.g. strict avoidance of infant botulism from honey).</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Meal pattern</span></td>
+                <td>Meal/snack frequency; caregiver-entered daily pattern</td>
+                <td>Complements single meal photos; a photo cannot show whole-day nutritional and energy intake.</td>
+              </tr>
+              <tr>
+                <td><span class="tax-tag">Confidence</span></td>
+                <td>Clearly visible / uncertain / caregiver-corrected</td>
+                <td>Prevents treating model guesses as facts; mandates caregiver confirmation before advice is generated.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <strong>Educational Safety Notice:</strong> NutriGuide is a demonstration of Small Language & Vision Model safety bounding. 
+        It is not medical diagnostic software and must not be used for emergency care, growth faltering, allergy diagnosis, or individual prescriptions. 
+        Consult a pediatrician for medical evaluation.
+      </div>
+      <div class="footer-links">
+        <span>Built with Hugging Face SmolLM2-360M + SmolVLM-500M</span>
+        <span>•</span>
+        <span>WHO, CDC & UNICEF Guidelines</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/app.js?v=2.1"></script>
+</body>
+</html>

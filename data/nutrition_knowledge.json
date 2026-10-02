@@ -1,0 +1,243 @@
+{
+  "scope": "Educational nutrition guidance for generally healthy children from birth through 59 completed months. It is not a diagnostic, feeding-prescription, or emergency service.",
+  "age_bands": [
+    {
+      "id": "0_5_months",
+      "label": "Birth to 5 months",
+      "stage_title": "Exclusive Milk Feeding",
+      "variety_target": "Exclusive milk only (0 complementary food groups). Breast milk or clinician-guided infant formula meets all hydration and nutritional needs.",
+      "meal_cadence": "On-demand feeding (typically 8–12 feeds in 24 hours for newborns, following hunger and fullness cues).",
+      "food_categories": [
+        {
+          "group_name": "Breast Milk",
+          "examples": ["Mother's breast milk or screened donor milk"],
+          "key_nutrients": "Optimal balance of proteins, fats, lactose, antibodies, and micronutrients"
+        },
+        {
+          "group_name": "Infant Formula",
+          "examples": ["Clinician-prescribed or standard iron-fortified infant formula (when breastfeeding is not possible or sufficient)"],
+          "key_nutrients": "Balanced macronutrients and iron for formula-fed infants"
+        }
+      ],
+      "safe_textures": "Liquid milk only. Infant swallowing reflex is not yet equipped for solids.",
+      "foods_to_avoid": [
+        "Water, sugar water, or herbal teas (risk of water intoxication, electrolyte imbalance, nutrient dilution)",
+        "Infant cereals, baby purees, or solid foods before 4–6 months",
+        "Cow's milk, goat's milk, or plant-based milks as a drink",
+        "Honey (infant botulism hazard)"
+      ],
+      "core_guidance": [
+        "Exclusive breastfeeding is recommended for the first 6 months when possible; this means breast milk only, including no water.",
+        "If breastfeeding is not possible or sufficient, feeding decisions and formula preparation should be guided by a qualified clinician and local public-health advice.",
+        "Do not begin complementary foods before 4 months."
+      ],
+      "feeding_skills": "Feeding is milk-based; assess feeding concerns with a qualified health professional.",
+      "safety": ["Seek urgent medical advice for poor feeding with lethargy, breathing difficulty, dehydration, or very few wet diapers."],
+      "sources": ["WHO-IYCF", "WHO-BF", "CDC-SOLIDS"]
+    },
+    {
+      "id": "6_8_months",
+      "label": "6 to 8 months",
+      "stage_title": "Starting Solids & Complementary Feeding",
+      "variety_target": "Introduce 2 to 4 food groups gradually alongside continued frequent breast milk or formula. Focus on iron-rich staples and single-ingredient exposures.",
+      "meal_cadence": "Offer 2 to 3 small complementary meals daily + on-demand breast milk or formula.",
+      "food_categories": [
+        {
+          "group_name": "Iron-Rich Foods (Priority)",
+          "examples": ["Pureed beef, chicken, turkey", "Iron-fortified infant cereals (oat, barley)", "Pureed lentils, split peas, or white beans"],
+          "key_nutrients": "Iron, zinc, protein (critical as fetal iron stores deplete around 6 months)"
+        },
+        {
+          "group_name": "Vegetables",
+          "examples": ["Mashed or pureed cooked sweet potato", "Cooked carrots", "Pureed squash", "Steamed pureed zucchini or green beans"],
+          "key_nutrients": "Vitamin A, beta-carotene, dietary fiber, minerals"
+        },
+        {
+          "group_name": "Fruits",
+          "examples": ["Mashed ripe avocado", "Mashed ripe banana", "Steamed unsweetened applesauce", "Pureed ripe pear or peach"],
+          "key_nutrients": "Vitamin C, potassium, healthy fatty acids"
+        },
+        {
+          "group_name": "Common Allergens (Early & Safe)",
+          "examples": ["Smooth peanut butter thinned with warm water or breast milk", "Well-cooked scrambled or pureed whole egg"],
+          "key_nutrients": "Protein, choline; early safe introduction reduces future allergy risk"
+        }
+      ],
+      "safe_textures": "Smooth purees progressing toward thicker mashes with soft, small tender lumps as oral motor control develops.",
+      "foods_to_avoid": [
+        "Honey (strict botulism hazard before 12 months)",
+        "Cow's milk or fortified plant milks as a drink before 12 months",
+        "Raw or undercooked eggs, meats, or seafood",
+        "Added salt, sugar, honey, or artificial sweeteners",
+        "Hard, round foods that pose choking hazards (whole grapes, raw apple wedges, whole nuts)"
+      ],
+      "core_guidance": [
+        "Begin safe, nutritionally adequate complementary foods around 6 months while continuing breastfeeding where applicable.",
+        "Start with small amounts; offer 2 to 3 meals daily, increasing texture and variety gradually.",
+        "Prioritize iron-rich foods and a variety of food groups; responsive feeding means noticing hunger and fullness cues."
+      ],
+      "feeding_skills": "When developmentally ready, offer smooth mashed or pureed foods, progressing toward thicker textures. Sit the child upright and supervise every meal.",
+      "safety": [
+        "No honey before 12 months.",
+        "Do not give cow's milk or fortified dairy alternatives as a drink before 12 months.",
+        "Introduce allergenic foods alongside other foods; severe eczema or egg allergy requires clinician guidance before peanut introduction."
+      ],
+      "sources": ["WHO-IYCF", "WHO-CF-2023", "CDC-SOLIDS", "CDC-LIMITS"]
+    },
+    {
+      "id": "9_11_months",
+      "label": "9 to 11 months",
+      "stage_title": "Texture Progression & Safe Finger Foods",
+      "variety_target": "Aim for 3 to 5 diverse food groups daily. Promote oral chewing skills and independent grasp with appropriately sized finger foods.",
+      "meal_cadence": "Offer 3 to 4 meals daily + 1 to 2 nutritious snacks + continued milk feeds.",
+      "food_categories": [
+        {
+          "group_name": "Safe Finger Foods & Proteins",
+          "examples": ["Shredded tender chicken or soft flaked fish (carefully deboned)", "Soft scrambled egg pieces", "Soft tofu cubes", "Cooked black beans, chickpeas, or lentils gently mashed"],
+          "key_nutrients": "High-quality protein, zinc, iron, omega-3 fatty acids"
+        },
+        {
+          "group_name": "Grains & Tubers",
+          "examples": ["Soft cooked pasta shapes (spirals, shells)", "Whole grain toast fingers", "Soft cooked brown rice, oatmeal, or barley porridge", "Steamed potato wedges"],
+          "key_nutrients": "Complex carbohydrates, B vitamins, energy density"
+        },
+        {
+          "group_name": "Vegetables & Fruits",
+          "examples": ["Soft steamed carrot or broccoli florets", "Ripe banana cut into bite pieces", "Soft avocado cubes", "Ripe strawberries or blueberries cut into quarters"],
+          "key_nutrients": "Vitamin A, vitamin C, antioxidants, dietary fiber"
+        },
+        {
+          "group_name": "Dairy Foods",
+          "examples": ["Pasteurized plain whole-milk yogurt", "Pasteurized mild cheese strips or shredded cheddar"],
+          "key_nutrients": "Calcium, fat, fat-soluble vitamins (as food ingredients, not liquid drink)"
+        }
+      ],
+      "safe_textures": "Minced, chopped, or soft finger foods the child can grasp with fingertips. Soft enough to easily squish between thumb and forefinger.",
+      "foods_to_avoid": [
+        "Whole round grapes, large berries, or cherry tomatoes (must be quartered lengthwise)",
+        "Whole nuts, whole seeds, popcorn, or hard chips",
+        "Raw hard carrots or apples (must be cooked until soft or finely grated)",
+        "Thick blobs or spoonfuls of peanut butter (must be spread thinly)",
+        "Honey (<12 months) and added sugars"
+      ],
+      "core_guidance": [
+        "Continue varied, nutrient-dense complementary foods and breastfeeding where applicable.",
+        "Offer 3 to 4 meals daily; 1 to 2 nutritious snacks can be added as needed.",
+        "Make textures progressively thicker and more varied as chewing and self-feeding skills develop."
+      ],
+      "feeding_skills": "Many infants can manage appropriately prepared finger foods from about 8 months; tailor texture and pieces to the individual child's ability.",
+      "safety": [
+        "Cut, cook, mash, or thinly spread foods to reduce choking risk; avoid hard, sticky, round, or small foods.",
+        "Stay with the child and keep them seated upright while eating."
+      ],
+      "sources": ["WHO-IYCF", "WHO-EARLY-FOODS", "CDC-CHOKING"]
+    },
+    {
+      "id": "12_23_months",
+      "label": "12 to 23 months",
+      "stage_title": "Family Foods & UNICEF 5-of-8 Diversity",
+      "variety_target": "UNICEF Minimum Dietary Diversity Indicator: At least 5 of 8 food groups daily (breast milk, grains/roots, pulses/nuts, dairy, flesh foods, eggs, vitamin-A fruits/veg, other fruits/veg).",
+      "meal_cadence": "Offer 3 to 4 family meals daily + 1 to 2 wholesome snacks as needed.",
+      "food_categories": [
+        {
+          "group_name": "1. Breast Milk & Dairy",
+          "examples": ["Continued breastfeeding up to 2 years or beyond", "Pasteurized whole cow's milk (up to 16–24 oz/day)", "Plain whole-milk yogurt", "Cottage cheese"],
+          "key_nutrients": "Calcium, healthy fats, vitamin D, immune factors"
+        },
+        {
+          "group_name": "2. Grains, Roots & Tubers",
+          "examples": ["Oatmeal, brown rice, whole wheat bread/roti, quinoa", "Mashed or roasted sweet potatoes, potatoes, yams"],
+          "key_nutrients": "Sustained carbohydrates, fiber, B vitamins"
+        },
+        {
+          "group_name": "3. Pulses, Nuts & Seeds",
+          "examples": ["Lentils (dal), hummus, cooked chickpeas, black beans", "Smooth peanut or almond butter thinly spread on bread"],
+          "key_nutrients": "Plant protein, zinc, iron, healthy monounsaturated fats"
+        },
+        {
+          "group_name": "4. Flesh Foods & 5. Eggs",
+          "examples": ["Tender chicken, turkey, beef, lamb, salmon, cod (boneless)", "Whole eggs (scrambled, hard-boiled and chopped)"],
+          "key_nutrients": "Heme iron (highly absorbable), complete proteins, choline, B12"
+        },
+        {
+          "group_name": "6. Vitamin-A Rich & 7. Other Fruits/Veg",
+          "examples": ["Cooked spinach, kale, carrots, pumpkin, cantaloupe, ripe mango", "Bananas, apples, pears, green peas, steamed zucchini, cucumbers"],
+          "key_nutrients": "Immune support, eyesight protection, vitamin C, diverse gut microbiota"
+        }
+      ],
+      "safe_textures": "Family table foods adapted for chewing and biting. Cut hot dogs and round grapes lengthwise into quarters. Supervise meals.",
+      "foods_to_avoid": [
+        "Added sugars (candy, cookies, sugary breakfast cereals, chocolate)",
+        "Sugar-sweetened beverages (fruit juices, soda, flavored milk, sweetened teas)",
+        "Unpasteurized juices, milks, or cheeses; raw or undercooked animal products",
+        "Excessive salt in cooking",
+        "Large choking hazards: whole nuts, sticky marshmallows, hard candies, tough meats"
+      ],
+      "core_guidance": [
+        "Continue breastfeeding up to 2 years or beyond if desired, alongside family foods adapted for safety and texture.",
+        "Offer 3 to 4 meals daily and 1 to 2 nutritious snacks as needed.",
+        "Aim for dietary diversity: UNICEF's 6–23 month indicator uses foods from at least 5 of 8 groups in the preceding day."
+      ],
+      "feeding_skills": "Most children can eat family foods with safe preparation; encourage self-feeding without force.",
+      "safety": [
+        "Keep added sugars out of infants' and young children's diets.",
+        "Avoid raw or undercooked eggs, meat, seafood, unpasteurized dairy/juice, and unwashed produce."
+      ],
+      "sources": ["WHO-IYCF", "UNICEF-DIET", "CDC-LIMITS", "CDC-FOOD-SAFETY"]
+    },
+    {
+      "id": "24_59_months",
+      "label": "2 to 5 years",
+      "stage_title": "Preschooler Balanced Diet & Dietary Rainbow",
+      "variety_target": "Diverse family plate targeting all main food groups across color spectrums: half vegetables and whole fruits, quarter whole grains, quarter lean protein foods, accompanied by water and pasteurized dairy.",
+      "meal_cadence": "3 structured meals + 2 planned healthy snacks daily at consistent times.",
+      "food_categories": [
+        {
+          "group_name": "Vegetables & Fruits (Half the Plate)",
+          "examples": ["Colorful rainbow: bell peppers, broccoli, tomatoes, carrots, berries, melons, apples, oranges"],
+          "key_nutrients": "Fiber, phytonutrients, vitamin C, potassium, immune resilience"
+        },
+        {
+          "group_name": "Whole Grains & Complex Carbs",
+          "examples": ["Whole wheat pasta, brown rice, whole grain bread, rolled oats, corn, millet"],
+          "key_nutrients": "Slow-release energy, gut health fibers, magnesium"
+        },
+        {
+          "group_name": "Protein Foods",
+          "examples": ["Lentils, beans, tofu, eggs, poultry, fish, lean meats, finely chopped nuts or nut butters"],
+          "key_nutrients": "Muscle development, enzymatic growth, bioavailable iron and zinc"
+        },
+        {
+          "group_name": "Dairy & Healthy Hydration",
+          "examples": ["Pasteurized whole or low-fat cow's milk (or fortified soy milk)", "Plain yogurt", "Abundant plain water (primary beverage)"],
+          "key_nutrients": "Bone-building calcium and vitamin D; optimal cellular hydration"
+        }
+      ],
+      "safe_textures": "Family meals; continue to cut round or firm items (cherry tomatoes, sausages, grapes). Model safe eating habits.",
+      "foods_to_avoid": [
+        "Sugary drinks, fruit punch, sodas, energy drinks, and flavored milk",
+        "Ultra-processed convenience snacks high in sodium and saturated/trans fats",
+        "Caffeinated beverages",
+        "Unpasteurized dairy, raw sprouts, or undercooked meats",
+        "Choking hazards without active supervision (hard candies, whole large nuts)"
+      ],
+      "core_guidance": [
+        "Build regular meals and nutritious snacks around a variety of minimally processed foods: vegetables and fruits, legumes, grains, protein foods, and dairy or appropriate alternatives.",
+        "Use responsive feeding: caregivers decide what is offered; the child decides whether and how much to eat from the offered foods.",
+        "Use WHO growth standards from birth to 5 years with a qualified health professional to interpret growth over time."
+      ],
+      "feeding_skills": "Maintain calm, seated meals and model varied foods; avoid pressure or restrictive diets unless a clinician directs them.",
+      "safety": [
+        "Choking risk persists—prepare foods for the child’s chewing ability and supervise.",
+        "Choose pasteurized foods and safe food handling practices."
+      ],
+      "sources": ["WHO-GROWTH", "CDC-CHOKING", "CDC-FOOD-SAFETY"]
+    }
+  ],
+  "red_flags": [
+    "difficulty breathing, blue color, or an active choking episode",
+    "signs of dehydration, lethargy, or persistent vomiting",
+    "poor growth, weight loss, feeding pain, swallowing difficulty, or a suspected food allergy reaction",
+    "prematurity, low birth weight, chronic disease, metabolic condition, or a prescribed therapeutic diet"
+  ]
+}
