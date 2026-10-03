@@ -6,7 +6,7 @@
 [![Guidelines](https://img.shields.io/badge/Clinical%20Grounding-WHO%20%7C%20UNICEF%20%7C%20CDC-green.svg)](https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding)
 [![Privacy](https://img.shields.io/badge/Execution-100%25%20Local%20%26%20Private-success.svg)](#privacy--safety-boundaries)
 
-An evidence-grounded, on-device multimodal educational prototype for child nutrition and dietary diversity covering children aged **0 to 59 completed months**. 
+An evidence-grounded, on-device multimodal prototype for child nutrition and dietary diversity covering children aged **0 to 59 completed months**. 
 
 NutriGuide demonstrates the principled, safe pattern for deploying Small Language Models (SLMs) and Vision-Language Models (VLMs) in sensitive healthcare education:
 **Authoritative Domain Evidence &rarr; Deterministic Safety Gates &rarr; Bounded Constrained Inference &rarr; Mandatory Caregiver Verification &rarr; Auditable Citations**.
@@ -33,18 +33,6 @@ NutriGuide demonstrates the principled, safe pattern for deploying Small Languag
 ---
 
 ## Important Pediatric & Safety Boundaries
-
-> [!CAUTION]
-> **NutriGuide is strictly an educational learning prototype and not medical diagnostic software.**
-> It must never be used for clinical triage, growth assessment, disease diagnosis, individual calorie/portion prescribing, or allergy management. Always consult a licensed pediatrician or healthcare professional for medical questions.
-
-### Non-Negotiable Boundaries:
-- **No Face or Child Body Assessments**: The photo companion is strictly for meal/plate/bowl/tray photos. Images containing children, faces, or bodies are intercepted and blocked.
-- **No Model Hallucination as Fact**: The vision model (`SmolVLM-500M`) produces *draft observations only*. Educational guidance is never generated until the caregiver actively reviews, corrects, and confirms the observations.
-- **Deterministic Red-Flag Gate**: Emergency or high-risk medical terms (e.g., lethargy, respiratory distress, cyanosis, dehydration, anaphylaxis) immediately bypass model generation and return direct medical emergency instructions.
-- **No Calorie / Portion Calculations**: Individual nutritional needs vary drastically based on growth velocity, health status, breast milk/formula volume, and clinical history. NutriGuide emphasizes food diversity, safe textures, and feeding skills rather than universal portion numbers.
-
----
 
 ## What NutriGuide Does
 
