@@ -1,9 +1,10 @@
 """NutriGuide Child Nutrition Screening & Caregiver Education Platform Server
 
 Serves a unified modern web UI on localhost with:
-1. NutriGuide SLM: Text intake screening queries & caregiver education grounded in WHO/CDC guidelines with SmolLM2-360M-Instruct.
-2. Meal Photo Companion: Meal image observation using SmolVLM-500M-Instruct + Caregiver Confirmation & Safety Review.
-Target population: Children from birth through 6 completed years (0 to 72 completed months; 0 to 59 months currently implemented).
+1. Intake indicators: deterministic WHO/UNICEF calculations for ages 6–23 months.
+2. Text SLM: constrained selection of reviewed caregiver guidance.
+3. Meal Photo Companion: SmolVLM observations with caregiver confirmation.
+Target: 0–72 months; educational bands 0–59 months; intake indicators 6–23 months.
 """
 from __future__ import annotations
 
@@ -15,7 +16,8 @@ import os
 import re
 import sys
 import threading
-from http.server import HTTPServer, ThreadingHTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from typing import Any
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 from PIL import Image
@@ -37,12 +39,13 @@ from screening_constants import (
     TARGET_MAX_AGE_MONTHS,
     VITAMIN_D_SCREENING_ENABLED,
 )
-from app import KB, MODEL_ID, SYSTEM, find_band, context_for, red_flag_gate, explain_screening_findings
+from app import KB, MODEL_ID, SYSTEM, find_band, context_for, red_flag_gate, explain_screening_findings, grounded_answer
 from meal_photo_app import (
     VLM_ID,
     ALLOWED_TEXTURES,
     PHOTO_POLICY,
     _extract_json,
+    create_photo_draft,
     guidance_from_confirmed,
 )
 from nutrition_engine import (
@@ -53,77 +56,27 @@ from nutrition_engine import (
     review_meal,
 )
 
-# Text Model Pipeline
-_PIPELINE = None
-_PIPELINE_LOCK = threading.Lock()
-_PIPELINE_LOADING = False
+from intake_screening import screen_intake, format_screening
+from model_runtime import load_pipeline, generate_vision, model_status
 
-# Vision Model Pipeline
-_VLM_PIPELINE = None
-_VLM_LOCK = threading.Lock()
-_VLM_LOADING = False
+MAX_REQUEST_BYTES = 16 * 1024 * 1024
+
 
 def get_pipeline():
-    global _PIPELINE, _PIPELINE_LOADING
-    with _PIPELINE_LOCK:
-        if _PIPELINE is not None:
-            return _PIPELINE
-        _PIPELINE_LOADING = True
-    
-    print(f"[*] Initializing local SLM model: {MODEL_ID}...")
-    import torch
-    from transformers import pipeline
+    return load_pipeline("text")
 
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
-    print(f"[*] SLM Target device: {device}")
-    
-    try:
-        pipe = pipeline(
-            "text-generation",
-            model=MODEL_ID,
-            device=device,
-            torch_dtype=torch.float16 if device == "mps" else torch.bfloat16,
-        )
-    except Exception as e:
-        print(f"[!] Warning: SLM device-specific load fallback ({e})...")
-        pipe = pipeline("text-generation", model=MODEL_ID, torch_dtype=torch.bfloat16)
-        
-    with _PIPELINE_LOCK:
-        _PIPELINE = pipe
-        _PIPELINE_LOADING = False
-    print("[+] SLM Model loaded successfully into memory.")
-    return _PIPELINE
 
 def get_vision_pipeline():
-    global _VLM_PIPELINE, _VLM_LOADING
-    with _VLM_LOCK:
-        if _VLM_PIPELINE is not None:
-            return _VLM_PIPELINE
-        _VLM_LOADING = True
+    return load_pipeline("vision")
 
-    print(f"[*] Initializing local VLM model: {VLM_ID}...")
-    import torch
-    from transformers import pipeline
 
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
-    print(f"[*] VLM Target device: {device}")
+def decode_meal_image(source) -> Image.Image:
+    with Image.open(source) as image:
+        if image.width * image.height > 12_000_000:
+            raise ValueError("Meal images must be at most 12 megapixels.")
+        image.thumbnail((1536, 1536))
+        return image.convert("RGB")
 
-    try:
-        pipe = pipeline(
-            "image-text-to-text",
-            model=VLM_ID,
-            device=device,
-            dtype=torch.float16 if device == "mps" else torch.float32,
-        )
-    except Exception as e:
-        print(f"[!] Warning: VLM device-specific load fallback ({e})...")
-        pipe = pipeline("image-text-to-text", model=VLM_ID)
-
-    with _VLM_LOCK:
-        _VLM_PIPELINE = pipe
-        _VLM_LOADING = False
-    print("[+] Vision Model loaded successfully into memory.")
-    return _VLM_PIPELINE
 
 def parse_vision_output(generated_text: Any) -> dict:
     if isinstance(generated_text, list) and generated_text:
@@ -135,68 +88,16 @@ def parse_vision_output(generated_text: Any) -> dict:
     elif not isinstance(generated_text, str):
         generated_text = str(generated_text)
 
-    draft = _extract_json(generated_text)
-    raw_clean = generated_text.strip()
-    
-    # If JSON extraction didn't extract foods, attempt natural language extraction
-    if not draft["visible_foods"] and len(raw_clean) > 0:
-        if re.search(r"\b(child|baby|infant|kid|face|toddler|person|hand|arm)\b", raw_clean, re.I):
-            draft["child_present"] = True
-            
-        text_lower = raw_clean.lower()
-        textures = []
-        if "puree" in text_lower or "smooth" in text_lower:
-            textures.append("smooth puree")
-        if "mash" in text_lower:
-            textures.append("mashed")
-        if "soft" in text_lower or "piece" in text_lower or "cooked" in text_lower:
-            textures.append("soft pieces")
-        if "finger" in text_lower or "strip" in text_lower or "stick" in text_lower:
-            textures.append("finger food")
-        if textures:
-            draft["texture_cues"] = textures
-            
-        foods_found = []
-        # Check visible_foods [...] bracket format
-        bracket_match = re.search(r"visible_foods\s*\[(.*?)\]", raw_clean, re.I)
-        if bracket_match:
-            raw_items = [s.strip(" '\"") for s in bracket_match.group(1).split(",") if s.strip(" '\"")]
-            for it in raw_items:
-                cl = it.lower()
-                if cl and cl not in foods_found and len(cl) > 2:
-                    foods_found.append(cl)
+    return _extract_json(generated_text)
 
-        items = re.findall(r"(?:bowl of|plate of|\d+\.|\*|-)\s*([a-zA-Z\s]+?)(?::|\.|\n|,|$)", raw_clean)
-        for it in items:
-            cl = it.strip().lower()
-            if cl and cl not in {"food", "texture", "color", "plate", "bowl", "the food is", "is a"} and len(cl) > 2:
-                cl = re.sub(r"^(the|a|an|bowl of|plate of)\s+", "", cl).strip()
-                if cl and cl not in foods_found:
-                    foods_found.append(cl)
-
-        if not foods_found and len(raw_clean) < 100:
-            cleaned = re.sub(r"[^\w\s,]", "", raw_clean).strip()
-            if cleaned:
-                for s in cleaned.split(","):
-                    item = s.strip()
-                    if item and len(item) > 2 and item.lower() not in {"yes", "no", "true", "false"}:
-                        foods_found.append(item)
-        if foods_found:
-            draft["visible_foods"] = foods_found[:8]
-
-    return draft
 
 def analyze_photo_bytes(image: Image.Image) -> dict:
-    prompt = """Analyze only the meal, plate, bowl, or tray. Do NOT infer anything about a child, health status, or nutritional deficiency.
-Return candidate observations only as JSON with: visible_foods (up to 8 ordinary food names), texture_cues (only: smooth puree, mashed, soft pieces, finger food, mixed/unclear), uncertain (boolean), child_present (boolean). If a child or face is visible, set child_present true. If unclear, use empty foods and mixed/unclear."""
-    messages = [{"role": "user", "content": [{"type": "image", "image": image}, {"type": "text", "text": prompt}]}]
     try:
-        pipe = get_vision_pipeline()
-        result = pipe(text=messages, max_new_tokens=140, do_sample=False, return_full_text=False)
-        raw_text = result[0]["generated_text"]
-        draft = parse_vision_output(raw_text)
+        raw_text, draft = create_photo_draft(image, generate=generate_vision)
     except Exception as exc:
         return {
+            "success": False,
+            "parse_valid": False,
             "status": f"Could not analyze the photo: {exc}",
             "raw_text": "",
             "candidate_foods": [],
@@ -214,6 +115,8 @@ Return candidate observations only as JSON with: visible_foods (up to 8 ordinary
 
     if draft["child_present"]:
         return {
+            "success": False,
+            "parse_valid": draft["parse_valid"],
             "status": "A child or face may be visible. Do not submit this photo. Crop it to the meal only and try again.",
             "raw_text": raw_text,
             "candidate_foods": [],
@@ -229,11 +132,16 @@ Return candidate observations only as JSON with: visible_foods (up to 8 ordinary
             "screening_notice": SCREENING_DISCLAIMER,
         }
 
-    status = "Draft candidate observations only — requires caregiver confirmation before screening guidance."
-    if draft["uncertain"]:
-        status += " The model marked the photo as uncertain."
+    status = "Food suggestions ready to review. Correct any food names and confirm preparation and texture."
+    if not draft["parse_valid"]:
+        status = "The model could not produce readable food observations. Try a clearer meal photo or enter foods manually."
+    elif draft["uncertain"]:
+        status += " Hidden ingredients and softness cannot be confirmed from the photo."
 
     return {
+        "success": draft["parse_valid"],
+        "parse_valid": draft["parse_valid"],
+        "model": model_status()["vision"]["loaded_model"],
         "status": status,
         "raw_text": raw_text,
         "candidate_foods": draft.get("candidate_foods", draft["visible_foods"]),
@@ -311,23 +219,26 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
         path = parsed.path
         
         if path == "/api/health":
+            models = model_status()
             self.send_json(200, {
                 "status": "ok",
                 "module_name": MODULE_NAME,
                 "module_type": MODULE_TYPE,
                 "scope": "children_0_to_6_years",
                 "target_scope": f"0_to_{TARGET_MAX_AGE_MONTHS}_months",
-                "implemented_rule_scope": f"0_to_{CURRENT_IMPLEMENTED_MAX_AGE_MONTHS}_months",
+                "implemented_rule_scope": "6_to_23_months",
+                "educational_guidance_scope": f"0_to_{CURRENT_IMPLEMENTED_MAX_AGE_MONTHS}_months",
                 "screening_engine_status": SCREENING_ENGINE_STATUS,
                 "diagnostic": False,
                 "vitamin_d_screening_enabled": VITAMIN_D_SCREENING_ENABLED,
                 "screening_notice": SCREENING_DISCLAIMER,
-                "lm_model": MODEL_ID,
-                "lm_ready": _PIPELINE is not None,
-                "lm_loading": _PIPELINE_LOADING,
-                "vlm_model": VLM_ID,
-                "vlm_ready": _VLM_PIPELINE is not None,
-                "vlm_loading": _VLM_LOADING,
+                "lm_model": models["text"]["loaded_model"] or models["text"]["configured_model"],
+                "lm_ready": models["text"]["ready"],
+                "lm_loading": models["text"]["loading"],
+                "models": models,
+                "vlm_model": models["vision"]["loaded_model"] or models["vision"]["configured_model"],
+                "vlm_ready": models["vision"]["ready"],
+                "vlm_loading": models["vision"]["loading"],
                 "sources_count": len(SOURCES_INFO),
             })
             return
@@ -356,7 +267,7 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                 "allergen_flags": list(ALLERGEN_FLAGS),
                 "photo_policy": PHOTO_POLICY,
                 "vlm_model": VLM_ID,
-                "vlm_ready": _VLM_PIPELINE is not None,
+                "vlm_ready": model_status()["vision"]["ready"],
             })
             return
 
@@ -368,21 +279,52 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urlparse(self.path)
-        content_length = int(self.headers.get("Content-Length", 0))
-        body = self.rfile.read(content_length).decode("utf-8")
-        
         try:
+            content_length = int(self.headers.get("Content-Length", 0))
+            if content_length < 0:
+                raise ValueError("Content-Length must not be negative")
+        except ValueError:
+            self.close_connection = True
+            self.send_json(400, {"error": "Invalid Content-Length."})
+            return
+        if content_length > MAX_REQUEST_BYTES:
+            self.close_connection = True
+            self.send_json(413, {"error": "Request exceeds the 16 MiB limit."})
+            return
+        try:
+            body = self.rfile.read(content_length).decode("utf-8")
             data = json.loads(body) if body else {}
-        except Exception as e:
+            if not isinstance(data, dict):
+                raise ValueError("JSON payload must be an object")
+        except (ValueError, UnicodeDecodeError) as e:
             self.send_json(400, {"error": f"Invalid JSON payload: {e}"})
+            return
+
+        if parsed.path == "/api/screen-intake":
+            try:
+                result = screen_intake(data)
+                # The canonical result is always rendered before optional AI selection.
+                result["explanation"] = format_screening(result)
+                if data.get("use_model") is True and not result["professional_review_flag"] and 6 <= result["age_months"] <= 23:
+                    result["explanation"] += "\n\n" + explain_screening_findings(result, result["age_months"], use_model=True)
+                self.send_json(200, result)
+            except ValueError as exc:
+                self.send_json(400, {"error": str(exc)})
             return
 
         if parsed.path == "/api/query":
             age_months = data.get("age_months")
-            question = data.get("question", "").strip()
-            use_model = bool(data.get("use_model", False))
+            question = data.get("question", "")
+            if not isinstance(question, str):
+                self.send_json(400, {"error": "question must be a string."})
+                return
+            question = question.strip()
+            use_model = data.get("use_model", False)
+            if type(use_model) is not bool:
+                self.send_json(400, {"error": "use_model must be true or false."})
+                return
 
-            if age_months is None or not isinstance(age_months, int) or not (SUPPORTED_MIN_AGE_MONTHS <= age_months <= CURRENT_IMPLEMENTED_MAX_AGE_MONTHS):
+            if age_months is None or type(age_months) is not int or not (SUPPORTED_MIN_AGE_MONTHS <= age_months <= CURRENT_IMPLEMENTED_MAX_AGE_MONTHS):
                 self.send_json(400, {
                     "error": f"age_months must be an integer between {SUPPORTED_MIN_AGE_MONTHS} and {CURRENT_IMPLEMENTED_MAX_AGE_MONTHS} for currently implemented screening bands (target scope: 0 to {TARGET_MAX_AGE_MONTHS} months; 60 to {TARGET_MAX_AGE_MONTHS} months screening rules planned for Phase 2)."
                 })
@@ -390,6 +332,9 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
 
             if not question:
                 self.send_json(400, {"error": "question must not be empty."})
+                return
+            if len(question) > 4000:
+                self.send_json(400, {"error": "question must be at most 4000 characters."})
                 return
 
             urgent = red_flag_gate(question)
@@ -438,13 +383,7 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                 return
 
             try:
-                generator = get_pipeline()
-                messages = [
-                    {"role": "system", "content": SYSTEM},
-                    {"role": "user", "content": f"CONTEXT\n{context}\n\nQUESTION\n{question}"},
-                ]
-                output = generator(messages, max_new_tokens=240, do_sample=False)
-                answer_text = output[0]["generated_text"][-1]["content"]
+                answer_text, answer_mode = grounded_answer(age_months, question)
 
                 self.send_json(200, {
                     "is_red_flag": False,
@@ -453,7 +392,8 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                     "band": band,
                     "context": context,
                     "sources": sources_meta,
-                    "mode": "slm_generated",
+                    "mode": answer_mode,
+                    "model": model_status()["text"]["loaded_model"],
                     "module_type": MODULE_TYPE,
                     "diagnostic": False,
                     "screening_notice": SCREENING_DISCLAIMER,
@@ -470,15 +410,21 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
 
             pil_img = None
             if sample_name:
-                sample_path = BASE_DIR / "static" / "samples" / Path(sample_name).name
-                if sample_path.exists():
-                    pil_img = Image.open(sample_path).convert("RGB")
+                try:
+                    if not isinstance(sample_name, str):
+                        raise ValueError("sample must be a file name.")
+                    sample_path = BASE_DIR / "static" / "samples" / Path(sample_name).name
+                    if sample_path.exists():
+                        pil_img = decode_meal_image(sample_path)
+                except (ValueError, OSError) as exc:
+                    self.send_json(400, {"error": f"Could not decode sample image: {exc}"})
+                    return
             elif img_data:
                 try:
                     if "," in img_data:
                         img_data = img_data.split(",", 1)[1]
-                    raw_bytes = base64.b64decode(img_data)
-                    pil_img = Image.open(io.BytesIO(raw_bytes)).convert("RGB")
+                    raw_bytes = base64.b64decode(img_data, validate=True)
+                    pil_img = decode_meal_image(io.BytesIO(raw_bytes))
                 except Exception as e:
                     self.send_json(400, {"error": f"Could not decode image: {e}"})
                     return
@@ -499,11 +445,13 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
             preparation = data.get("preparation", [])
             allergens = data.get("allergens", [])
             daily_groups = data.get("daily_groups", [])
-            confirmed = bool(data.get("confirmed", False))
+            confirmed = data.get("confirmed") is True
 
             try:
+                if type(age_months) is not int or not 0 <= age_months <= 72:
+                    raise ValueError("age_months must be a whole number from 0 to 72.")
                 guidance_text = guidance_from_confirmed(
-                    age_months=int(age_months),
+                    age_months=age_months,
                     foods=foods,
                     groups=groups,
                     textures=textures,
@@ -527,11 +475,14 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
 
         elif parsed.path == "/api/explain-screening":
             age_months = data.get("age_months", 12)
-            screening_result = data.get("screening_result", "LOW_SCREENING_CONCERN")
+            screening_result = data.get("screening_result", "INSUFFICIENT_DATA")
             findings = data.get("findings", [])
-            use_model = bool(data.get("use_model", False))
+            use_model = data.get("use_model", False)
+            if type(use_model) is not bool:
+                self.send_json(400, {"error": "use_model must be true or false."})
+                return
 
-            if age_months is None or not isinstance(age_months, int) or not (SUPPORTED_MIN_AGE_MONTHS <= age_months <= CURRENT_IMPLEMENTED_MAX_AGE_MONTHS):
+            if age_months is None or type(age_months) is not int or not (SUPPORTED_MIN_AGE_MONTHS <= age_months <= CURRENT_IMPLEMENTED_MAX_AGE_MONTHS):
                 self.send_json(400, {
                     "error": f"age_months must be an integer between {SUPPORTED_MIN_AGE_MONTHS} and {CURRENT_IMPLEMENTED_MAX_AGE_MONTHS} for currently implemented screening bands (target scope: 0 to {TARGET_MAX_AGE_MONTHS} months)."
                 })
@@ -589,8 +540,9 @@ def run_server(port: int = 8080):
     static_dir = BASE_DIR / "static"
     static_dir.mkdir(exist_ok=True)
     
-    print("[*] Starting background models warmup (SLM + VLM)...")
-    warm_up_models_in_background()
+    if os.getenv("NUTRIGUIDE_WARMUP") == "1":
+        print("[*] Starting background models warmup (SLM + VLM)...")
+        warm_up_models_in_background()
 
     server = ThreadingHTTPServer(("127.0.0.1", port), NutriGuideHandler)
     print(f"\n=======================================================")

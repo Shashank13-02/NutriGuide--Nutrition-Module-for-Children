@@ -1,0 +1,41 @@
+{
+  "accuracy_validated": false,
+  "model": {
+    "loading": false,
+    "ready": true,
+    "loaded_model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\smolvlm_500m",
+    "error": null,
+    "image_edge": 1024,
+    "device": "cpu",
+    "precision": "torch.float32",
+    "fallback_used": false,
+    "configured_model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\smolvlm_500m",
+    "display_name": "SmolVLM-500M meal observations"
+  },
+  "results": [
+    {
+      "sample": "meal_carrots_oatmeal.jpg",
+      "prompt": "Describe the food visible in this image in one short sentence.",
+      "latency_seconds": 30.76,
+      "raw_text": " Rice porridge with nuts on top and carrots and avocado pieces."
+    },
+    {
+      "sample": "meal_carrots_oatmeal.jpg",
+      "prompt": "List the visible foods. Answer only with food names separated by commas. If ingredients are unclear, say \"unclear dish\".",
+      "latency_seconds": 17.22,
+      "raw_text": " Carrots, Avocado, Rice."
+    },
+    {
+      "sample": "meal_lentils_rice.jpg",
+      "prompt": "Describe the food visible in this image in one short sentence.",
+      "latency_seconds": 15.92,
+      "raw_text": " Yellow soup in a bowl."
+    },
+    {
+      "sample": "meal_lentils_rice.jpg",
+      "prompt": "List the visible foods. Answer only with food names separated by commas. If ingredients are unclear, say \"unclear dish\".",
+      "latency_seconds": 15.42,
+      "raw_text": " Yellow soup."
+    }
+  ]
+}

@@ -23,75 +23,115 @@ except ImportError:
 import os
 from nutrition_engine import ALLERGEN_FLAGS, FOOD_GROUPS, PREPARATION_FLAGS, TEXTURES, review_meal
 from screening_constants import DEFAULT_VISION_MODEL_ID, SCREENING_DISCLAIMER
+from model_runtime import configured_vision_model
 
-VLM_ID = os.getenv("NUTRIGUIDE_VISION_MODEL", DEFAULT_VISION_MODEL_ID)
+VLM_ID = configured_vision_model()
 ALLOWED_TEXTURES = {"smooth puree", "mashed", "soft pieces", "finger food", "mixed/unclear"}
 PHOTO_POLICY = f"""Upload only a photo of the meal, plate, bowl, or tray—never the child.
 This screening tool does not diagnose disease or assess a child’s body, face, health, growth, feeding ability, or nutritional status.
 The vision model's candidate food and texture observations are drafts and require caregiver confirmation before screening guidance is displayed.
 Screening notice: {SCREENING_DISCLAIMER}"""
 
-@lru_cache(maxsize=1)
 def get_vision_model():
-    from transformers import pipeline
-    return pipeline("image-text-to-text", model=VLM_ID)
+    from model_runtime import load_pipeline
+    return load_pipeline("vision")
+
 
 def _extract_json(text: str) -> dict[str, Any]:
-    """Best-effort parse; unknown model output becomes a blank review form with mandatory confirmation."""
+    """Only schema-valid observations become editable drafts; malformed output abstains."""
+    blank = {"visible_foods": [], "candidate_foods": [], "texture_cues": ["mixed/unclear"],
+             "observations": ["mixed/unclear"], "uncertain_items": [], "uncertain": True,
+             "child_present": False, "requires_confirmation": True, "parse_valid": False}
+    if not isinstance(text, str):
+        return blank
     match = re.search(r"\{.*\}", text, flags=re.S)
     if not match:
-        return {
-            "visible_foods": [],
-            "candidate_foods": [],
-            "texture_cues": ["mixed/unclear"],
-            "observations": ["mixed/unclear"],
-            "uncertain_items": [],
-            "uncertain": True,
-            "child_present": False,
-            "requires_confirmation": True,
-        }
+        return blank
     try:
         result = json.loads(match.group(0))
-    except json.JSONDecodeError:
-        return {
-            "visible_foods": [],
-            "candidate_foods": [],
-            "texture_cues": ["mixed/unclear"],
-            "observations": ["mixed/unclear"],
-            "uncertain_items": [],
-            "uncertain": True,
-            "child_present": False,
-            "requires_confirmation": True,
-        }
-    foods = [str(x).strip() for x in result.get("visible_foods", result.get("candidate_foods", [])) if str(x).strip()][:8]
-    textures = [str(x).strip().lower() for x in result.get("texture_cues", result.get("observations", []))]
-    textures = [x for x in textures if x in ALLOWED_TEXTURES] or ["mixed/unclear"]
-    uncertain = bool(result.get("uncertain", True))
-    uncertain_items = [str(x).strip() for x in result.get("uncertain_items", []) if str(x).strip()]
-    return {
-        "visible_foods": foods,
-        "candidate_foods": foods,
-        "texture_cues": textures,
-        "observations": textures,
-        "uncertain_items": uncertain_items,
-        "uncertain": uncertain,
-        "child_present": bool(result.get("child_present", False)),
-        "requires_confirmation": True,
-    }
+        if not isinstance(result, dict):
+            return blank
+        # Preserve a positive person flag even if the food fields are malformed.
+        blank["child_present"] = result.get("child_present") is True
+        foods = result.get("visible_foods", result.get("candidate_foods", []))
+        textures = result.get("texture_cues", result.get("observations", []))
+        uncertain_items = result.get("uncertain_items", [])
+        if any(not isinstance(v, list) or any(not isinstance(x, str) for x in v) for v in (foods, textures, uncertain_items)):
+            return blank
+        if type(result.get("uncertain")) is not bool or type(result.get("child_present")) is not bool:
+            return blank
+        foods = list(dict.fromkeys(x.strip()[:100] for x in foods if x.strip()))[:8]
+        textures = [x.strip().lower() for x in textures if x.strip().lower() in ALLOWED_TEXTURES] or ["mixed/unclear"]
+        return {**blank, "visible_foods": foods, "candidate_foods": foods,
+                "texture_cues": textures, "observations": textures,
+                "uncertain_items": uncertain_items[:8], "uncertain": result["uncertain"],
+                "child_present": result["child_present"], "parse_valid": True}
+    except (ValueError, TypeError):
+        return blank
+
+
+FOOD_LIST_PROMPT = 'List the visible foods. Answer only with food names separated by commas. If ingredients are unclear, say "unclear dish".'
+PERSON_PROMPT = "Is a person or a face visible in this image? Answer only yes or no."
+
+
+def parse_food_list(text: str) -> dict[str, Any]:
+    """Convert a short model list into an editable draft without inventing foods."""
+    blank = _extract_json("")
+    if not isinstance(text, str) or not text.strip():
+        return blank
+    cleaned = re.sub(r"^\s*(?:foods?|visible foods?)\s*:\s*", "", text, flags=re.I).strip().strip('"').rstrip(".")
+    if cleaned.lower() in {"none", "no food", "no foods", "unclear", "unclear dish"}:
+        return {**blank, "parse_valid": True, "uncertain_items": ["Food ingredients could not be identified."]}
+    items = re.split(r"[,;\n]+", cleaned)
+    foods = []
+    for item in items:
+        item = re.sub(r"^\s*(?:[-*]|\d+[.)])\s*", "", item).strip().strip('"[]').rstrip(".")
+        if not item:
+            continue
+        if len(item) > 60 or len(item.split()) > 5 or not re.fullmatch(r"[\w '\-()/]+", item):
+            return blank
+        if re.search(r"\b(?:image|photo|child|person|face|diagnos\w*|deficien\w*|calories|healthy|unhealthy|safe|unsafe|visible|there|contains|shows|cannot|instructions)\b", item, re.I):
+            return blank
+        if item.casefold() not in {food.casefold() for food in foods}:
+            foods.append(item)
+    if not foods or len(foods) > 8:
+        return blank
+    return {**blank, "visible_foods": foods, "candidate_foods": foods, "parse_valid": True,
+            "uncertain_items": ["Confirm food identities and any hidden ingredients.", "Confirm texture and softness yourself."]}
+
+
+def create_photo_draft(image: Image.Image, generate=None):
+    """Use two short visual questions; JSON formatting is handled in code."""
+    if generate is None:
+        from model_runtime import generate_vision
+        generate = generate_vision
+
+    def ask(prompt, budget):
+        messages = [{"role": "user", "content": [{"type": "image", "image": image}, {"type": "text", "text": prompt}]}]
+        return generate(messages, max_new_tokens=budget)[0]["generated_text"].strip()
+
+    person = ask(PERSON_PROMPT, 6)
+    person_answer = person.lower().strip().rstrip(".! ")
+    if person_answer == "yes":
+        return f"Person check: {person}", {**_extract_json(""), "child_present": True, "parse_valid": True}
+    if person_answer != "no":
+        return f"Person check: {person}", _extract_json("")
+    raw = ask(FOOD_LIST_PROMPT, 40)
+    draft = parse_food_list(raw)
+    return f"Person check: {person}\nVisible foods: {raw}", draft
+
 
 def analyze_meal_photo(image: Image.Image | None):
     if image is None:
         return "Upload a meal photo first.", ""
-    prompt = """Analyze only the meal, plate, bowl, or tray. Do NOT infer anything about a child, health status, or nutritional deficiency.
-Return candidate observations only as JSON with: visible_foods (up to 8 ordinary food names), texture_cues (only: smooth puree, mashed, soft pieces, finger food, mixed/unclear), uncertain (boolean), child_present (boolean). If a child or face is visible, set child_present true. If unclear, use empty foods and mixed/unclear."""
-    messages = [{"role": "user", "content": [{"type": "image", "image": image}, {"type": "text", "text": prompt}]}]
     try:
-        result = get_vision_model()(text=messages, max_new_tokens=120, do_sample=False, return_full_text=False)
-        draft = _extract_json(result[0]["generated_text"])
+        raw, draft = create_photo_draft(image)
     except Exception as exc:
         return f"Could not analyze the photo: {exc}", ""
     if draft["child_present"]:
         return "A child or face may be visible. Do not submit this photo. Crop it to the meal only and try again.", ""
+    if not draft["parse_valid"]:
+        return "The photo could not be read reliably. Try a clearer meal photo or enter foods manually.", ""
     status = "Draft observations only — requires caregiver confirmation before screening guidance."
     if draft["uncertain"]:
         status += " The model marked the photo as uncertain."

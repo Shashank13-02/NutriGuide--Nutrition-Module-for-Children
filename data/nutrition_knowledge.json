@@ -10,12 +10,16 @@
       "food_categories": [
         {
           "group_name": "Breast Milk",
-          "examples": ["Mother's breast milk or screened donor milk"],
+          "examples": [
+            "Mother's breast milk or screened donor milk"
+          ],
           "key_nutrients": "Optimal balance of proteins, fats, lactose, antibodies, and micronutrients"
         },
         {
           "group_name": "Infant Formula",
-          "examples": ["Clinician-prescribed or standard iron-fortified infant formula (when breastfeeding is not possible or sufficient)"],
+          "examples": [
+            "Clinician-prescribed or standard iron-fortified infant formula (when breastfeeding is not possible or sufficient)"
+          ],
           "key_nutrients": "Balanced macronutrients and iron for formula-fed infants"
         }
       ],
@@ -32,34 +36,57 @@
         "Do not begin complementary foods before 4 months."
       ],
       "feeding_skills": "Feeding is milk-based; assess feeding concerns with a qualified health professional.",
-      "safety": ["Seek urgent medical advice for poor feeding with lethargy, breathing difficulty, dehydration, or very few wet diapers."],
-      "sources": ["WHO-IYCF", "WHO-BF", "CDC-SOLIDS"]
+      "safety": [
+        "Seek urgent medical advice for poor feeding with lethargy, breathing difficulty, dehydration, or very few wet diapers."
+      ],
+      "sources": [
+        "WHO-IYCF",
+        "WHO-BF",
+        "CDC-SOLIDS"
+      ]
     },
     {
       "id": "6_8_months",
       "label": "6 to 8 months",
       "stage_title": "Starting Solids & Complementary Feeding",
-      "variety_target": "Introduce 2 to 4 food groups gradually alongside continued frequent breast milk or formula. Focus on iron-rich staples and single-ingredient exposures.",
+      "variety_target": "For children 6–23 months, the WHO/UNICEF minimum dietary diversity indicator counts at least 5 of 8 food groups actually consumed during the previous day. It is a population indicator, not a clinical diagnosis or a target for a single meal.",
       "meal_cadence": "Offer 2 to 3 small complementary meals daily + on-demand breast milk or formula.",
       "food_categories": [
         {
           "group_name": "Iron-Rich Foods (Priority)",
-          "examples": ["Pureed beef, chicken, turkey", "Iron-fortified infant cereals (oat, barley)", "Pureed lentils, split peas, or white beans"],
+          "examples": [
+            "Pureed beef, chicken, turkey",
+            "Iron-fortified infant cereals (oat, barley)",
+            "Pureed lentils, split peas, or white beans"
+          ],
           "key_nutrients": "Iron, zinc, protein (critical as fetal iron stores deplete around 6 months)"
         },
         {
           "group_name": "Vegetables",
-          "examples": ["Mashed or pureed cooked sweet potato", "Cooked carrots", "Pureed squash", "Steamed pureed zucchini or green beans"],
+          "examples": [
+            "Mashed or pureed cooked sweet potato",
+            "Cooked carrots",
+            "Pureed squash",
+            "Steamed pureed zucchini or green beans"
+          ],
           "key_nutrients": "Vitamin A, beta-carotene, dietary fiber, minerals"
         },
         {
           "group_name": "Fruits",
-          "examples": ["Mashed ripe avocado", "Mashed ripe banana", "Steamed unsweetened applesauce", "Pureed ripe pear or peach"],
+          "examples": [
+            "Mashed ripe avocado",
+            "Mashed ripe banana",
+            "Steamed unsweetened applesauce",
+            "Pureed ripe pear or peach"
+          ],
           "key_nutrients": "Vitamin C, potassium, healthy fatty acids"
         },
         {
           "group_name": "Common Allergens (Early & Safe)",
-          "examples": ["Smooth peanut butter thinned with warm water or breast milk", "Well-cooked scrambled or pureed whole egg"],
+          "examples": [
+            "Smooth peanut butter thinned with warm water or breast milk",
+            "Well-cooked scrambled or pureed whole egg"
+          ],
           "key_nutrients": "Protein, choline; early safe introduction reduces future allergy risk"
         }
       ],
@@ -80,35 +107,59 @@
       "safety": [
         "No honey before 12 months.",
         "Do not give cow's milk or fortified dairy alternatives as a drink before 12 months.",
-        "Introduce allergenic foods alongside other foods; severe eczema or egg allergy requires clinician guidance before peanut introduction."
+        "Introduce allergenic foods alongside other foods; severe eczema or egg allergy requires clinician guidance before peanut introduction.",
+        "Introduce single-ingredient foods one at a time so the caregiver can observe reactions; use clinician guidance for a previous reaction or allergy concern."
       ],
-      "sources": ["WHO-IYCF", "WHO-CF-2023", "CDC-SOLIDS", "CDC-LIMITS"]
+      "sources": [
+        "WHO-IYCF",
+        "WHO-CF-2023",
+        "CDC-SOLIDS",
+        "CDC-LIMITS"
+      ]
     },
     {
       "id": "9_11_months",
       "label": "9 to 11 months",
       "stage_title": "Texture Progression & Safe Finger Foods",
-      "variety_target": "Aim for 3 to 5 diverse food groups daily. Promote oral chewing skills and independent grasp with appropriately sized finger foods.",
+      "variety_target": "For children 6–23 months, the WHO/UNICEF minimum dietary diversity indicator counts at least 5 of 8 food groups actually consumed during the previous day. It is a population indicator, not a clinical diagnosis or a target for a single meal.",
       "meal_cadence": "Offer 3 to 4 meals daily + 1 to 2 nutritious snacks + continued milk feeds.",
       "food_categories": [
         {
           "group_name": "Safe Finger Foods & Proteins",
-          "examples": ["Shredded tender chicken or soft flaked fish (carefully deboned)", "Soft scrambled egg pieces", "Soft tofu cubes", "Cooked black beans, chickpeas, or lentils gently mashed"],
+          "examples": [
+            "Shredded tender chicken or soft flaked fish (carefully deboned)",
+            "Soft scrambled egg pieces",
+            "Soft tofu cubes",
+            "Cooked black beans, chickpeas, or lentils gently mashed"
+          ],
           "key_nutrients": "High-quality protein, zinc, iron, omega-3 fatty acids"
         },
         {
           "group_name": "Grains & Tubers",
-          "examples": ["Soft cooked pasta shapes (spirals, shells)", "Whole grain toast fingers", "Soft cooked brown rice, oatmeal, or barley porridge", "Steamed potato wedges"],
+          "examples": [
+            "Soft cooked pasta shapes (spirals, shells)",
+            "Whole grain toast fingers",
+            "Soft cooked brown rice, oatmeal, or barley porridge",
+            "Steamed potato wedges"
+          ],
           "key_nutrients": "Complex carbohydrates, B vitamins, energy density"
         },
         {
           "group_name": "Vegetables & Fruits",
-          "examples": ["Soft steamed carrot or broccoli florets", "Ripe banana cut into bite pieces", "Soft avocado cubes", "Ripe strawberries or blueberries cut into quarters"],
+          "examples": [
+            "Soft steamed carrot or broccoli florets",
+            "Ripe banana cut into bite pieces",
+            "Soft avocado cubes",
+            "Ripe strawberries or blueberries cut into quarters"
+          ],
           "key_nutrients": "Vitamin A, vitamin C, antioxidants, dietary fiber"
         },
         {
           "group_name": "Dairy Foods",
-          "examples": ["Pasteurized plain whole-milk yogurt", "Pasteurized mild cheese strips or shredded cheddar"],
+          "examples": [
+            "Pasteurized plain whole-milk yogurt",
+            "Pasteurized mild cheese strips or shredded cheddar"
+          ],
           "key_nutrients": "Calcium, fat, fat-soluble vitamins (as food ingredients, not liquid drink)"
         }
       ],
@@ -130,38 +181,59 @@
         "Cut, cook, mash, or thinly spread foods to reduce choking risk; avoid hard, sticky, round, or small foods.",
         "Stay with the child and keep them seated upright while eating."
       ],
-      "sources": ["WHO-IYCF", "WHO-EARLY-FOODS", "CDC-CHOKING"]
+      "sources": [
+        "WHO-IYCF",
+        "WHO-EARLY-FOODS",
+        "CDC-CHOKING"
+      ]
     },
     {
       "id": "12_23_months",
       "label": "12 to 23 months",
       "stage_title": "Family Foods & UNICEF 5-of-8 Diversity",
-      "variety_target": "UNICEF Minimum Dietary Diversity Indicator: At least 5 of 8 food groups daily (breast milk, grains/roots, pulses/nuts, dairy, flesh foods, eggs, vitamin-A fruits/veg, other fruits/veg).",
+      "variety_target": "For children 6–23 months, the WHO/UNICEF minimum dietary diversity indicator counts at least 5 of 8 food groups actually consumed during the previous day. It is a population indicator, not a clinical diagnosis or a target for a single meal.",
       "meal_cadence": "Offer 3 to 4 family meals daily + 1 to 2 wholesome snacks as needed.",
       "food_categories": [
         {
           "group_name": "1. Breast Milk & Dairy",
-          "examples": ["Continued breastfeeding up to 2 years or beyond", "Pasteurized whole cow's milk (up to 16–24 oz/day)", "Plain whole-milk yogurt", "Cottage cheese"],
+          "examples": [
+            "Continued breastfeeding up to 2 years or beyond",
+            "Pasteurized whole cow's milk (up to 16–24 oz/day)",
+            "Plain whole-milk yogurt",
+            "Cottage cheese"
+          ],
           "key_nutrients": "Calcium, healthy fats, vitamin D, immune factors"
         },
         {
           "group_name": "2. Grains, Roots & Tubers",
-          "examples": ["Oatmeal, brown rice, whole wheat bread/roti, quinoa", "Mashed or roasted sweet potatoes, potatoes, yams"],
+          "examples": [
+            "Oatmeal, brown rice, whole wheat bread/roti, quinoa",
+            "Mashed or roasted sweet potatoes, potatoes, yams"
+          ],
           "key_nutrients": "Sustained carbohydrates, fiber, B vitamins"
         },
         {
           "group_name": "3. Pulses, Nuts & Seeds",
-          "examples": ["Lentils (dal), hummus, cooked chickpeas, black beans", "Smooth peanut or almond butter thinly spread on bread"],
+          "examples": [
+            "Lentils (dal), hummus, cooked chickpeas, black beans",
+            "Smooth peanut or almond butter thinly spread on bread"
+          ],
           "key_nutrients": "Plant protein, zinc, iron, healthy monounsaturated fats"
         },
         {
           "group_name": "4. Flesh Foods & 5. Eggs",
-          "examples": ["Tender chicken, turkey, beef, lamb, salmon, cod (boneless)", "Whole eggs (scrambled, hard-boiled and chopped)"],
+          "examples": [
+            "Tender chicken, turkey, beef, lamb, salmon, cod (boneless)",
+            "Whole eggs (scrambled, hard-boiled and chopped)"
+          ],
           "key_nutrients": "Heme iron (highly absorbable), complete proteins, choline, B12"
         },
         {
           "group_name": "6. Vitamin-A Rich & 7. Other Fruits/Veg",
-          "examples": ["Cooked spinach, kale, carrots, pumpkin, cantaloupe, ripe mango", "Bananas, apples, pears, green peas, steamed zucchini, cucumbers"],
+          "examples": [
+            "Cooked spinach, kale, carrots, pumpkin, cantaloupe, ripe mango",
+            "Bananas, apples, pears, green peas, steamed zucchini, cucumbers"
+          ],
           "key_nutrients": "Immune support, eyesight protection, vitamin C, diverse gut microbiota"
         }
       ],
@@ -183,7 +255,12 @@
         "Keep added sugars out of infants' and young children's diets.",
         "Avoid raw or undercooked eggs, meat, seafood, unpasteurized dairy/juice, and unwashed produce."
       ],
-      "sources": ["WHO-IYCF", "UNICEF-DIET", "CDC-LIMITS", "CDC-FOOD-SAFETY"]
+      "sources": [
+        "WHO-IYCF",
+        "UNICEF-DIET",
+        "CDC-LIMITS",
+        "CDC-FOOD-SAFETY"
+      ]
     },
     {
       "id": "24_59_months",
@@ -194,22 +271,32 @@
       "food_categories": [
         {
           "group_name": "Vegetables & Fruits (Half the Plate)",
-          "examples": ["Colorful rainbow: bell peppers, broccoli, tomatoes, carrots, berries, melons, apples, oranges"],
+          "examples": [
+            "Colorful rainbow: bell peppers, broccoli, tomatoes, carrots, berries, melons, apples, oranges"
+          ],
           "key_nutrients": "Fiber, phytonutrients, vitamin C, potassium, immune resilience"
         },
         {
           "group_name": "Whole Grains & Complex Carbs",
-          "examples": ["Whole wheat pasta, brown rice, whole grain bread, rolled oats, corn, millet"],
+          "examples": [
+            "Whole wheat pasta, brown rice, whole grain bread, rolled oats, corn, millet"
+          ],
           "key_nutrients": "Slow-release energy, gut health fibers, magnesium"
         },
         {
           "group_name": "Protein Foods",
-          "examples": ["Lentils, beans, tofu, eggs, poultry, fish, lean meats, finely chopped nuts or nut butters"],
+          "examples": [
+            "Lentils, beans, tofu, eggs, poultry, fish, lean meats, finely chopped nuts or nut butters"
+          ],
           "key_nutrients": "Muscle development, enzymatic growth, bioavailable iron and zinc"
         },
         {
           "group_name": "Dairy & Healthy Hydration",
-          "examples": ["Pasteurized whole or low-fat cow's milk (or fortified soy milk)", "Plain yogurt", "Abundant plain water (primary beverage)"],
+          "examples": [
+            "Pasteurized whole or low-fat cow's milk (or fortified soy milk)",
+            "Plain yogurt",
+            "Abundant plain water (primary beverage)"
+          ],
           "key_nutrients": "Bone-building calcium and vitamin D; optimal cellular hydration"
         }
       ],
@@ -231,7 +318,11 @@
         "Choking risk persists—prepare foods for the child’s chewing ability and supervise.",
         "Choose pasteurized foods and safe food handling practices."
       ],
-      "sources": ["WHO-GROWTH", "CDC-CHOKING", "CDC-FOOD-SAFETY"]
+      "sources": [
+        "WHO-GROWTH",
+        "CDC-CHOKING",
+        "CDC-FOOD-SAFETY"
+      ]
     }
   ],
   "red_flags": [

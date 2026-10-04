@@ -1,0 +1,510 @@
+{
+  "evaluation_kind": "held_out_evidence_selection",
+  "clinical_validation": false,
+  "vision_status": "not_evaluated_no_labelled_image_dataset",
+  "models": [
+    {
+      "model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\nutriguide_adapted_slm",
+      "precision": "float32_cpu",
+      "count": 20,
+      "schema_valid_rate": 0.75,
+      "exact_selection_rate": 0.25,
+      "mean_latency_seconds": 2.5025931049999826,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.3200828000001366
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.391232299999956
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "[2] Exclusive milk only (0 complementary food groups).",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.0856688999999733
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[1] Exclusive milk only.",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.4033068999999614
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.1621308999999655
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.4120342999999593
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.468177100000048
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.3796219999999266
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.296539100000018
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.120106799999803
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.3049186000000645
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.2296166999999514
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.22720379999987
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.14689710000016
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.1276708000000326
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "[3] Encourage self-feeding without force.",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.795496200000116
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 1.9164883999999347
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.8797890999999254
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[2] Family meals; continue to cut round or firm items (cherry tomatoes, sausages, grapes) along with whole grains, lean protein foods, and water and pasteurized dairy.",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.121873899999855
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "[3] Encourage children to eat a variety of foods, including whole grains, fruits, and vegetables.",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.263006399999995
+        }
+      ]
+    },
+    {
+      "model": "models/qwen3_base",
+      "precision": "float32_cpu",
+      "count": 20,
+      "schema_valid_rate": 0.25,
+      "exact_selection_rate": 0.15,
+      "mean_latency_seconds": 7.536764405000008,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.878347300000087
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.0937871999999516
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.465840600000092
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.209206899999799
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [
+            1
+          ],
+          "raw": "[1]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 9.20735680000007
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 9.284460699999954
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.66834670000003
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.641612399999985
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 9.140202900000077
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.428164800000104
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.463708600000018
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.400397200000043
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.93923719999998
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.9264261000000715
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.958866500000113
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.974134900000081
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 7.272446199999877
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 8.03477799999996
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.9196240999999645
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 7.828342999999904
+        }
+      ]
+    }
+  ],
+  "holdout_sha256": "9275520d9cdd2f464e7ac783d7923c7ae4c3df9b16880fecafe76598004c7075",
+  "passed": false,
+  "promoted": false
+}

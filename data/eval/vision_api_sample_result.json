@@ -1,0 +1,33 @@
+{
+  "success": true,
+  "parse_valid": true,
+  "model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\smolvlm_500m",
+  "status": "Food suggestions ready to review. Correct any food names and confirm preparation and texture. Hidden ingredients and softness cannot be confirmed from the photo.",
+  "raw_text": "Person check: No.\nVisible foods: Carrots, Avocado, Rice.",
+  "candidate_foods": [
+    "Carrots",
+    "Avocado",
+    "Rice"
+  ],
+  "visible_foods": [
+    "Carrots",
+    "Avocado",
+    "Rice"
+  ],
+  "observations": [
+    "mixed/unclear"
+  ],
+  "texture_cues": [
+    "mixed/unclear"
+  ],
+  "uncertain_items": [
+    "Confirm food identities and any hidden ingredients.",
+    "Confirm texture and softness yourself."
+  ],
+  "uncertain": true,
+  "child_present": false,
+  "requires_confirmation": true,
+  "diagnostic": false,
+  "module_type": "nutrition_screening_support",
+  "screening_notice": "This module supports nutrition screening and education. It does not diagnose malnutrition, nutrient deficiency, or disease."
+}

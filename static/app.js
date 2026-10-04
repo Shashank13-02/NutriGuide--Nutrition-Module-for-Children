@@ -12,6 +12,8 @@
   let sourcesMeta = {};
   let currentAge = 9;
   let isGenerating = false;
+  let textModelLabel = 'Local SLM';
+  let visionModelLabel = 'Local vision model';
 
   let mealMeta = {
     food_groups: [],
@@ -176,23 +178,25 @@
       const res = await fetch('/api/health');
       if (res.ok) {
         const h = await res.json();
-        // LM
-        if (h.lm_ready) {
-          const isTrained = h.lm_model && (h.lm_model.includes('qwen') || h.lm_model.includes('adapted_slm') || h.lm_model.includes('trained'));
-          statusLmText.textContent = isTrained ? 'Qwen3-1.7B (UNICEF Trained)' : (h.lm_model ? h.lm_model.split('/').pop() : 'Qwen3-1.7B');
-          statusLmIndicator.className = 'status-pill status-ready';
-        } else if (h.lm_loading) {
-          statusLmText.textContent = 'Qwen3 Warming Up...';
-          statusLmIndicator.className = 'status-pill status-offline';
+        textModelLabel = h.models?.text?.display_name || (h.lm_model || 'Local SLM').split(/[\\/]/).pop();
+        visionModelLabel = h.models?.vision?.display_name || (h.vlm_model || 'Local vision model').split(/[\\/]/).pop();
+        document.getElementById('nav-text-model').textContent = textModelLabel;
+        document.getElementById('nav-vision-model').textContent = visionModelLabel;
+        document.getElementById('text-mode-model').textContent = textModelLabel;
+        const selectionEnabled = h.models?.text?.selection_enabled !== false;
+        const modelRadio = document.getElementById('mode-slm');
+        if (modelRadio) {
+          modelRadio.disabled = !selectionEnabled;
+          if (!selectionEnabled) {
+            document.getElementById('mode-context').checked = true;
+            labelModeSlm.classList.remove('active');
+            labelModeContext.classList.add('active');
+          }
         }
-        // VLM
-        if (h.vlm_ready) {
-          statusVlmText.textContent = 'SmolVLM-500M';
-          statusVlmIndicator.className = 'status-pill status-ready';
-        } else if (h.vlm_loading) {
-          statusVlmText.textContent = 'SmolVLM Warming Up...';
-          statusVlmIndicator.className = 'status-pill status-offline';
-        }
+        statusLmText.textContent = textModelLabel + (h.models?.text?.test_mode ? ' · Testing' : '') + (!selectionEnabled ? ' Selection inactive' : h.lm_ready ? ' Ready' : h.lm_loading ? ' Loading…' : ' On demand');
+        statusLmIndicator.className = h.lm_ready ? 'status-pill status-ready' : 'status-pill status-offline';
+        statusVlmText.textContent = visionModelLabel + (h.vlm_ready ? ' Ready' : h.vlm_loading ? ' Loading…' : h.models?.vision?.error ? ' Unavailable' : ' On demand');
+        statusVlmIndicator.className = h.vlm_ready ? 'status-pill status-ready' : 'status-pill status-offline';
       }
     } catch (e) {
       // Offline fallback
@@ -274,7 +278,7 @@
 
     if (diversityProgressFill) {
       diversityProgressFill.style.width = `${pct}%`;
-      if (checkedCount >= 5) {
+      if (checkedCount >= 5 && currentAge >= 6 && currentAge <= 23 && document.getElementById('recall-complete').checked) {
         diversityProgressFill.style.background = 'linear-gradient(90deg, #10b981 0%, #34d399 100%)';
       } else {
         diversityProgressFill.style.background = 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)';
@@ -282,13 +286,13 @@
     }
 
     if (diversityCounter) {
-      if (checkedCount >= 5) {
+      if (checkedCount >= 5 && currentAge >= 6 && currentAge <= 23 && document.getElementById('recall-complete').checked) {
         diversityCounter.textContent = `${checkedCount} / ${totalGroups} Groups (Met MDD Target 🎯)`;
         diversityCounter.style.background = 'rgba(16, 185, 129, 0.25)';
         diversityCounter.style.color = '#34d399';
         diversityCounter.style.borderColor = 'rgba(16, 185, 129, 0.5)';
       } else {
-        diversityCounter.textContent = `${checkedCount} / ${totalGroups} Groups (Target: ≥5)`;
+        diversityCounter.textContent = `${checkedCount} / ${totalGroups} Groups (${currentAge >= 6 && currentAge <= 23 ? "6–23m indicator; complete recall required" : "MDD indicator does not apply at this age"})`;
         diversityCounter.style.background = 'rgba(59, 130, 246, 0.15)';
         diversityCounter.style.color = '#93c5fd';
         diversityCounter.style.borderColor = 'rgba(59, 130, 246, 0.3)';
@@ -422,7 +426,7 @@
     loadingState.classList.remove('hidden');
 
     if (useModel) {
-      loadingText.textContent = 'Running local SLM inference on Qwen3-1.7B (UNICEF Trained)...';
+      loadingText.textContent = `Selecting reviewed evidence with ${textModelLabel}…`;
     } else {
       loadingText.textContent = 'Fetching verified WHO & CDC context...';
     }
@@ -468,8 +472,8 @@
       redFlagBanner.classList.add('hidden');
       normalHeader.classList.remove('hidden');
 
-      if (data.mode === 'slm_generated') {
-        responseModeBadge.textContent = '🤖 Qwen3-1.7B Generated';
+      if (data.mode === 'model_evidence_selection' || data.mode === 'curated_fallback') {
+        responseModeBadge.textContent = data.mode === 'curated_fallback' ? 'Reviewed guidance (model fallback)' : 'Model-selected evidence';
         responseModeBadge.className = 'response-badge';
       } else {
         responseModeBadge.textContent = '⚡ Curated Evidence Context';
@@ -477,7 +481,7 @@
       }
 
       responseAgeBadge.textContent = `For ${data.band?.label || currentAge + ' Months'}`;
-      responseBody.innerHTML = formatMarkdown(data.answer);
+      responseBody.innerHTML = formatMarkdown(data.answer, data.screening_notice);
     }
 
     contextPre.textContent = data.context || 'No context loaded.';
@@ -485,7 +489,7 @@
     renderSources(data.sources || []);
   }
 
-  function formatMarkdown(text) {
+  function formatMarkdown(text, screeningNotice = '') {
     if (!text) return '';
     const lines = text.split('\n');
     let html = '';
@@ -493,6 +497,10 @@
 
     for (let line of lines) {
       line = line.trim();
+      // The footer carries the notice; source cards provide readable citations.
+      if ((screeningNotice && (line === screeningNotice || line === `Screening Notice: ${screeningNotice}`)) || /^\[Source IDs:.*\]$/.test(line)) {
+        continue;
+      }
       if (!line) {
         if (inList) {
           html += '</ul>';
@@ -501,7 +509,8 @@
         continue;
       }
 
-      let formatted = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      const escaped = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      let formatted = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       const listMatch = formatted.match(/^(\*|-|\d+\.)\s+(.*)/);
       if (listMatch) {
         if (!inList) {
@@ -636,6 +645,8 @@
       mealDailyGroupsGrid.appendChild(label);
     });
     mealDailyGroupsGrid.addEventListener('change', updateDailyDiversityIndicator);
+    document.getElementById('recall-complete').addEventListener('change', updateDailyDiversityIndicator);
+    mealReviewForm.addEventListener('input', () => { guidanceResultCard.classList.add('hidden'); });
     updateDailyDiversityIndicator();
   }
 
@@ -691,6 +702,7 @@
       currentAge = val;
       ageSlider.value = val;
       updateAgeView(val);
+      updateDailyDiversityIndicator();
     });
 
     // Analyze photo button
@@ -746,6 +758,9 @@
     dropzonePrompt.classList.add('hidden');
     previewContainer.classList.remove('hidden');
     vlmStatusBox.classList.add('hidden');
+    chkCaregiverConfirmed.checked = false;
+    mealFoodsInput.value = '';
+    document.querySelectorAll('input[name="meal_groups"], input[name="meal_textures"], input[name="meal_prep"]').forEach(input => { input.checked = false; });
   }
 
   function clearPhoto() {
@@ -771,7 +786,7 @@
     photoSpinner.style.display = 'inline-block';
 
     vlmStatusBox.classList.remove('hidden');
-    vlmStatusBadge.textContent = 'Analyzing Photo with SmolVLM-500M...';
+    vlmStatusBadge.textContent = `Analyzing photo with ${visionModelLabel}…`;
     vlmStatusBadge.style.color = '#93c5fd';
     vlmStatusMessage.textContent = 'Scanning meal image for visible foods, textures, and safety boundaries...';
     vlmRawDetails.open = false;
@@ -813,20 +828,21 @@
       return;
     }
 
+    if (result.success === false || result.parse_valid === false) {
+      vlmStatusBadge.textContent = 'Photo analysis needs a retry';
+      vlmStatusBadge.style.color = '#fca5a5';
+      chkCaregiverConfirmed.checked = false;
+      return;
+    }
+
     vlmStatusBadge.textContent = 'Draft Candidate Observations Ready';
     vlmStatusBadge.style.color = '#34d399';
 
     // Populate visible foods input
-    if (currentSampleName === 'meal_lentils_rice.jpg') {
-      mealFoodsInput.value = 'mashed lentils, soft rice';
-    } else if (currentSampleName === 'meal_carrots_oatmeal.jpg') {
-      mealFoodsInput.value = 'steamed carrots, oatmeal';
-    } else if ((result.candidate_foods && result.candidate_foods.length > 0) || (result.visible_foods && result.visible_foods.length > 0)) {
-      const items = result.candidate_foods && result.candidate_foods.length > 0 ? result.candidate_foods : result.visible_foods;
-      mealFoodsInput.value = items.join(', ');
-    } else if (result.raw_text) {
-      mealFoodsInput.value = result.raw_text.replace(/\n/g, ' ').slice(0, 100);
-    }
+    const items = result.candidate_foods || result.visible_foods || [];
+    mealFoodsInput.value = items.join(', ');
+    chkCaregiverConfirmed.checked = false;
+    document.querySelectorAll('input[name="meal_groups"], input[name="meal_textures"]').forEach(chk => { chk.checked = false; });
 
     // Auto-check matching textures if identified
     if (result.texture_cues && result.texture_cues.length > 0) {
@@ -834,22 +850,6 @@
       document.querySelectorAll('input[name="meal_textures"]').forEach((chk) => {
         const val = chk.value.toLowerCase();
         if (cues.some(c => val.includes(c) || c.includes(val))) {
-          chk.checked = true;
-        }
-      });
-    }
-
-    // Auto-check sample-specific texture and preparation defaults
-    if (currentSampleName === 'meal_lentils_rice.jpg') {
-      document.querySelectorAll('input[name="meal_textures"]').forEach((chk) => {
-        const val = chk.value.toLowerCase();
-        if (val.includes('mash') || val.includes('puree')) {
-          chk.checked = true;
-        }
-      });
-      document.querySelectorAll('input[name="meal_prep"]').forEach((chk) => {
-        const val = chk.value.toLowerCase();
-        if (val.includes('cooked') || val.includes('mashed')) {
           chk.checked = true;
         }
       });
@@ -874,17 +874,12 @@
       if (g.includes('Eggs') && foodsLower.includes('egg')) {
         chk.checked = true;
       }
-      if (g.includes('Dairy') && (foodsLower.includes('yogurt') || foodsLower.includes('cheese') || foodsLower.includes('milk'))) {
+      if (g.includes('Dairy') && (foodsLower.includes('yogurt') || foodsLower.includes('cheese') || foodsLower.includes('formula'))) {
         chk.checked = true;
       }
     });
 
-    // Also sync observed meal groups into daily groups and update progress
-    document.querySelectorAll('input[name="meal_groups"]:checked').forEach((mealChk) => {
-      document.querySelectorAll(`input[name="daily_groups"][value="${mealChk.value}"]`).forEach((dailyChk) => {
-        dailyChk.checked = true;
-      });
-    });
+    // Previous-day groups require independent caregiver entry.
     updateDailyDiversityIndicator();
   }
 
@@ -892,7 +887,7 @@
   async function submitMealGuidance(e) {
     if (e) e.preventDefault();
 
-    if (!chkCaregiverConfirmed.checked) {
+    if (!chkCaregiverConfirmed.checked && !document.getElementById('recall-concern').value) {
       alert('Please check the confirmation box to verify that you reviewed and confirmed the candidate meal observations.');
       chkCaregiverConfirmed.focus();
       return;
@@ -912,8 +907,37 @@
     btnGetGuidance.disabled = true;
     guidanceSpinner.style.display = 'inline-block';
     guidanceResultCard.classList.add('hidden');
+    let screeningAvailable = false;
 
     try {
+      const nullableCount = id => {
+        const value = document.getElementById(id).value;
+        return value === '' ? null : Number(value);
+      };
+      const breastfedValue = document.getElementById('recall-breastfed').value;
+      const concern = document.getElementById('recall-concern').value;
+      const screeningResponse = await fetch('/api/screen-intake', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({age_months: age, confirmed: chkCaregiverConfirmed.checked,
+          recall_complete: document.getElementById('recall-complete').checked,
+          daily_groups, breastfed: breastfedValue === '' ? null : breastfedValue === 'true',
+          solid_feeds: nullableCount('recall-solids'), milk_feeds: nullableCount('recall-milk'),
+          yogurt_feeds: nullableCount('recall-yogurt'),
+          red_flags: concern ? [concern] : [],
+          honey_consumed: document.getElementById('recall-honey').checked,
+          sweet_beverage_consumed: document.getElementById('recall-sweet-drink').checked,
+          added_sugar_consumed: document.getElementById('recall-sugar').checked
+        })
+      });
+      const screening = await screeningResponse.json();
+      if (!screeningResponse.ok) throw new Error(screening.error || 'Screening request failed');
+      guidanceBody.textContent = screening.explanation;
+      guidanceResultCard.classList.remove('hidden');
+      guidanceResultCard.scrollIntoView({behavior: 'smooth'});
+      screeningAvailable = true;
+      if (screening.professional_review_flag || (!foods && groups.length === 0)) {
+        return;
+      }
       const res = await fetch('/api/review-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -931,15 +955,17 @@
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${res.status}`);
+        guidanceBody.textContent += '\n\nOptional meal review unavailable: ' + (err.error || `HTTP ${res.status}`);
+        return;
       }
 
       const data = await res.json();
-      guidanceBody.textContent = data.guidance;
+      guidanceBody.textContent = screening.explanation + '\n\nMeal review:\n' + data.guidance;
       guidanceResultCard.classList.remove('hidden');
       guidanceResultCard.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
-      alert(`Could not complete meal screening review: ${err.message}`);
+      if (screeningAvailable) guidanceBody.textContent += '\n\nOptional meal review unavailable: ' + err.message;
+      else alert(`Could not calculate intake indicators: ${err.message}`);
     } finally {
       btnGetGuidance.disabled = false;
       guidanceSpinner.style.display = 'none';

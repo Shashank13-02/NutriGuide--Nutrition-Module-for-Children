@@ -1,0 +1,470 @@
+{
+  "evaluation_kind": "held_out_evidence_selection",
+  "clinical_validation": false,
+  "vision_status": "not_evaluated_no_labelled_image_dataset",
+  "models": [
+    {
+      "model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\nutriguide_adapted_slm",
+      "precision": "dynamic_int8_cpu",
+      "count": 20,
+      "schema_valid_rate": 0.0,
+      "exact_selection_rate": 0.0,
+      "mean_latency_seconds": 4.112189090000006,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "For a child aged 3 months:\n1. Feedings are not for",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 5.958047500000021
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "For a child aged 3 months: Which food textures are best for their age",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.149802100000045
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "For a child 3 months: What is the food-based-in-",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.945706900000005
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "For a child aged 3 months to 12 months: What feeding skills",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.309760499999982
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "For a child 7 months, the WHO/UNICEF minimum dietary guidelines are",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.637405699999988
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "For a child aged 7 months to 12 months:\n1.",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.0675842999999645
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "For a child aged 7 months: What is the child's food variety?",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.445758000000012
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "You've requested a response to the following question: What is the best way to",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 5.3946494000000484
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "For a child aged 10 months: How many daily feedings are suggested",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.24616560000004
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "1: For children 6\u201312 month, the WHO/UNICEF",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.9190557000000013
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "For a child 10 months, the best food variety is a variety of",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.9525896000000103
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "For a child aged 10 months: What feeding skills should I encourage?",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.370296699999983
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "the child is to eat a variety of foods, including fruits, vegetables, whole",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.8720584000000144
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "Your question is not in the main menu.\n\nQUESTION\nWhat",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.5070393999999965
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "To be a child, you must be 18 months.\n\nQU",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 5.701478300000019
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "For a 18\u201334 month child:\n\nWhat are the",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 4.680972600000018
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "You are correct that the correct answer is 3.\n\nHow many daily",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.5028383000000076
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "For a child aged 36 months:\n1. 300",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.754432500000007
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "Select the evidence statements that answer the caregiver question. Return only a JSON array of",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.9744163999999955
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "For a child aged 36 months, the best feeding skills to encourage are",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 2.853723899999977
+        }
+      ]
+    },
+    {
+      "model": "models/qwen3_base",
+      "precision": "dynamic_int8_cpu",
+      "count": 20,
+      "schema_valid_rate": 0.0,
+      "exact_selection_rate": 0.0,
+      "mean_latency_seconds": 7.317055070000018,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "Okay, let's see. The user provided a query in a JSON format with",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 11.412665300000015
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "</think>\n\nThe question is asking about **textual evidence** and **guidelines",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.887836499999935
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "</think>\n\nSure! Here's the answer to the question: \n\n**For a",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.705670600000076
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "I'm sorry, but I can't assist with that query. It seems like",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.577344700000026
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "**Answer:**  \nFor a child aged 7 months, the recommended daily feeding",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 9.555262800000037
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "Okay, let's see. The user provided a series of questions and answers that",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 9.560311899999988
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "Okay, let's try to figure out this question. The user is asking about",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.121279799999911
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "Okay, let's see. The user provided a bunch of text that looks like",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.913587900000039
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "The question is a bit complex and contains some grammatical and logical errors. Let",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.643051600000035
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "**Step 1: Understand the Query**\nThe user is asking for a JSON",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.051509300000021
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "Okay, let's try to figure out how to approach this. The user provided",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.116263500000059
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "</think>\n\n{\"answer\": \"For a child aged 10 months, the",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.034468199999992
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "Okay, let's see. The user provided a bunch of examples and then a",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.47680390000005
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "## The answer is:\n\n[\n  0,\n  2,",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.697089699999992
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "Okay, let's tackle this problem. The user is asking about the age-specific",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.638679000000025
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "Okay, let's try to figure out this problem. The user provided a series",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 5.988619600000106
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "Okay, let's see. The user provided a query about the \"EVID",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.61160899999993
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "Okay, let's see. The user provided a question in Chinese and then a",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.037091000000032
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "</think>\n\n</think>\n\nSure! Let's break down the query and provide a clear",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.439617800000065
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "Okay, the user is asking about how to structure a response to a question that",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 5.8723393000000215
+        }
+      ]
+    }
+  ],
+  "holdout_sha256": "db0d4f228149e0ff9e3a81337737e25d90032edffb05d97e0a35c4d722d45750",
+  "passed": false,
+  "promoted": false
+}

@@ -13,7 +13,7 @@ CURRENT_IMPLEMENTED_MAX_AGE_MONTHS: int = 59  # 60–72 month screening rules pl
 
 MODULE_NAME: str = "Child Nutrition Screening Module"
 MODULE_TYPE: str = "nutrition_screening_support"
-SCREENING_ENGINE_STATUS: str = "under_development"
+SCREENING_ENGINE_STATUS: str = "iycf_indicators_implemented_6_to_23_months"
 
 # Mandatory Safety & Screening Disclaimers
 SCREENING_DISCLAIMER: str = (
@@ -45,6 +45,7 @@ DECISION_MAKER: str = "deterministic_rule_engine"
 # Model Registry (Qwen3-1.7B selected as primary text communication SLM)
 DEFAULT_TEXT_MODEL_ID: str = "Qwen/Qwen3-1.7B"
 FALLBACK_TEXT_MODEL_ID: str = "HuggingFaceTB/SmolLM2-360M-Instruct"
+BENCHMARK_CANDIDATE_TEXT_MODEL_ID: str = DEFAULT_TEXT_MODEL_ID
 
 DEFAULT_VISION_MODEL_ID: str = "HuggingFaceTB/SmolVLM-500M-Instruct"
 BENCHMARK_CANDIDATE_VISION_MODELS = (
@@ -55,6 +56,8 @@ BENCHMARK_CANDIDATE_VISION_MODELS = (
 
 # Planned Standardized Screening Terminology (Phase 1 Taxonomy)
 SCREENING_CATEGORIES = (
+    "INDICATORS_MET",
+    "FEEDING_PATTERN_REVIEW",
     "LOW_SCREENING_CONCERN",
     "MODERATE_SCREENING_CONCERN",
     "HIGH_SCREENING_CONCERN",

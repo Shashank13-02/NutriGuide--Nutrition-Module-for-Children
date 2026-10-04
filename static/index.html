@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NutriGuide: Child Nutrition Screening & Caregiver Education Platform</title>
-  <meta name="description" content="Pediatric nutrition intake screening and caregiver educational platform for children aged 0–6 years (0–72 completed months; 0–59m currently implemented) grounded in WHO and CDC guidelines.">
+  <meta name="description" content="Pediatric nutrition intake screening and caregiver educational platform for children aged 0–6 years (0–72 completed months; education 0–59m; intake indicators 6–23m) grounded in WHO and CDC guidelines.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v=3.1">
 </head>
 <body>
   <div class="glow-orb glow-orb-1" aria-hidden="true"></div>
@@ -35,13 +35,13 @@
       <nav class="app-nav" aria-label="Application Sections">
         <button type="button" class="nav-tab active" id="tab-btn-chat" data-target="view-chat">
           <span class="nav-tab-icon">💬</span>
-          <span class="nav-tab-label">Nutrition Intake Assistant</span>
-          <span class="nav-tab-badge">Qwen3-1.7B (UNICEF Trained)</span>
+          <span class="nav-tab-label">Nutrition Guidance</span>
+          <span class="nav-tab-badge" id="nav-text-model">Evidence selection SLM</span>
         </button>
         <button type="button" class="nav-tab" id="tab-btn-photo" data-target="view-photo">
           <span class="nav-tab-icon">📸</span>
-          <span class="nav-tab-label">Meal Photo Review</span>
-          <span class="nav-tab-badge">SmolVLM-500M</span>
+          <span class="nav-tab-label">Intake Screening & Meal Review</span>
+          <span class="nav-tab-badge" id="nav-vision-model">Meal observations</span>
         </button>
       </nav>
 
@@ -85,7 +85,7 @@
           </div>
           <div>
             <h2 class="card-title">Completed Age</h2>
-            <p class="card-desc">Select child age to retrieve screening guidance (0–59m implemented; 0–72m target scope)</p>
+            <p class="card-desc">Select child age for feeding guidance (0–59m; intake indicators 6–23m)</p>
           </div>
         </div>
 
@@ -210,16 +210,16 @@
         <!-- MODE SELECTOR -->
         <div class="mode-bar">
           <div class="mode-toggles" role="radiogroup" aria-label="Inference Mode">
-            <label class="mode-radio active" id="label-mode-slm">
-              <input type="radio" name="inference-mode" id="mode-slm" value="slm" checked>
+            <label class="mode-radio" id="label-mode-slm">
+              <input type="radio" name="inference-mode" id="mode-slm" value="slm">
               <span class="mode-icon">🤖</span>
               <span class="mode-info">
-                <strong>Qwen3-1.7B</strong>
-                <small>UNICEF-Trained SLM</small>
+                <strong id="text-mode-model">Local SLM</strong>
+                <small>Reviewed evidence selection</small>
               </span>
             </label>
-            <label class="mode-radio" id="label-mode-context">
-              <input type="radio" name="inference-mode" id="mode-context" value="context">
+            <label class="mode-radio active" id="label-mode-context">
+              <input type="radio" name="inference-mode" id="mode-context" value="context" checked>
               <span class="mode-icon">⚡</span>
               <span class="mode-info">
                 <strong>Curated Evidence</strong>
@@ -279,7 +279,7 @@
 
           <div class="loading-state hidden" id="loading-state" aria-live="polite">
             <div class="loader-pulse"></div>
-            <p class="loading-title" id="loading-text">Running local SLM inference on Qwen3-1.7B (UNICEF Trained)...</p>
+            <p class="loading-title" id="loading-text">Selecting reviewed feeding guidance…</p>
             <p class="loading-sub">Retrieving age guidelines → Checking red flags → Generating constrained response</p>
           </div>
 
@@ -294,7 +294,7 @@
 
             <div class="response-header" id="normal-response-header">
               <div class="response-meta">
-                <span class="response-badge" id="response-mode-badge">Qwen3-1.7B Generated</span>
+                <span class="response-badge" id="response-mode-badge">Reviewed evidence</span>
                 <span class="response-age" id="response-age-badge">For 9–11 Months</span>
               </div>
               <button type="button" class="btn-copy" id="btn-copy" aria-label="Copy response to clipboard">
@@ -358,8 +358,8 @@
             </svg>
           </div>
           <div>
-            <h2 class="card-title">1. Meal Photo</h2>
-            <p class="card-desc">Upload a high-chair tray, bowl, or plate photo</p>
+            <h2 class="card-title">Optional Meal Photo</h2>
+            <p class="card-desc">Screen intake below with or without a tray, bowl, or plate photo</p>
           </div>
         </div>
 
@@ -399,7 +399,7 @@
 
         <!-- ANALYZE BUTTON -->
         <button type="button" class="btn btn-primary btn-block" id="btn-analyze-photo">
-          <span class="btn-text">1. Analyze Meal with SmolVLM-500M</span>
+          <span class="btn-text">1. Analyze Meal Photo</span>
           <span class="spinner" id="photo-spinner" aria-hidden="true"></span>
         </button>
 
@@ -428,8 +428,8 @@
             </svg>
           </div>
           <div>
-            <h2 class="card-title">Caregiver Review & Screening Guidance</h2>
-            <p class="card-desc">Confirm or correct all model observations before viewing screening guidance</p>
+            <h2 class="card-title">Previous-day Intake Screening</h2>
+            <p class="card-desc">Complete the daily recall below. Review meal observations if you used a photo.</p>
           </div>
         </div>
 
@@ -511,7 +511,7 @@
           <div class="form-group">
             <div class="form-label-row">
               <label class="form-label" style="margin-bottom: 0;">
-                <strong>7. Caregiver-reported food groups offered over the day:</strong>
+                <strong>7. Caregiver-reported food groups actually consumed during the previous day:</strong>
               </label>
               <span class="diversity-counter-pill" id="diversity-counter">0 / 8 Groups</span>
             </div>
@@ -524,20 +524,47 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <h3>Previous-day intake recall</h3>
+            <p class="form-help">You can complete this form without a photo. Count foods consumed during the previous day and night, including snacks beyond trivial tastes. Indicator thresholds apply to 6–23 months.</p>
+            <label class="checkbox-item"><input type="checkbox" id="recall-complete"> <span>This is a complete previous-day record, not a single meal.</span></label>
+            <label for="recall-breastfed" class="form-label">Breast milk consumed yesterday?</label>
+            <select id="recall-breastfed" class="form-input"><option value="">Unknown</option><option value="true">Yes</option><option value="false">No</option></select>
+            <label for="recall-solids" class="form-label">Solid, semi-solid or soft food feedings (including snacks)</label>
+            <input id="recall-solids" type="number" min="0" max="50" step="1" class="form-input" placeholder="Leave blank if unknown">
+            <label for="recall-milk" class="form-label">Non-breast-milk feedings (formula, animal milk or drinkable yogurt)</label>
+            <input id="recall-milk" type="number" min="0" max="50" step="1" class="form-input" placeholder="Leave blank if unknown">
+            <label for="recall-yogurt" class="form-label">Semi-solid yogurt feedings (eaten with a spoon)</label>
+            <input id="recall-yogurt" type="number" min="0" max="50" step="1" class="form-input" placeholder="Unknown; enter 0 if none">
+            <p class="form-help">Infant formula counts in Dairy, not Breast milk. Include yogurt eaten with a spoon within food feedings and separately here for milk frequency. Do not add it again to fluid milk feeds. Milk and yogurt counts are required for non-breastfed children.</p>
+            <label for="recall-concern" class="form-label">Reported feeding or health concern</label>
+            <select id="recall-concern" class="form-input">
+              <option value="">None reported</option><option value="active_choking">Active choking</option>
+              <option value="breathing_difficulty">Breathing difficulty</option><option value="blue_colour">Blue colour</option>
+              <option value="unresponsive">Unresponsive</option><option value="swallowing_difficulty">Swallowing difficulty</option>
+              <option value="feeding_pain">Feeding pain</option><option value="growth_concern">Growth concern</option>
+              <option value="dehydration">Dehydration concern</option><option value="persistent_vomiting">Persistent vomiting</option>
+              <option value="allergy_concern">Allergy concern</option>
+            </select>
+            <label class="checkbox-item"><input type="checkbox" id="recall-honey"> <span>Honey consumed yesterday</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="recall-sweet-drink"> <span>Sweet drinks or juice consumed yesterday</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="recall-sugar"> <span>Foods with added sugar consumed yesterday</span></label>
+          </div>
+
           <!-- 8. MANDATORY CAREGIVER CONFIRMATION -->
           <div class="confirmation-box">
             <label class="custom-checkbox-label">
               <input type="checkbox" id="chk-caregiver-confirmed" required>
               <span class="checkbox-custom"></span>
               <span class="confirmation-text">
-                I reviewed and corrected the photo observations; this is a meal-only photo.
+                I reviewed and confirmed the intake record and any photo observations. A photo, if used, shows only the meal.
               </span>
             </label>
           </div>
 
           <!-- SUBMIT GUIDANCE BUTTON -->
           <button type="submit" class="btn btn-primary btn-block" id="btn-get-guidance">
-            <span class="btn-text">8. Review Meal Screening Guidance</span>
+            <span class="btn-text">8. Calculate Intake Indicators</span>
             <span class="spinner" id="guidance-spinner" aria-hidden="true"></span>
           </button>
         </form>
@@ -545,7 +572,7 @@
         <!-- GUIDANCE RESULTS DISPLAY -->
         <article class="guidance-result-card hidden" id="guidance-result-card">
           <div class="guidance-header">
-            <span class="guidance-badge">Meal Screening Guidance</span>
+            <span class="guidance-badge">Intake Screening Result</span>
             <button type="button" class="btn-copy" id="btn-copy-guidance">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -633,18 +660,18 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-disclaimer">
-        <strong>Screening & Educational Notice:</strong> NutriGuide supports pediatric nutrition intake screening and caregiver education for children aged 0 to 6 years (0–72 completed months; 0–59m currently implemented). 
+        <strong>Screening & Educational Notice:</strong> NutriGuide supports pediatric nutrition intake screening and caregiver education for children aged 0 to 6 years (0–72 completed months; education 0–59m; intake indicators 6–23m).
         It does not diagnose malnutrition, nutrient deficiency, disease, or medical conditions. It is not medical diagnostic software and must not be used for emergency care, growth faltering, allergy diagnosis, or individual prescriptions. 
         Consult a pediatrician or qualified healthcare professional for medical evaluation.
       </div>
       <div class="footer-links">
-        <span>Built with Qwen3-1.7B (UNICEF Trained) + SmolVLM-500M</span>
+        <span>Built with Evidence selection SLM + SmolVLM-500M</span>
         <span>•</span>
         <span>WHO, CDC & UNICEF Guidelines</span>
       </div>
     </div>
   </footer>
 
-  <script src="/app.js?v=2.1"></script>
+  <script src="/app.js?v=3.4"></script>
 </body>
 </html>

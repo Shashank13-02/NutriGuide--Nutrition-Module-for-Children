@@ -1,0 +1,551 @@
+{
+  "evaluation_kind": "held_out_evidence_selection",
+  "decoding": "single_id_json_token_trie",
+  "clinical_validation": false,
+  "vision_status": "not_evaluated_no_labelled_image_dataset",
+  "models": [
+    {
+      "model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\nutriguide_adapted_slm",
+      "precision": "float32_cpu",
+      "count": 20,
+      "schema_valid_rate": 1.0,
+      "exact_selection_rate": 0.25,
+      "mean_latency_seconds": 2.053398095,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.2963968999999906
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.6975936999999703
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.12374920000002
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [
+            1
+          ],
+          "raw": "[1]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.7996482999999444
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.304032700000107
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.166061599999921
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.4226031000000603
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.209667300000092
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.337751699999899
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.365233800000169
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.23829099999989
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.1551645000001827
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 2.0510563999998794
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.018422200000032
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.05176849999998
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.0146826999998666
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 1.8965860999999222
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.8862278000001425
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 1.9618562999999085
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 2.0711681000000226
+        }
+      ]
+    },
+    {
+      "model": "models/qwen3_base",
+      "precision": "float32_cpu",
+      "count": 20,
+      "schema_valid_rate": 1.0,
+      "exact_selection_rate": 0.5,
+      "mean_latency_seconds": 8.165480734999994,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 8.143624799999998
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 7.226870299999973
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [
+            1
+          ],
+          "raw": "[1]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 6.83897560000014
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [
+            1
+          ],
+          "raw": "[1]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 6.809006799999906
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [
+            1
+          ],
+          "raw": "[1]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 8.963633300000083
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [
+            1
+          ],
+          "raw": "[1]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 7.921116600000005
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 7.821547399999872
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 7.88363430000004
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 9.05475309999997
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 10.075336200000038
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 9.879814599999918
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 8.90024040000003
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 7.682711000000154
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 7.521824199999855
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 7.747013700000025
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 9.32762519999983
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 8.530210800000077
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 7.550563999999895
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 8.067237200000136
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 7.363875199999939
+        }
+      ]
+    }
+  ],
+  "holdout_sha256": "9275520d9cdd2f464e7ac783d7923c7ae4c3df9b16880fecafe76598004c7075",
+  "passed": false,
+  "promoted": false
+}

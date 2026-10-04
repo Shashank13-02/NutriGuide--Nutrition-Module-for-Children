@@ -41,7 +41,7 @@ def test_screening_constants_and_configuration():
     assert MICRONUTRIENT_DEFICIENCY_PREDICTION_ENABLED is False
     assert CALORIE_ESTIMATION_ENABLED is False
     assert MODULE_TYPE == "nutrition_screening_support"
-    assert SCREENING_ENGINE_STATUS == "under_development"
+    assert SCREENING_ENGINE_STATUS == "iycf_indicators_implemented_6_to_23_months"
     assert "SCREENING_CONCERN" in "".join(SCREENING_CATEGORIES)
     assert "LOW_SCREENING_CONCERN" in SCREENING_CATEGORIES
     assert "MODERATE_SCREENING_CONCERN" in SCREENING_CATEGORIES

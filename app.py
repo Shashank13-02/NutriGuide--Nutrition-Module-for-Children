@@ -22,9 +22,8 @@ from screening_constants import (
 )
 
 ROOT = Path(__file__).parent
-TRAINED_SLM_PATH = ROOT / "models" / "qwen3_pediatric_slm"
-DEFAULT_MODEL = str(TRAINED_SLM_PATH) if (TRAINED_SLM_PATH / "model.safetensors").exists() else DEFAULT_TEXT_MODEL_ID
-MODEL_ID = os.getenv("NUTRIGUIDE_TEXT_MODEL", DEFAULT_MODEL)
+from model_runtime import configured_text_model, select_evidence
+MODEL_ID = configured_text_model()
 KB = json.loads((ROOT / "data" / "nutrition_knowledge.json").read_text(encoding="utf-8"))
 
 SYSTEM = """You are a communication and caregiver-explanation component of a pediatric nutrition screening platform for children aged 0 to 6 years.
@@ -98,7 +97,12 @@ def explain_screening_findings(
         SLM = communication / explanation, NOT decision maker.
     """
     result_category = screening_payload.get("screening_result", "INSUFFICIENT_DATA")
+    from screening_constants import SCREENING_CATEGORIES
+    if result_category not in SCREENING_CATEGORIES:
+        raise ValueError("Unknown screening_result")
     findings = screening_payload.get("findings", [])
+    if not isinstance(findings, list) or any(not isinstance(f, str) for f in findings):
+        raise ValueError("findings must be a list of strings")
     urgent_flag = screening_payload.get("professional_review_flag", False)
 
     if urgent_flag:
@@ -110,7 +114,7 @@ def explain_screening_findings(
         )
 
     context = context_for(age_months)
-    findings_bullets = "\n".join(f"- {f}" for f in findings) if findings else "- No specific concerns flagged in reported foods."
+    findings_bullets = "\n".join(f"- {f}" for f in findings) if findings else "- No screening findings were supplied; this does not establish low concern."
 
     if not use_model:
         explanation_lines = [
@@ -125,26 +129,36 @@ def explain_screening_findings(
         ]
         return "\n".join(explanation_lines)
 
-    from transformers import pipeline
-    generator = pipeline("text-generation", model=MODEL_ID)
-    user_prompt = f"""DETERMINISTIC SCREENING RESULT (DO NOT ALTER): {result_category}
-DETERMINISTIC FINDINGS (EXPLAIN THESE TO CAREGIVER):
-{findings_bullets}
+    # Conclusions and findings remain deterministic even when AI selection fails.
+    explanation = explain_screening_findings(screening_payload, age_months, use_model=False)
+    evidence = evidence_for(age_months)
+    indices, mode = select_evidence("Explain these reported findings: " + "; ".join(findings), evidence)
+    if indices:
+        explanation += "\n\nRelevant feeding guidance:\n" + "\n".join("- " + evidence[i] for i in indices)
+    return explanation
 
-CLINICAL GUIDELINES CONTEXT:
-{context}
 
-TASK:
-Explain this screening result and these findings to the caregiver in simple, encouraging, and easy-to-understand language.
-Do not alter or question the screening result. Do not diagnose disease or malnutrition.
-Provide 2-3 practical, supportive next steps for the caregiver based only on the guidelines context."""
+def evidence_for(age_months: int) -> list[str]:
+    band = find_band(age_months)
+    facts = list(band["core_guidance"]) + list(band["safety"])
+    facts += [band["feeding_skills"], band.get("safe_textures", ""), band.get("meal_cadence", ""), band.get("variety_target", "")]
+    facts += band.get("foods_to_avoid", [])
+    return list(dict.fromkeys(f for f in facts if f))
 
-    messages = [
-        {"role": "system", "content": SYSTEM},
-        {"role": "user", "content": user_prompt},
-    ]
-    output = generator(messages, max_new_tokens=220, do_sample=False)
-    return output[0]["generated_text"][-1]["content"]
+
+def grounded_answer(age_months: int, question: str) -> tuple[str, str]:
+    urgent = red_flag_gate(question)
+    if urgent:
+        return urgent, "red_flag_gate"
+    facts = evidence_for(age_months)
+    indices, mode = select_evidence(question, facts)
+    band = find_band(age_months)
+    if indices:
+        text = "\n".join("- " + facts[i] for i in indices)
+    else:
+        text = "Model selection is unavailable or could not select a supported answer. Reviewed guidance for this age follows:\n" + context_for(age_months)
+    return text + "\n\n" + SCREENING_DISCLAIMER + "\n[Source IDs: " + ", ".join(band["sources"]) + "]", mode
+
 
 def answer(age_months: int, question: str, use_model: bool = True) -> str:
     urgent = red_flag_gate(question)
@@ -182,14 +196,7 @@ def answer(age_months: int, question: str, use_model: bool = True) -> str:
     context = context_for(age_months)
     if not use_model:
         return context
-    from transformers import pipeline
-    generator = pipeline("text-generation", model=MODEL_ID)
-    messages = [
-        {"role": "system", "content": SYSTEM},
-        {"role": "user", "content": f"CONTEXT\n{context}\n\nQUESTION\n{question}"},
-    ]
-    output = generator(messages, max_new_tokens=220, do_sample=False)
-    return output[0]["generated_text"][-1]["content"]
+    return grounded_answer(age_months, question)[0]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Constrained child nutrition SLM demo")

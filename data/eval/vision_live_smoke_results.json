@@ -1,0 +1,113 @@
+{
+  "evaluation_kind": "real_sample_smoke_check",
+  "accuracy_validated": false,
+  "models": {
+    "text": {
+      "loading": false,
+      "ready": false,
+      "loaded_model": null,
+      "error": null,
+      "configured_model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\qwen3_base",
+      "selection_enabled": false,
+      "test_mode": false,
+      "display_name": "Qwen3-1.7B"
+    },
+    "vision": {
+      "loading": false,
+      "ready": true,
+      "loaded_model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\smolvlm_500m",
+      "error": null,
+      "device": "cpu",
+      "precision": "torch.float32",
+      "fallback_used": false,
+      "configured_model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\smolvlm_500m",
+      "display_name": "SmolVLM-500M meal observations"
+    }
+  },
+  "results": [
+    {
+      "prompt_version": "baseline",
+      "sample": "meal_carrots_oatmeal.jpg",
+      "latency_seconds": 82.47,
+      "raw_text": " visible_foods: [mushroom, carrots, avocado, rice, oatmeal, quinoa, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus, hummus",
+      "draft": {
+        "visible_foods": [],
+        "candidate_foods": [],
+        "texture_cues": [
+          "mixed/unclear"
+        ],
+        "observations": [
+          "mixed/unclear"
+        ],
+        "uncertain_items": [],
+        "uncertain": true,
+        "child_present": false,
+        "requires_confirmation": true,
+        "parse_valid": false
+      }
+    },
+    {
+      "prompt_version": "baseline",
+      "sample": "meal_lentils_rice.jpg",
+      "latency_seconds": 56.98,
+      "raw_text": " texture_cues: smooth puree, mashed, soft pieces, finger food, mixed/unclear.",
+      "draft": {
+        "visible_foods": [],
+        "candidate_foods": [],
+        "texture_cues": [
+          "mixed/unclear"
+        ],
+        "observations": [
+          "mixed/unclear"
+        ],
+        "uncertain_items": [],
+        "uncertain": true,
+        "child_present": false,
+        "requires_confirmation": true,
+        "parse_valid": false
+      }
+    },
+    {
+      "prompt_version": "optimized",
+      "sample": "meal_carrots_oatmeal.jpg",
+      "latency_seconds": 70.87,
+      "raw_text": " \"mushroom, carrots, avocado, oatmeal, quinoa, rice, sweet potato, quinoa, rice cake, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal, oatmeal",
+      "draft": {
+        "visible_foods": [],
+        "candidate_foods": [],
+        "texture_cues": [
+          "mixed/unclear"
+        ],
+        "observations": [
+          "mixed/unclear"
+        ],
+        "uncertain_items": [],
+        "uncertain": true,
+        "child_present": false,
+        "requires_confirmation": true,
+        "parse_valid": false
+      }
+    },
+    {
+      "prompt_version": "optimized",
+      "sample": "meal_lentils_rice.jpg",
+      "latency_seconds": 46.75,
+      "raw_text": " mashed.",
+      "draft": {
+        "visible_foods": [],
+        "candidate_foods": [],
+        "texture_cues": [
+          "mixed/unclear"
+        ],
+        "observations": [
+          "mixed/unclear"
+        ],
+        "uncertain_items": [],
+        "uncertain": true,
+        "child_present": false,
+        "requires_confirmation": true,
+        "parse_valid": false
+      }
+    }
+  ]
+}

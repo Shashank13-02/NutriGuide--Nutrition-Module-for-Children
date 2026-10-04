@@ -1,0 +1,512 @@
+{
+  "evaluation_kind": "held_out_evidence_selection",
+  "clinical_validation": false,
+  "vision_status": "not_evaluated_no_labelled_image_dataset",
+  "models": [
+    {
+      "model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\nutriguide_adapted_slm",
+      "count": 20,
+      "schema_valid_rate": 0.1,
+      "exact_selection_rate": 0.05,
+      "mean_latency_seconds": 6.5715718650004415,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.7204378000024008
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[0] Liquid milk only.",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.8133116999961203
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "[0: 0]",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 3.421833799991873
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[0: Encourage on-demand feeding; 1: Encourage breastfeeding;",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.194623000003048
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[0] Offer 2 to 3 small complementary meals daily + on-",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.109958800007007
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "[0] 2 to 3 small complementary meals daily + on-demand",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.708343599995715
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "[0: 7 months]",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 5.472836800006917
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "JSON:\n[\n{\n  \"evidence_id\": \"0\",",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.001220200007083
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "[0] 3 to 4 meals daily + 1 to 2",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.577510700008133
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [],
+          "raw": "[0] Many infants can manage appropriately prepared finger foods from about 8 months",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.166418599997996
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "[0: Many infants can manage appropriately prepared finger foods from about 8 months",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.709931900011725
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "JSON:\n[\n{\n  \"evidence\": \"0\",\n  \"question",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.700436400002218
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [],
+          "raw": "[0] Family table foods adapted for chewing and biting. Cut hot dogs and",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.113961199996993
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "[0] Family table foods adapted for chewing and biting. Cut hot dogs and",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.124062100003357
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "[0: Most children can eat family foods with safe preparation; encourage self-",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.505470399992191
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "JSON:\n[\n{\n  \"evidence\": \"Encourage self-feeding without",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.379421199992066
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 3.999786700005643
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[0: Family meals; continue to cut round or firm items (cherry",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 8.15538579999702
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [],
+          "raw": "[0: Diverse family plate targeting all main food groups across color spectrums:",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 7.223647799997707
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [],
+          "raw": "JSON:\n[\n{\n  \"id\": 1,\n  \"question",
+          "schema_valid": false,
+          "exact_match": false,
+          "latency_seconds": 6.332838799993624
+        }
+      ]
+    },
+    {
+      "model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\nutrition_evidence_candidate",
+      "count": 20,
+      "schema_valid_rate": 1.0,
+      "exact_selection_rate": 0.25,
+      "mean_latency_seconds": 3.821585449999111,
+      "outputs": [
+        {
+          "id": "60a73e645cac9841",
+          "target": [
+            2
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 6.582667099995888
+        },
+        {
+          "id": "719e73741e965d1e",
+          "target": [
+            0
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 3.179015100002289
+        },
+        {
+          "id": "81860f99ce0f3271",
+          "target": [
+            1
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.1350928000028944
+        },
+        {
+          "id": "06611bf0a5f3afc2",
+          "target": [
+            0
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 3.311979000005522
+        },
+        {
+          "id": "ce3939b614cb4afc",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.5612331999873277
+        },
+        {
+          "id": "70589d65a5278714",
+          "target": [
+            3
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.572480300004827
+        },
+        {
+          "id": "86ed3d1344f866cc",
+          "target": [
+            3
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.6022639000002528
+        },
+        {
+          "id": "8d37b5254d59221e",
+          "target": [
+            1
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.622087099996861
+        },
+        {
+          "id": "7c0c31d6f7d468a3",
+          "target": [
+            3
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.9917780999967363
+        },
+        {
+          "id": "058e56b70298c7bd",
+          "target": [
+            1
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.932364400010556
+        },
+        {
+          "id": "3c980b082564447c",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 4.269585600006394
+        },
+        {
+          "id": "9189c5c987d4f835",
+          "target": [
+            3
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.9798345000017434
+        },
+        {
+          "id": "43321730c0bb3577",
+          "target": [
+            3
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 4.248707099992316
+        },
+        {
+          "id": "cba1ebbbbf4f70a8",
+          "target": [
+            2
+          ],
+          "prediction": [
+            0
+          ],
+          "raw": "[0]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.625469599995995
+        },
+        {
+          "id": "7628bda9a48dbaa2",
+          "target": [
+            2
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 3.5353778999997303
+        },
+        {
+          "id": "6361d61af3eac2b7",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.531422499989276
+        },
+        {
+          "id": "d04011f9a45f0cc4",
+          "target": [
+            3
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": true,
+          "latency_seconds": 3.3560765000001993
+        },
+        {
+          "id": "9d4107db6627c3c9",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.8028309999936027
+        },
+        {
+          "id": "35b394ef64e7c751",
+          "target": [
+            0
+          ],
+          "prediction": [
+            2
+          ],
+          "raw": "[2]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.8902297000022372
+        },
+        {
+          "id": "829db8582fb8b47d",
+          "target": [
+            2
+          ],
+          "prediction": [
+            3
+          ],
+          "raw": "[3]",
+          "schema_valid": true,
+          "exact_match": false,
+          "latency_seconds": 3.7012135999975726
+        }
+      ]
+    }
+  ],
+  "holdout_sha256": "db0d4f228149e0ff9e3a81337737e25d90032edffb05d97e0a35c4d722d45750",
+  "passed": false,
+  "promoted": false
+}

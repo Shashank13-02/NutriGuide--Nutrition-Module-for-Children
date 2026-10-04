@@ -1,498 +1,193 @@
-# NutriGuide: Child Nutrition Screening & Caregiver Education Platform
+# NutriGuide: intake screening and caregiver guidance
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![SmolLM2](https://img.shields.io/badge/SLM-SmolLM2--360M--Instruct-orange.svg)](https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct)
-[![SmolVLM](https://img.shields.io/badge/VLM-SmolVLM--500M--Instruct-purple.svg)](https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct)
-[![Guidelines](https://img.shields.io/badge/Clinical%20Grounding-WHO%20%7C%20UNICEF%20%7C%20CDC-green.svg)](https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding)
-[![Privacy](https://img.shields.io/badge/Execution-100%25%20Local%20%26%20Private-success.svg)](#privacy--safety-boundaries)
+NutriGuide calculates previous-day feeding indicators from caregiver-confirmed intake.
+It supports nutrition screening and education; it does not diagnose malnutrition,
+nutrient deficiency, disease, or overall nutritional adequacy.
 
-NutriGuide is being extended into a nutrition-intake screening platform for children from birth to 6 years of age. The platform is designed to identify dietary patterns that may warrant attention using age-aware feeding information, caregiver-confirmed food intake, food-group analysis, and deterministic screening logic.
+## What now produces an actual result
 
-The platform is a screening and educational support tool. It does not diagnose malnutrition, nutrient deficiencies, disease, or other medical conditions.
+The web form works with or without a meal photo. Enter age, the groups actually
+consumed yesterday (day and night), breastfeeding status, food-feeding count and
+non-breast-milk feeding count. Confirm that the recall is complete.
 
-The architecture combines **Nutrition Screening + Caregiver Education**: deterministic screening rules evaluate reported intake against authoritative pediatric guidelines, while an SLM conversational assistant provides downstream evidence-grounded explanations.
+For **6–23 completed months**, the deterministic engine calculates:
 
----
+- Minimum dietary diversity (MDD): at least 5 of 8 food groups.
+- Minimum meal frequency (MMF): breastfed 6–8m, at least 2 food feeds;
+  breastfed 9–23m, at least 3; non-breastfed 6–23m, at least 4 food/milk feeds,
+  including at least one solid, semi-solid or soft food feed.
+- Minimum milk-feeding frequency (MMFF): at least 2 fluid milk and/or semi-solid yogurt feeds for non-breastfed children.
+- Minimum acceptable diet (MAD): MDD and MMF, plus MMFF for non-breastfed children.
+- Descriptive egg/flesh-food and zero fruit/vegetable consumption indicators.
 
-## Screening vs Diagnosis
+Formula belongs to **Dairy**, not Breast milk. Counts are deduplicated. Missing
+fields remain unknown; a photo or an incomplete recall does not imply a full-day
+record. Conflicting records produce a correction request. Reported urgent symptoms
+bypass confirmation and model inference and show referral guidance.
 
-| Dimension | Nutrition Screening (This Platform) | Medical / Clinical Diagnosis (Healthcare Provider) |
-|---|---|---|
-| **Goal** | Early identification of dietary intake patterns that may warrant attention or review. | Definitive determination of the presence or absence of clinical disease or pathology. |
-| **Data Evaluated** | Caregiver-reported food items, meal cadence, dietary diversity (5-of-8 groups), textures, preparation safety. | Physical examination, clinical history, anthropometrics (growth curves, stunting/wasting), biochemical & laboratory tests (blood panels, serum ferritin, micronutrient levels). |
-| **Output Wording** | Screening concern categories (e.g., *Low concern*, *Limited iron-rich food intake*, *Meal pattern requires review*, *Insufficient data*). | Clinical diagnostic statements (e.g., *Severe acute malnutrition*, *Iron-deficiency anemia*, *Failure to thrive*). |
-| **Role of AI** | Observation proposal (vision model) and explanation generation (language model) strictly bounded by deterministic rules. | Never replaces a physician, pediatrician, or registered pediatric dietitian. |
-| **Action** | Recommending positive feeding adjustments, dietary diversity improvements, or prompt referral to healthcare services. | Formulating medical treatment, prescribing therapeutic supplements, or specialized medical diets. |
+Results are `INDICATORS_MET`, `FEEDING_PATTERN_REVIEW`, `INSUFFICIENT_DATA`, or
+`PROFESSIONAL_REVIEW_FLAG`. These are workflow outcomes, not validated individual
+Low/Moderate/High risk classes. There is no arbitrary weighted severity score.
 
----
+**Scope:** target platform 0–72 months; reviewed educational bands 0–59 months;
+implemented quantitative intake indicators 6–23 months. Other ages return explicit
+insufficient-data/scope messages. Vitamin D scoring, calorie estimation,
+micronutrient prediction and clinical growth diagnosis remain outside scope.
 
-## Current Development Status
+Source: [WHO/UNICEF 2021 definitions and measurement methods](https://data.unicef.org/wp-content/uploads/2021/04/Indicators-for-assessing-infant-and-young-child-feeding-practices.pdf),
+feeding indicators and their calculation methods. Semi-solid yogurt is included in
+the food-feeding count for MMF and the milk-frequency count for MMFF; it is not
+added a second time to MMF. The API uses separate `milk_feeds` (fluid) and
+`yogurt_feeds` (semi-solid) fields; enter explicit zero when none was consumed.
+Honey and added-sugar prompts use
+[CDC foods and drinks to avoid or limit](https://www.cdc.gov/infant-toddler-nutrition/foods-and-drinks/foods-and-drinks-to-avoid-or-limit.html).
+These population indicators do not validate an individual clinical diagnosis.
 
-- **Phase 1 Transition:** The repository is transitioning from an educational nutrition module to a structured child nutrition screening platform.
-- **Target Population Scope:** Children from birth through 6 completed years (0 to 72 completed months).
-- **Current Implemented Rules:** Currently implemented evidence bands cover 0 to 59 completed months. Rules for 60 to 72 completed months will be designed in subsequent implementation phases.
-- **Screening Engine Status:** The deterministic Low/Moderate/High scoring engine has not yet been implemented in Phase 1. Phase 1 defines product boundaries, terminology, and safety gates without inventing arbitrary scores.
-- **Vitamin Scope Exclusion:** **Vitamin D assessment is not part of the current implementation scope.** The system does not compute Vitamin D scores, track Vitamin D supplements, or predict Vitamin D deficiency. Vitamin-specific screening will be evaluated separately in a future phase.
+## Model roles and selection
 
----
+| Model | Role and activation |
+|---|---|
+| Qwen/Qwen3-1.7B | Official text base for task adaptation; local copy in models/qwen3_base. Thinking is disabled through its native chat template. Selection requires qualification. |
+| HuggingFaceTB/SmolLM2-360M-Instruct | Automatic text-load fallback if the primary checkpoint fails to load. |
+| models/nutrition_evidence_candidate | New task adaptation candidate. Used automatically only after measured held-out selection passes promotion and creates models/deployment.json. |
+| models/qwen_nutrition_evidence_candidate | Qwen adaptation candidate; automatic selection requires qualification. The local testing launcher enables an explicit research override. |
+| models/nutriguide_adapted_slm | Legacy SmolLM2 source checkpoint. Previously trained on synthetic evaluation cases; not automatically selected or represented as validated. |
+| HuggingFaceTB/SmolVLM-500M-Instruct | Meal-photo candidate food and texture observations. Not a text SLM or nutrition classifier. |
 
-## Table of Contents
+All entry points share a lazy runtime: one load per model, separate inference
+locks, CUDA/MPS when available, and CPU float32 text inference with bfloat16 loading followed by conversion of individual modules to limit peak memory. Aggressive CPU int8 changed model answers in measured trials and is not enabled by default. Vision CPU inference uses float32. Health reports actual
+loaded model, configured model, fallback, loading status and load errors. Model
+weights are not downloaded at server startup unless warmup is enabled.
 
-1. [Screening vs Diagnosis](#screening-vs-diagnosis)
-2. [Current Development Status](#current-development-status)
-3. [Important Pediatric & Safety Boundaries](#important-pediatric--safety-boundaries)
-4. [What NutriGuide Does](#what-nutriguide-does)
-5. [The 8-Dimensional Pediatric Nutrition Taxonomy](#the-8-dimensional-pediatric-nutrition-taxonomy)
-6. [System Architecture](#system-architecture)
-7. [Models & Hardware Acceleration](#models--hardware-acceleration)
-8. [Repository Structure](#repository-structure)
-9. [Getting Started & Installation](#getting-started--installation)
-10. [Running the Applications](#running-the-applications)
-    - [Unified Web Application (Port 8080)](#1-unified-web-application-recommended)
-    - [Gradio Photo Companion (Port 8899)](#2-standalone-gradio-photo-companion)
-    - [Command-Line Evidence Inspector](#3-command-line-evidence-inspector)
-11. [Automated Verification & Evaluation Suites](#automated-verification--evaluation-suites)
-12. [REST API Documentation](#rest-api-documentation)
-13. [Authoritative Source Registry](#authoritative-source-registry)
+The text model selects the single most relevant reviewed excerpt. A token trie
+constrains decoding to one valid ID in a JSON array or an empty array for abstention.
+Schema compliance is enforced; answer selection accuracy is measured separately. The app
+renders those original statements and canonical deterministic results. Invalid
+model output falls back to reviewed guidance. This constrains factual output;
+it does not guarantee that the selected statements answer every question. Unqualified
+checkpoints and load fallbacks stay inactive for selection; reviewed guidance is
+returned instead. `NUTRIGUIDE_ALLOW_UNQUALIFIED=1` is an explicit research override.
 
----
+Vision uses two short image questions: a person/face check, then a food-name list.
+Code validates the list and constructs editable observation fields. Malformed output becomes an empty,
+uncertain draft. Person flags block use of the draft; the detector is not a
+validated privacy guarantee. Caregivers must use meal-only images and confirm
+food groups independently. Photo groups are never automatically counted as a
+previous-day record. No real labelled image dataset is included for VLM training
+or accuracy claims; vision weights have not been retrained.
+The local vision checkpoint is selected automatically when complete. CPU image
+processing uses a 1024px longest edge; generation uses deterministic settings and
+a repetition penalty. See [VISION_TESTING.md](VISION_TESTING.md) for measured
+sample outputs, latency, and remaining identification errors.
 
-## Important Pediatric & Safety Boundaries
+## Run locally (Windows PowerShell)
 
-1. **Non-Diagnostic:** The platform does not diagnose disease, malnutrition, or specific nutrient deficiencies.
-2. **Single-Meal Limitation:** A single meal or photo cannot determine a child's overall nutritional adequacy; dietary diversity is evaluated across full-day patterns.
-3. **Deterministic Primacy:** AI models never invent or override screening categories; deterministic clinical rules govern all evaluations.
-4. **Mandatory Confirmation:** Observations from the vision model are drafts that require caregiver confirmation before guidance is issued.
-5. **Red-Flag Escalation:** Potential medical emergencies or severe feeding distress are immediately directed to clinical or emergency care.
-
----
-
-## What NutriGuide Does
-
-NutriGuide provides a modern, dual-tab web interface designed with sleek glassmorphic aesthetics and responsive controls:
-
-### Tab 1: Nutrition Assistant (SLM Chat & Diversity Guidelines)
-- **Continuous Age Slider (0–59 Months)**: Smoothly transitions through 5 pediatric developmental stages with 1-click preset buttons (`0–5m`, `6–8m`, `9–11m`, `12–23m`, `24–59m`).
-- **Interactive Food & Variety Guidelines Explorer**:
-  - **Variety Target Banner**: Explains the exact nutritional diversity focus for the selected month (e.g., UNICEF's 5-of-8 groups indicator for 12–23m).
-  - **Meal Cadence Indicator**: Highlights age-appropriate daily meal and snack frequencies.
-  - **Recommended Food Category Cards**: Shows food group names, micronutrient rationales (iron, zinc, vitamins A & C), and safe food examples.
-  - **Safe Textures & Foods to Avoid**: Clearly articulates developmental texture milestones alongside hazard items (e.g., honey under 12 months, unpasteurized products).
-- **Dual Inference Engine**:
-  - **SmolLM2-360M Generated**: Runs prompt-grounded local SLM text generation on Apple Silicon MPS or CPU.
-  - **Curated Evidence Context**: Instant zero-latency retrieval of exact WHO and CDC evidence sentences.
-- **Evidence Drawer & Citations**: Clickable source cards linking directly to normative publications from the WHO and CDC.
-
-### Tab 2: Meal Photo Companion (Vision AI)
-- **Meal Image Input**: Drag-and-drop or file upload for plate, bowl, or high-chair tray photos.
-- **Built-In Sample Meals**:
-  - **Sample 1**: Mashed Lentils & Rice (Khichdi) in a bowl (10 months) — pre-linked to real food photography.
-  - **Sample 2**: Steamed Carrots & Oatmeal (14 months).
-- **Local Vision Analysis**: 1-click inference using `SmolVLM-500M` to propose visible food names and texture cues.
-- **8-Step Caregiver Review Form**: Enables the caregiver to edit visible foods, confirm food groups, textures, preparation steps, and allergen exposure.
-- **UNICEF Minimum Dietary Diversity Indicator**:
-  - Live **0–8 progress bar** tracking daily dietary diversity.
-  - Dynamically updates as daily food groups are selected, visually celebrating when the target of &ge;5 groups is reached.
-- **Safe Educational Interpretation**: Compiles caregiver-verified meal records into tailored feeding guidance and choking hazard prompts.
-
----
-
-## The 8-Dimensional Pediatric Nutrition Taxonomy
-
-NutriGuide organizes pediatric nutrition around an 8-dimensional framework grounded in normative WHO, UNICEF, and CDC clinical standards:
-
-| # | Category | Examples / Formats | Why It Matters in Pediatric Care | Enforced In |
-|---|---|---|---|---|
-| **1** | **Age / development** | `0–5`, `6–8`, `9–11`, `12–23`, `24–59` months | Determines whether complementary feeding and certain textures are developmentally appropriate. | `data/nutrition_knowledge.json`, `app.py`, `server.py` |
-| **2** | **Food groups** | Breast milk; grains/roots/tubers; pulses/nuts/seeds; dairy; flesh foods; eggs; vitamin-A-rich fruit/veg; other fruit/veg | WHO/UNICEF 6–23-month dietary diversity framework uses **8 distinct groups** to prevent micronutrient deficiencies. | `nutrition_engine.py`, `server.py`, `index.html` |
-| **3** | **Texture** | Purée, mashed, lumpy/soft pieces, safe finger food, family-food texture | Must fit oral motor feeding skill—**not age alone**. Prevents choking while advancing self-feeding development. | `nutrition_engine.py`, `meal_photo_app.py` |
-| **4** | **Preparation / safety** | Cooked, peeled, mashed, thinly spread, cut lengthwise / quartered | Choking hazard prevention. Round firm foods (grapes, cherry tomatoes, hot dogs) must be quartered lengthwise; hard vegetables steamed or grated. | `nutrition_engine.py`, `evaluate_meal.py` |
-| **5** | **Allergen flag** | Egg, dairy, peanut/tree nut, wheat, soy, fish/shellfish | Prompts early, single-ingredient introduction at home with guidance to consult clinician if personal or family history of atopy exists. | `nutrition_engine.py`, `data/nutrition_knowledge.json` |
-| **6** | **Added ingredients** | Honey, added sugar, excess salt, unpasteurized/raw foods | Enforces strict toxicological and clinical limits: **Honey is strictly forbidden <12 months** (infant botulism); **zero added sugars <24 months**. | `data/nutrition_knowledge.json`, `app.py` |
-| **7** | **Meal pattern / cadence** | 2–3 meals (6–8m); 3–4 meals + 1–2 snacks (9–23m); 3 meals + 2 snacks (24–59m) | A single plate cannot reflect daily nutritional adequacy. Supports day-level feeding cadence complementary to milk intake. | `data/nutrition_knowledge.json`, `index.html` |
-| **8** | **Confidence / verification** | Clearly visible / uncertain / caregiver-corrected | **Prevents treating model guesses as facts**. VLM observations are treated purely as drafts requiring mandatory caregiver confirmation. | `server.py`, `meal_photo_app.py`, `static/app.js` |
-
----
-
-## System Architecture: SLM as Communicator, Not Decision Maker
-
-A core architectural principle of NutriGuide is:
-> **SLM = Communication & Caregiver Explanation, NOT Decision Maker**
-
-The SLM is **strictly prohibited** from calculating, modifying, upgrading, or downgrading screening risk. Screening risks and clinical rule flags are computed entirely by a deterministic pediatric rule engine. The SLM receives the structured output and explains it in empathetic, accessible language to the caregiver:
-
-```
-Deterministic Rule Engine Output:
-{
-  "screening_result": "MODERATE_SCREENING_CONCERN",
-  "findings": ["Limited dietary diversity: 2 of 5 recommended food groups reported today", "High-sodium snack observed"]
-}
-                          │
-                          ▼
-            Small Language Model (SLM)
-         "Explain this to the caregiver in simple language."
-                          │
-                          ▼
-Empathetic, clear caregiver guidance with actionable next steps (No diagnosis, no score alteration)
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe server.py 8080
 ```
 
-```mermaid
-flowchart TD
-    User([Caregiver / User]) -->|Enters Query| InputQuery[Input Question & Age]
-    User -->|Uploads Plate Image| InputPhoto[Meal Photo Only]
+Open http://127.0.0.1:8080. Curated guidance and intake screening work without
+model inference. Generated selection requires cached weights or network access.
 
-    subgraph SafetyGate [Safety & Privacy Layer]
-        InputQuery --> RedFlagGate{Red-Flag Gate}
-        RedFlagGate -->|Urgent Symptoms| DirectER[Immediate Medical Emergency Advice]
-        InputPhoto --> ChildCheck{Child Face/Body Check}
-        ChildCheck -->|Person Detected| BlockImage[Block Photo & Request Meal Only]
-    end
+Optional overrides:
 
-    subgraph VisionPipeline [VLM Meal Photo Pipeline]
-        ChildCheck -->|Meal Only| SmolVLM[HuggingFaceTB/SmolVLM-500M-Instruct]
-        SmolVLM --> DraftObs[Draft Food & Texture Observations]
-        DraftObs --> CaregiverForm[Caregiver Review & Confirmation Form]
-    end
-
-    subgraph DeterministicEngine [Deterministic Screening & Rule Engine (Decision Maker)]
-        CaregiverForm -->|Caregiver Confirms| RuleEngine[Deterministic Screening Engine]
-        RuleEngine --> StructuredResult["Structured Output: { screening_result, findings }"]
-    end
-
-    subgraph SLMCommunication [SLM Explanation Layer (Communicator)]
-        StructuredResult --> SLMExplanation[SmolLM2-360M / Qwen3-1.7B]
-        RetrieveKB[Retrieve Age-Band Knowledge] --> SLMExplanation
-        SLMExplanation --> CaregiverGuidance["Caregiver-Friendly Explanation (No Risk Calculation)"]
-    end
-
-    CaregiverGuidance --> UI[Glassmorphic Web App UI :8080]
-    DirectER --> UI
-    BlockImage --> UI
+```powershell
+$env:NUTRIGUIDE_TEXT_MODEL = "Qwen/Qwen3-1.7B"
+$env:NUTRIGUIDE_VISION_MODEL = "HuggingFaceTB/SmolVLM-500M-Instruct"
+$env:NUTRIGUIDE_WARMUP = "1"
+# Experimental only: quantify accuracy again before using MLP int8
+# $env:NUTRIGUIDE_CPU_INT8 = "1"
 ```
 
----
+Models are cached under `.hf_cache`. Overrides are explicit; a qualified local
+checkpoint otherwise takes precedence over the default Qwen model.
 
-## Models & Hardware Acceleration
+**Repository contents:** source, training/evaluation data, checkpoint metadata and
+browser screenshots are included. Multi-gigabyte `.safetensors` weights, download
+temporaries, model caches and the virtual environment are Git-ignored and remain
+local. A fresh clone needs model downloads or training before model inference.
+Metadata-only checkpoint directories are not usable weights.
 
-| Model | Hugging Face ID | License | Parameters | Role in Architecture |
-|---|---|---|---|---|
-| **SmolLM2** *(Current)* | `HuggingFaceTB/SmolLM2-360M-Instruct` | Apache 2.0 | ~360 Million | **Communication & explanation only** (Explaining deterministic findings to caregivers) |
-| **SmolVLM** *(Current)* | `HuggingFaceTB/SmolVLM-500M-Instruct` | Apache 2.0 | ~500 Million | Zero-shot meal-photo candidate draft observations (Requires caregiver confirmation) |
+Download the pinned official vision model with:
 
-### Model Upgrade Roadmap
-
-1. **Text SLM Upgrade Benchmark (Post-Deterministic Engine):**
-   - **Candidate**: [`Qwen/Qwen3-1.7B`](https://huggingface.co/Qwen/Qwen3-1.7B) (Apache 2.0).
-   - **Role**: Benchmark against `SmolLM2-360M` strictly for communication clarity, caregiver empathy, and prompt constraint adherence.
-   - **Timing**: Benchmarked *after* the deterministic screening rule engine is fully tested and verified. The model will never calculate risk.
-
-2. **Phase 19 — Vision Model Upgrade (Separate Evaluation):**
-   - Vision quality is critical for accurate meal plate observation.
-   - **Candidates**:
-     - [`Qwen/Qwen3-VL-2B-Instruct`](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct) (Apache 2.0)
-     - [`Qwen/Qwen3-VL-4B-Instruct`](https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct) (Apache 2.0)
-   - **Comparison Strategy**: `SmolVLM-500M` vs `Qwen3-VL-2B` vs `Qwen3-VL-4B`.
-   - **Benchmark Criteria**: Evaluated directly against the curated **pediatric meal-image dataset** (plate/bowl food identification and texture cues), rather than generic multimodal benchmarks.
-
-- **Local Cache Management**: Models are downloaded once and cached in `./.hf_cache` via `HF_HOME="$PWD/.hf_cache"`. The application can run completely air-gapped without internet access once weights are cached.
-- **Apple Silicon Acceleration**: On macOS devices with M1/M2/M3/M4 chips, PyTorch automatically binds to the Metal Performance Shaders (`mps`) backend in `float16`, providing text generation in ~3s and vision inference in ~2s.
-
-
----
-
-## Repository Structure
-
-```
-NutriGuide--Nutrition-Module-for-Children/
-├── SCREENING_MODULE.md         # Product boundary, screening taxonomy & safety specification
-├── screening_constants.py      # Centralized screening terminology, age constants & disclaimers
-├── app.py                      # Core CLI application & prompt-grounding engine
-├── server.py                   # High-performance HTTP server & REST API
-├── meal_photo_app.py           # Standalone Gradio interface for meal photo reviews
-├── nutrition_engine.py         # Deterministic pediatric rule engine & taxonomy validator
-├── requirements.txt            # Python dependencies (transformers, torch, pillow, gradio)
-├── README.md                   # Comprehensive platform documentation
-├── EDUCATIONAL_MODULE.md       # Caregiver education curriculum & clinical rationale
-│
-├── data/
-│   ├── nutrition_knowledge.json # Ground truth evidence across all pediatric age bands
-│   └── eval/                   # Benchmark evaluation dataset suite
-│       ├── deterministic_nutrition_cases.json # 70 pediatric cases (CNNS, NFHS-5, UNICEF, NHANES, FITS)
-│       └── meal_photo_cases.json              # 110 meal photos (IndianFoodNet30, UECFoodPix, UEC-Food)
-│
-├── static/                     # Web application frontend assets
-│   ├── index.html              # Modern, semantic single-page application markup
-│   ├── style.css               # Rich glassmorphic dark theme (vanilla CSS, responsive)
-│   ├── app.js                  # Client-side reactivity, slider sync, and API wiring
-│   └── samples/                # Pre-packaged sample meal images
-│       ├── meal_lentils_rice.jpg    # Sample 1: Mashed lentils & rice (10 months)
-│       └── meal_carrots_oatmeal.jpg # Sample 2: Steamed carrots & oatmeal (14 months)
-│
-├── evaluate.py                 # Automated regression suite for SLM knowledge context
-├── evaluate_meal.py            # Automated test suite for meal-photo review logic
-├── evaluate_framework.py       # Automated test suite for the 8-category taxonomy
-├── evaluate_screening_boundaries.py # Automated verification of screening safety & boundaries
-└── evaluate_dataset.py         # Comprehensive evaluation runner (70 deterministic + 110 photo cases)
+```powershell
+.\.venv\Scripts\python.exe download_vision_model.py
 ```
 
----
+Once both the trained Qwen candidate and vision weights exist, `./start_testing.ps1`
+starts the testing configuration at http://127.0.0.1:8088 with both models warmed
+up and offline inference. The text candidate is explicitly enabled for research
+testing; this does not change its failed qualification status. Photo suggestions
+remain editable and require review. Repeated notices and raw source-ID lines are
+removed from guidance cards; the footer notice and readable source links remain.
 
-## Getting Started & Installation
+## Training and honest evaluation
 
-### Prerequisites
-- Python **3.10** or higher
-- pip and virtual environment support (`python3 -m venv`)
-- ~3.5 GB of free disk space for PyTorch and cached Hugging Face model weights
-
-### 1. Set Up Virtual Environment
-```bash
-# Navigate to the module directory
-cd outputs/nutrition_slm_module
-
-# Create and activate virtual environment
-python3 -m venv .venv
-source .venv/bin/activate
-
-# Install dependencies into virtual environment
-pip install -r requirements.txt
+```powershell
+.\.venv\Scripts\python.exe build_task_training_data.py
+.\.venv\Scripts\python.exe train_model.py --model Qwen/Qwen3-1.7B --output-dir models/qwen_nutrition_evidence_candidate --epochs 2 --batch-size 2
+.\.venv\Scripts\python.exe benchmark_models.py --live --text-only --baseline Qwen/Qwen3-1.7B --candidate models/qwen_nutrition_evidence_candidate --promote
+.\.venv\Scripts\python.exe run_all_tests.py
 ```
 
----
+Training uses reproducible synthetic selections from reviewed local guideline
+statements: 60 train prompts and 20 held-out wording prompts. The native tokenizer
+chat template and assistant-only loss preserve prompt masking and EOS supervision;
+oversize examples are rejected rather than losing the answer to truncation.
+The final two actual transformer blocks are adapted. The completed local trial improved valid JSON but reached only 25% exact held-out selection and was rejected; its actual training records and metadata are preserved in the candidate directory. The source is preserved.
+The completed Qwen trial trained for 60 steps across two epochs. Exact selection
+improved from 50% to 75% on the development questions, but reached 60% on the
+separate confirmation set and failed all three unsupported-question abstentions.
+It was rejected for automatic activation; the local testing launcher can explicitly enable it. Both trials used synthetic selection labels;
+neither establishes clinical screening accuracy. Further qualification requires
+reviewed representative questions, supported-answer labels and unsupported examples.
+Training computes vocabulary logits only at supervised assistant prediction positions,
+reducing Qwen's training memory use without changing which tokens contribute to loss.
+Aggregate UNICEF country spreadsheets are not individual diagnostic labels and
+are not represented as clinical training examples.
 
-## Running the Applications
+The 20 wording prompts were used during prompt tuning and are now a development
+benchmark. A separate 15-prompt confirmation set contains new wording and ages,
+including unsupported questions; it is excluded from training and prompt tuning.
+Promotion requires 100% valid selection JSON, at least 90% exact development selection,
+improvement over the source checkpoint, at least 90% confirmation selection, and
+correct abstention on every unsupported confirmation question. Detailed actual generations and
+measured latency are saved in `data/eval/model_evaluation_results.json` and
+`BENCHMARK_REPORT.md`. A failed candidate stays inactive. These are engineering
+selection checks on synthetic labels, not clinical validation. The existing
+70 nutrition and 110 photo JSON fixtures remain workflow/safety regression tests;
+the latter do not contain 110 real image files. No simulated model scores are used.
 
-### 1. Unified Web Application (Recommended)
+## HTTP API
 
-The primary application combines both the **Nutrition Assistant (SLM Chat)** and the **Meal Photo Companion (VLM)** into a single, unified web interface:
+- GET `/api/health`: configured/loaded model identity and readiness.
+- GET `/api/bands`, `/api/meal-meta`: reviewed guidance and form taxonomy.
+- POST `/api/screen-intake`: computes confirmed previous-day intake indicators.
+- POST `/api/query`: curated evidence or constrained model evidence selection.
+- POST `/api/analyze-meal`: editable vision draft, never a screening conclusion.
+- POST `/api/review-meal`: legacy caregiver-confirmed meal education.
+- POST `/api/explain-screening`: explains externally supplied findings; it does
+  not verify that the supplied category came from the rule engine. Prefer
+  `/api/screen-intake` for actual calculations.
 
-```bash
-# Start the web server (defaults to port 8080)
-HF_HOME="$PWD/.hf_cache" .venv/bin/python server.py 8080
-```
+Example intake payload:
 
-Open your browser and navigate to:
-```
-http://localhost:8080
-```
-
-- **Tab 1: Nutrition Assistant**:
-  - Drag the completed-months slider from 0 to 59.
-  - Review the dynamically rendered variety targets, meal cadence, and food categories.
-  - Ask questions in either **SmolLM2-360M Generated** mode or **Curated Evidence** mode.
-  - Click **"📋 Framework Taxonomy"** in the top bar to inspect the complete 8-dimensional architecture table.
-- **Tab 2: Meal Photo Companion**:
-  - Click **"🥣 Sample 1: Mashed Lentils & Rice (10m)"** or upload an image.
-  - Click **"1. Analyze Photo with SmolVLM-500M"** to run on-device vision inference.
-  - Edit or confirm the observations in the caregiver review form.
-  - Watch the **UNICEF Minimum Dietary Diversity Indicator** calculate the day-level score (target: &ge;5 of 8 groups).
-  - Click **"8. Get Age-Specific Educational Guidance"** to generate the evidence-backed feeding interpretation.
-
----
-
-### 2. Standalone Gradio Photo Companion
-
-If you prefer testing the meal photo companion inside Gradio's standard interface:
-
-```bash
-HF_HOME="$PWD/.hf_cache" .venv/bin/python meal_photo_app.py
-```
-
-Navigate to `http://127.0.0.1:8899` (or the port defined by `NUTRIGUIDE_PORT`).
-
----
-
-### 3. Command-Line Evidence Inspector
-
-You can inspect the exact evidence context or run SLM text generation directly from your terminal:
-
-```bash
-# Inspect curated evidence for a 7-month-old (Zero model download needed)
-.venv/bin/python app.py --age-months 7 --question "What is safe to introduce?" --context-only
-
-# Run SmolLM2-360M inference for an 18-month-old
-HF_HOME="$PWD/.hf_cache" .venv/bin/python app.py --age-months 18 --question "What textures and meal frequency should we offer?"
-```
-
----
-
-## Automated Verification & Evaluation Suites
-
-NutriGuide includes five deterministic evaluation test suites to prevent regressions, enforce screening boundaries, test age transitions, and verify compliance with clinical guidelines:
-
-```bash
-# 1. Knowledge Base & Context Checks (5 tests)
-python evaluate.py
-
-# 2. Meal-Photo Workflow & Policy Checks (4 tests)
-python evaluate_meal.py
-
-# 3. 8-Dimensional Educational Framework Checks (8 tests)
-python evaluate_framework.py
-
-# 4. Screening Safety & Boundary Verification Suite (Phase 1 Boundaries)
-python evaluate_screening_boundaries.py
-
-# 5. Comprehensive Pediatric Dataset Benchmark Suite (70 deterministic + 110 meal photos)
-python evaluate_dataset.py
-```
-
-All automated tests run deterministically without requiring network access or external API calls.
-
----
-
-## Ground Truth & Vision Evaluation Datasets
-
-NutriGuide's 180 evaluation benchmark cases (`data/eval/`) are systematically grounded in normative pediatric health surveys and computer vision food recognition datasets:
-
-### 1. Deterministic Nutrition Datasets & Clinical Standards (0–6 Years)
-
-- **[CNNS 2016–18 (Government of India – NHM)](https://nhm.gov.in/index1.php?lang=1&level=2&lid=713&sublinkid=1332):** Comprehensive National Nutrition Survey reports and [CNNS Data Note](https://healthnutritionindia.in/reports/documents/25/CNNS-v1.0-Data-Note-for-MoHFW.pdf) (`CNNS_04`, `CNNS_59`). Prime India-specific benchmark for stunting, wasting, micronutrient exposure, and food group transitions from infancy to school age.
-- **[NFHS-5 India 2019–21 (World Bank Microdata)](https://microdata.worldbank.org/catalog/4482) & [DHS India Report](https://www.dhsprogram.com/publications/publication-FR375-DHS-Final-Reports.cfm):** Benchmark for infant and young child feeding (IYCF) indicators: exclusive breastfeeding under 6m, timely complementary food introduction (6–8m), minimum meal frequency, and junk food exposure.
-- **[UNICEF IYCF Datasets](https://data.unicef.org/resources/dataset/infant-young-child-feeding/) & [Indicator Portal](https://data.unicef.org/topic/nutrition/infant-and-young-child-feeding/):** Global WHO/UNICEF standards for 0–23 months: Minimum Dietary Diversity (MDD &ge;5 of 8 food groups), Minimum Acceptable Diet (MAD), and zero-fruit-or-vegetable consumption.
-- **[NHANES Dietary (2021–23 & Archive – CDC/NCHS)](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Dietary&Cycle=2021-2023):** Detailed 24-hour individual dietary recall records, food portion distributions, sodium, and added sugars, particularly for children aged 2–6 years (24–72 months).
-- **[FITS (Feeding Infants and Toddlers Study)](https://www.nestlenutrition-institute.org/academies/toddler-hub/fits):** 24-hour dietary-recall methodology, developmental texture progression, and choking hazard exposure in infants and toddlers.
-
-### 2. Vision Recognition Benchmark Datasets for Meal Photos
-
-- **[IndianFoodNet30 (Roboflow Universe)](https://universe.roboflow.com/indianfoodnet/indianfoodnet) & [2026 Frontiers in Computer Science Study](https://www.frontiersin.org/journals/computer-science/articles/10.3389/fcomp.2026.1753764/full):** Primary benchmark for multi-dish Indian meals (khichdi, dal, rice, roti, sabzi, curd, paneer, thalis).
-- **[UECFoodPix / UECFoodPixComplete](https://mm.cs.uec.ac.jp/uecfoodpix/):** Multi-food detection and pixel-level segmentation on plates, divided trays, and bowls.
-- **[UEC-Food100 / 256](https://mm.cs.uec.ac.jp/uecfoodpix/):** Multi-category food recognition benchmarking across diverse international food preparations.
-
-### 3. Aggressive Age Boundary Pair Testing Matrix
-
-Bugs at age boundaries in pediatric systems are clinically hazardous. NutriGuide aggressively tests all 7 critical boundaries:
-- **5m vs 6m:** Exclusive milk feeding (no solids/water) vs early complementary start (smooth purees, iron-rich foods, 2–3 meals).
-- **8m vs 9m:** 2–3 meals (smooth/mashed) vs 3–4 meals + snacks (lumpy textures, finger food pincer grasp).
-- **11m vs 12m:** Honey strictly prohibited (infant botulism) & cow's milk beverage warning vs honey safe & whole cow's milk drink allowed.
-- **23m vs 24m:** Zero added sugar strict rule (<24m) & whole milk vs family diet & low-fat milk transition option.
-- **35m vs 36m:** Late toddler rotary chewing fatigue & acute choking hazards vs 3-year preschool milestone (all 20 deciduous teeth).
-- **59m vs 60m:** Active Phase 1 rule upper limit (24–59m) vs School-age Phase 2 deferred scope (60–72m).
-- **71m vs 72m:** Near target scope limit (5y 11m) vs 6 completed years exact scope upper boundary.
-
-
----
-
-## REST API Documentation
-
-The server exposes a clean JSON REST API on `http://localhost:8080`:
-
-### `GET /api/health`
-Checks readiness of the SLM and VLM pipelines along with screening metadata.
-```json
-{
-  "status": "ok",
-  "module_type": "nutrition_screening_support",
-  "scope": "children_0_to_6_years",
-  "target_scope": "0_to_72_months",
-  "implemented_rule_scope": "0_to_59_months",
-  "screening_engine_status": "under_development",
-  "diagnostic": false,
-  "vitamin_d_screening_enabled": false,
-  "screening_notice": "This module supports nutrition screening and education. It does not diagnose malnutrition, nutrient deficiency, or disease.",
-  "lm_ready": true,
-  "vlm_ready": true,
-  "lm_loading": false,
-  "vlm_loading": false
-}
-```
-
-### `GET /api/bands`
-Returns all 5 implemented age bands with full variety targets, meal cadence, food categories, safe textures, foods to avoid, and screening scope metadata.
-
-### `GET /api/meal-meta`
-Returns allowable food groups (8 UNICEF groups), textures, preparation safety flags, allergen categories, and screening disclaimers.
-
-### `POST /api/query`
-Executes an age-specific question query against either SmolLM2 or the curated evidence context, returning non-diagnostic screening metadata.
-**Request Body:**
 ```json
 {
   "age_months": 10,
-  "question": "What textures should my 10-month-old eat?",
-  "use_model": true
+  "confirmed": true,
+  "recall_complete": true,
+  "recall_period": "previous_day",
+  "breastfed": true,
+  "solid_feeds": 3,
+  "daily_groups": ["Breast milk", "Grains, roots and tubers", "Pulses, nuts and seeds", "Eggs", "Other fruits and vegetables"],
+  "red_flags": []
 }
 ```
 
-### `POST /api/analyze-meal`
-Processes an uploaded base64 image or a pre-packaged sample meal via `SmolVLM-500M` to produce candidate food and texture observations requiring caregiver confirmation.
-**Request Body:**
-```json
-{
-  "sample": "meal_lentils_rice.jpg"
-}
-```
-*or*
-```json
-{
-  "image": "data:image/jpeg;base64,..."
-}
-```
-
-### `POST /api/review-meal`
-Evaluates caregiver-confirmed meal observations against pediatric dietary rules, returning screening guidance and non-diagnostic notices.
-**Request Body:**
-```json
-{
-  "age_months": 10,
-  "foods": "mashed lentils, soft rice",
-  "groups": ["Grains, roots and tubers", "Pulses, nuts and seeds"],
-  "textures": ["Mashed", "Smooth puree"],
-  "preparation": ["Cooked/softened", "Mashed/pureed"],
-  "allergens": [],
-  "daily_groups": ["Breast milk", "Grains, roots and tubers", "Pulses, nuts and seeds"],
-  "confirmed": true
-}
-```
-
-### `POST /api/explain-screening`
-Implements the core **SLM as Communicator** pattern. Accepts structured output produced by the deterministic screening rule engine and uses the SLM strictly to explain the findings to the caregiver in empathetic, simple language (without calculating or altering screening risk).
-**Request Body:**
-```json
-{
-  "age_months": 14,
-  "screening_result": "MODERATE_SCREENING_CONCERN",
-  "findings": [
-    "Limited dietary diversity: only 2 of 5 recommended food groups reported today.",
-    "High-sodium processed snack observed."
-  ],
-  "professional_review_flag": false,
-  "use_model": false
-}
-```
-**Response Body:**
-```json
-{
-  "screening_result": "MODERATE_SCREENING_CONCERN",
-  "role": "communication_and_explanation",
-  "explanation": "Screening Result: MODERATE_SCREENING_CONCERN\n\nKey Screening Observations:\n- Limited dietary diversity: only 2 of 5 recommended food groups reported today.\n- High-sodium processed snack observed.\n\nCaregiver Guidance Summary:\nFor a child aged 14 months, feeding guidelines emphasize age-appropriate variety, responsive feeding, and regular meal cadence.\n- A single meal or photo cannot determine overall nutritional adequacy. Dietary diversity is evaluated across full-day patterns.\n- Note: Vitamin D-specific screening is outside the scope of this module.\n\nScreening Notice: This module supports nutrition screening and education. It does not diagnose malnutrition, nutrient deficiency, or disease.",
-  "decision_maker": "deterministic_rule_engine",
-  "screening_notice": "This module supports nutrition screening and education. It does not diagnose malnutrition, nutrient deficiency, or disease."
-}
-```
-
----
-
-## Authoritative Source Registry
-
-All educational guidance, safety rules, and dietary recommendations in NutriGuide are grounded in official, peer-reviewed clinical guidelines:
-
-| Source ID | Reference Title | Authoring Body | Clinical Topic Covered |
-|---|---|---|---|
-| **WHO-IYCF** | [Infant and Young Child Feeding](https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding) | World Health Organization | Exclusive breastfeeding, complementary feeding timing, meal cadence, responsive feeding |
-| **WHO-BF** | [Breastfeeding Q&A](https://www.who.int/news-room/questions-and-answers/item/breastfeeding) | World Health Organization | Definition of exclusive breastfeeding; zero water in first 6 months |
-| **WHO-CF-2023** | [Guideline for Complementary Feeding (6–23 Months)](https://www.who.int/publications/b/70981) | World Health Organization | Normative global complementary feeding standards |
-| **WHO-EARLY-FOODS** | [Recommended Food for the Very Early Years](https://www.who.int/news-room/questions-and-answers/item/child-health-recommended-food-for-the-very-early-years) | World Health Organization | Texture progression, energy density, transition to family table foods |
-| **UNICEF-DIET** | [Infant and Young Child Diets](https://data.unicef.org/topic/nutrition/diets/) | UNICEF Data | 5-of-8 food-group Minimum Dietary Diversity (MDD) population indicator |
-| **WHO-GROWTH** | [Child Growth Standards](https://www.who.int/news-room/questions-and-answers/item/child-growth-standards) | World Health Organization | 0–5 year growth monitoring principles |
-| **CDC-SOLIDS** | [When, What, and How to Introduce Solid Foods](https://www.cdc.gov/infant-toddler-nutrition/foods-and-drinks/when-what-and-how-to-introduce-solid-foods.html) | Centers for Disease Control and Prevention | Developmental readiness cues, texture progression, single-allergen introduction |
-| **CDC-CHOKING** | [Choking Hazards Prevention](https://www.cdc.gov/infant-toddler-nutrition/foods-and-drinks/choking-hazards.html) | Centers for Disease Control and Prevention | Food preparation safeguards (quartering grapes lengthwise, steaming hard foods), active supervision |
-| **CDC-LIMITS** | [Foods and Drinks to Avoid or Limit](https://www.cdc.gov/infant-toddler-nutrition/foods-and-drinks/foods-and-drinks-to-avoid-or-limit.html) | Centers for Disease Control and Prevention | Strict infant botulism prohibition on honey (<12m); zero added sugars (<24m) |
-| **CDC-FOOD-SAFETY**| [Safer Food Choices Under 5](https://www.cdc.gov/food-safety/foods/children-under-5.html) | Centers for Disease Control and Prevention | Foodborne illness risk reduction; pasteurization mandates |
-
----
-
-## License & Attribution
-
-This educational prototype is developed for research and learning on small language model safety bounding. Model weights are subject to the respective Hugging Face community licenses:
-- [SmolLM2-360M-Instruct License (Apache 2.0)](https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct)
-- [SmolVLM-500M-Instruct License (Apache 2.0)](https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct)
+This returns MDD met (5/8), MMF met (3 feeds) and MAD met. It does not establish
+clinical nutritional adequacy. Unknown counts should be null, not zero. JSON
+requests are limited to 16 MiB. Screening records are processed in memory and
+are not stored by the server. Model-load errors are visible through health.

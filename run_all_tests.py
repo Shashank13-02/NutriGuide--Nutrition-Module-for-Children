@@ -15,6 +15,8 @@ import sys
 import time
 
 TEST_SCRIPTS = [
+    ("Intake Indicators & Model Contracts", "test_intake_screening.py"),
+    ("Server Concurrency & Request Validation", "test_server_runtime.py"),
     ("Age Boundary Matrix & Evaluation Datasets", "evaluate_dataset.py"),
     ("Phase 1 Screening Safety Boundaries", "evaluate_screening_boundaries.py"),
     ("Curated Context Safety", "evaluate.py"),

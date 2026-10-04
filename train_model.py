@@ -1,240 +1,140 @@
-"""NutriGuide SLM Supervised Fine-Tuning (SFT) Training Pipeline
+"""Task adaptation with native chat formatting and assistant-only supervision.
 
-Trains the communication SLM on the pediatric nutrition screening dataset:
-- Architecture: SLM = Communication / Caregiver Explanation Layer.
-- Ground truth training pairs generated from WHO, UNICEF, CDC clinical guidelines and
-  the 70 deterministic screening cases.
-- Teaches the model:
-  1. Strict adherence to deterministic screening outputs (never alter/downgrade/invent).
-  2. Non-diagnostic phrasing (100% elimination of prohibited terms).
-  3. Actionable, empathetic caregiver guidance tailored to infant & child age bands.
-  4. Instant emergency escalation for pediatric red flags.
-
-Saves trained model to: models/nutriguide_adapted_slm/
+Produces a candidate checkpoint; never activates it based on training loss.
 """
 from __future__ import annotations
-
 import argparse
+import hashlib
 import json
-import os
-import sys
+import random
+import shutil
+import tempfile
 import time
 from pathlib import Path
 
-import torch
-from torch.utils.data import DataLoader, Dataset
-from transformers import AutoModelForCausalLM, AutoTokenizer, get_linear_schedule_with_warmup
+ROOT = Path(__file__).parent.resolve()
 
-ROOT = Path(__file__).parent
-EVAL_DIR = ROOT / "data" / "eval"
-DET_CASES_PATH = EVAL_DIR / "deterministic_nutrition_cases.json"
-MODELS_DIR = ROOT / "models"
-OUTPUT_DIR = MODELS_DIR / "nutriguide_adapted_slm"
 
-from app import SYSTEM
-from screening_constants import DEFAULT_TEXT_MODEL_ID, SCREENING_DISCLAIMER
+def encode_example(record, tokenizer, max_length=768):
+    messages = record["messages"]
+    prefix = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, enable_thinking=False)
+    # Tokenize the completion after the exact inference prefix; includes an EOS target.
+    completion = tokenizer(json.dumps(record["target"]), add_special_tokens=False)["input_ids"] + [tokenizer.eos_token_id]
+    if len(prefix) + len(completion) > max_length:
+        raise ValueError("Training example is too long; do not truncate away the answer.")
+    ids = prefix + completion
+    return {"input_ids": ids, "attention_mask": [1] * len(ids), "labels": [-100] * len(prefix) + completion}
 
-class PediatricSFTDataset(Dataset):
-    def __init__(self, cases: list[dict], tokenizer, max_length: int = 512):
-        self.examples = []
-        self.tokenizer = tokenizer
-        self.max_length = max_length
 
-        for c in cases:
-            age = c["age_months"]
-            query = c["caregiver_query"]
-            expected = c["expected_behavior"]
-            category = expected.get("expected_screening_category", "LOW_SCREENING_CONCERN")
-            is_urgent = expected.get("expect_urgent_referral", False)
-            foods = c.get("reported_foods", "Standard reported intake")
-            groups = ", ".join(c.get("reported_food_groups", [])) or "None specified"
-
-            user_prompt = (
-                f"CHILD AGE: {age} completed months\n"
-                f"CAREGIVER QUERY: {query}\n"
-                f"DETERMINISTIC RULE ENGINE RESULT: {category}\n"
-                f"REPORTED FOODS: {foods} (Groups: {groups})\n\n"
-                "TASK: Explain this deterministic screening finding to the caregiver in clear, supportive, "
-                "non-diagnostic language. Do not calculate risk or diagnose disease. State practical next steps."
-            )
-
-            if is_urgent:
-                assistant_response = (
-                    f"Screening Finding: PROFESSIONAL_REVIEW_FLAG\n\n"
-                    f"This feeding or physical pattern includes urgent symptoms that require prompt clinical assessment. "
-                    f"For breathing difficulty, blue color, lethargy, or active choking, please seek emergency help immediately. "
-                    f"For other severe dehydration or feeding concerns, contact your pediatrician right away.\n\n"
-                    f"Screening Notice: {SCREENING_DISCLAIMER}"
-                )
-            else:
-                assistant_response = (
-                    f"Screening Result: {category}\n\n"
-                    f"For a child aged {age} months, dietary guidance focuses on age-appropriate variety, consistent meal cadence, "
-                    f"and responsive feeding. Note that a single meal or photo cannot assess overall nutritional adequacy—dietary diversity "
-                    f"is a reflection of full-day eating patterns. Always discuss developmental milestones with your pediatrician.\n\n"
-                    f"Screening Notice: {SCREENING_DISCLAIMER}"
-                )
-
-            # Format as chat template
-            full_prompt = (
-                f"<|im_start|>system\n{SYSTEM}<|im_end|>\n"
-                f"<|im_start|>user\n{user_prompt}<|im_end|>\n"
-                f"<|im_start|>assistant\n{assistant_response}<|im_end|>"
-            )
-
-            enc = tokenizer(
-                full_prompt,
-                max_length=max_length,
-                truncation=True,
-                padding="max_length",
-                return_tensors="pt",
-            )
-            input_ids = enc["input_ids"].squeeze(0)
-            attention_mask = enc["attention_mask"].squeeze(0)
-
-            # Mask labels so loss is computed primarily on assistant tokens
-            labels = input_ids.clone()
-            labels[labels == tokenizer.pad_token_id] = -100
-
-            self.examples.append({
-                "input_ids": input_ids,
-                "attention_mask": attention_mask,
-                "labels": labels,
-            })
-
-    def __len__(self):
-        return len(self.examples)
-
-    def __getitem__(self, idx):
-        return self.examples[idx]
-
-def train_slm(
-    model_name: str = DEFAULT_TEXT_MODEL_ID,
-    epochs: int = 2,
-    batch_size: int = 2,
-    lr: float = 3e-5,
-    output_dir: Path = OUTPUT_DIR,
-):
-    print("=================================================================")
-    print("      NUTRIGUIDE SLM SUPERVISED FINE-TUNING PIPELINE")
-    print("=================================================================")
-    print(f"[*] Base Model: {model_name}")
-    print(f"[*] Target Output: {output_dir}")
-    print(f"[*] Epochs: {epochs} | Batch Size: {batch_size} | Learning Rate: {lr}\n")
-
-    assert DET_CASES_PATH.exists(), f"Missing dataset: {DET_CASES_PATH}"
-    cases = json.loads(DET_CASES_PATH.read_text(encoding="utf-8"))
-    print(f"[*] Loaded {len(cases)} pediatric clinical instruction pairs.")
-
-    print(f"[*] Loading tokenizer for {model_name}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    if tokenizer.pad_token is None:
+def train_slm(model_name=None, epochs=2, batch_size=2, lr=5e-5, output_dir=None, max_steps=None):
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from build_task_training_data import main as build
+    random.seed(42)
+    torch.manual_seed(42)
+    torch.set_num_threads(min(4, torch.get_num_threads()))
+    build()
+    source = model_name or str(ROOT / "models" / "nutriguide_adapted_slm")
+    output_dir = Path(output_dir or ROOT / "models" / "nutrition_evidence_candidate")
+    if Path(source).resolve() == output_dir.resolve():
+        raise ValueError("Candidate output must not overwrite the source checkpoint.")
+    train_file = ROOT / "data" / "training" / "evidence_train.jsonl"
+    rows = [json.loads(line) for line in train_file.read_text(encoding="utf-8").splitlines()]
+    tokenizer = AutoTokenizer.from_pretrained(source, local_files_only=Path(source).exists())
+    if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
-
-    print(f"[*] Building SFT Dataset...")
-    dataset = PediatricSFTDataset(cases, tokenizer)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-
-    print(f"[*] Loading base model weights...")
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"[*] Training Device: {device}")
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        torch_dtype=torch.float32,
-    )
+    examples = [encode_example(row, tokenizer) for row in rows]
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    if device == "cpu":
+        from cpu_model import cpu_text_components
+        model = cpu_text_components(source)["model"]
+    else:
+        model = AutoModelForCausalLM.from_pretrained(source, local_files_only=Path(source).exists(), dtype=torch.float32)
     model.to(device)
-
-    # Freeze lower transformer blocks for parameter-efficient adaptation
-    trainable_params = 0
-    all_params = 0
-    for name, param in model.named_parameters():
-        all_params += param.numel()
-        # Fine-tune the upper transformer layers and LM head
-        if "lm_head" in name or "model.layers.15" in name or "model.layers.14" in name:
+    # Adapt actual final blocks; previous code hard-coded intermediate layer numbers.
+    layers = model.model.layers
+    for param in model.parameters():
+        param.requires_grad = False
+    for layer in layers[-2:]:
+        for param in layer.parameters():
             param.requires_grad = True
-            trainable_params += param.numel()
-        else:
-            param.requires_grad = False
-
-    pct_trainable = round((trainable_params / all_params) * 100, 2)
-    print(f"[*] Parameter-Efficient Adaptation: {trainable_params:,} / {all_params:,} params trainable ({pct_trainable}%)")
-
-    optimizer = torch.optim.AdamW(
-        [p for p in model.parameters() if p.requires_grad],
-        lr=lr,
-        weight_decay=0.01,
-    )
-    total_steps = len(dataloader) * epochs
-    scheduler = get_linear_schedule_with_warmup(
-        optimizer,
-        num_warmup_steps=max(1, int(total_steps * 0.1)),
-        num_training_steps=total_steps,
-    )
-
-    print(f"\n[*] Starting Supervised Training ({epochs} epochs, {total_steps} total steps)...")
-    start_time = time.time()
-    history = []
-
+    parameters = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.AdamW(parameters, lr=lr, weight_decay=0.01)
+    start = time.perf_counter()
+    history, steps = [], 0
     model.train()
-    step = 0
-    for epoch in range(1, epochs + 1):
-        epoch_loss = 0.0
-        batch_count = 0
-        epoch_start = time.time()
-
-        for batch in dataloader:
-            step += 1
-            input_ids = batch["input_ids"].to(device)
-            attention_mask = batch["attention_mask"].to(device)
-            labels = batch["labels"].to(device)
-
-            optimizer.zero_grad()
-            outputs = model(
-                input_ids=input_ids,
-                attention_mask=attention_mask,
-                labels=labels,
-            )
-            loss = outputs.loss
+    for epoch in range(epochs):
+        random.shuffle(examples)
+        for offset in range(0, len(examples), batch_size):
+            items = examples[offset:offset + batch_size]
+            width = max(len(item["input_ids"]) for item in items)
+            batch = {key: torch.tensor([item[key] + [fill] * (width - len(item[key])) for item in items], device=device)
+                     for key, fill in (("input_ids", tokenizer.pad_token_id), ("attention_mask", 0), ("labels", -100))}
+            optimizer.zero_grad(set_to_none=True)
+            # Project only supervised prediction positions into the vocabulary.
+            # Qwen's large vocabulary otherwise materializes hundreds of MB of
+            # ignored prompt logits. Token t is predicted by hidden state t-1.
+            hidden = model.model(input_ids=batch["input_ids"], attention_mask=batch["attention_mask"], use_cache=False).last_hidden_state
+            supervised = batch["labels"][:, 1:] != -100
+            logits = model.lm_head(hidden[:, :-1][supervised])
+            loss = torch.nn.functional.cross_entropy(logits.float(), batch["labels"][:, 1:][supervised])
+            if not torch.isfinite(loss):
+                raise RuntimeError("Training loss is not finite")
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            torch.nn.utils.clip_grad_norm_(parameters, 1.0)
             optimizer.step()
-            scheduler.step()
-
-            epoch_loss += loss.item()
-            batch_count += 1
-
-            if step % 10 == 0 or step == total_steps:
-                print(f"    Epoch {epoch}/{epochs} | Step {step}/{total_steps} | Batch Loss: {loss.item():.4f}")
-
-        avg_loss = epoch_loss / max(1, batch_count)
-        epoch_dur = round(time.time() - epoch_start, 2)
-        history.append({"epoch": epoch, "loss": round(avg_loss, 4), "duration_sec": epoch_dur})
-        print(f"  [+] Epoch {epoch} Completed: Average Loss = {avg_loss:.4f} ({epoch_dur}s)")
-
-    total_dur = round(time.time() - start_time, 2)
-    print(f"\n[*] Training Complete in {total_dur}s. Final Loss: {history[-1]['loss']:.4f}")
-
-    print(f"[*] Exporting fine-tuned model and tokenizer to: {output_dir}...")
+            steps += 1
+            history.append(float(loss.detach().cpu()))
+            print(f"step={steps} assistant_loss={history[-1]:.4f} elapsed={time.perf_counter()-start:.1f}s", flush=True)
+            if max_steps is not None and steps >= max_steps:
+                break
+        if max_steps is not None and steps >= max_steps:
+            break
     output_dir.mkdir(parents=True, exist_ok=True)
-    model.save_pretrained(output_dir)
-    tokenizer.save_pretrained(output_dir)
-
-    meta = {
-        "base_model": model_name,
-        "epochs": epochs,
-        "trainable_parameters": trainable_params,
-        "total_parameters": all_params,
-        "dataset_samples": len(cases),
-        "initial_loss": history[0]["loss"],
-        "final_loss": history[-1]["loss"],
-        "total_duration_sec": total_dur,
-        "role": "communication_and_explanation",
-        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-    }
+    (output_dir / "training_records.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+    # Persist compact original-format weights; evaluation reloads this saved
+    # checkpoint, so any bfloat16 rounding is included in measured accuracy.
+    model.to(dtype=torch.bfloat16)
+    # Safetensors finalizes via atomic rename. Sync/scanner handles can block
+    # that rename on OneDrive. Serialize off the sync folder, then retry copies
+    # while the trained model remains alive rather than losing the entire run.
+    with tempfile.TemporaryDirectory(prefix="nutriguide-checkpoint-", ignore_cleanup_errors=True) as staging:
+        model.save_pretrained(staging)
+        tokenizer.save_pretrained(staging)
+        for path in Path(staging).iterdir():
+            if path.is_file():
+                for attempt in range(5):
+                    try:
+                        shutil.copyfile(path, output_dir / path.name)
+                        break
+                    except OSError:
+                        if attempt == 4:
+                            raise
+                        time.sleep(0.5)
+    meta = {"base_model": source, "role": "reviewed_evidence_selection", "steps": steps,
+            "dataset_samples": len(rows), "train_sha256": hashlib.sha256(train_file.read_bytes()).hexdigest(),
+            "assistant_only_loss": True, "native_chat_template": True, "seed": 42,
+            "initial_loss": history[0], "final_loss": history[-1], "duration_seconds": time.perf_counter()-start,
+            "validation_status": "candidate_not_qualified", "clinical_validation": False,
+            "source_limitations": "The legacy SmolLM2 source previously used synthetic evaluation cases." if "nutriguide_adapted_slm" in str(source) else "Official base weights; training labels are synthetic evidence selections, not clinical cases."}
     (output_dir / "training_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
-    print(f"[+] Model checkpoint saved successfully -> {output_dir / 'model.safetensors'}")
+    print(json.dumps(meta, indent=2), flush=True)
     return meta
 
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", default=None)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--batch-size", type=int, default=2)
+    parser.add_argument("--lr", type=float, default=5e-5)
+    parser.add_argument("--max-steps", type=int)
+    args = parser.parse_args()
+    if args.epochs < 1 or args.batch_size < 1 or args.lr <= 0 or (args.max_steps is not None and args.max_steps < 1):
+        parser.error("Training parameters must be positive")
+    train_slm(args.model, args.epochs, args.batch_size, args.lr, args.output_dir, args.max_steps)
+
+
 if __name__ == "__main__":
-    train_slm()
+    main()

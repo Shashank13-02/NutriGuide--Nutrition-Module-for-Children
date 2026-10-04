@@ -16,6 +16,7 @@ env/
 models/**/*.safetensors
 models/**/*.bin
 models/**/*.pt
+models/**/*.download
 
 # OS Specific
 .DS_Store
@@ -34,3 +35,6 @@ Thumbs.db
 *~
 .system_generated/
 *.log
+
+# Hugging Face local download bookkeeping
+models/**/.cache/

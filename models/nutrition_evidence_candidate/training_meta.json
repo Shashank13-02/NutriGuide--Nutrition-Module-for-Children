@@ -1,0 +1,18 @@
+{
+  "base_model": "C:\\Users\\skgpt\\OneDrive\\Desktop\\Nutritional Module\\models\\nutriguide_adapted_slm",
+  "role": "reviewed_evidence_selection",
+  "steps": 60,
+  "dataset_samples": 60,
+  "train_sha256": "d4b8cf29130604fc287ece969380491528318b8c5ab3d480c835c31b83f68a13",
+  "assistant_only_loss": true,
+  "native_chat_template": true,
+  "seed": 42,
+  "initial_loss": 1.3939626216888428,
+  "final_loss": 0.26741594076156616,
+  "duration_seconds": 387.82164439999906,
+  "validation_status": "rejected_heldout_selection_25_percent",
+  "clinical_validation": false,
+  "source_limitations": "Legacy source was previously adapted on synthetic evaluation cases; the new holdout tests selection only.",
+  "exact_selection_rate": 0.25,
+  "schema_valid_rate": 1.0
+}

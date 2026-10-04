@@ -1,0 +1,199 @@
+{
+  "model": "models/qwen_nutrition_evidence_candidate",
+  "precision": "float32_cpu",
+  "count": 15,
+  "schema_valid_rate": 1.0,
+  "exact_selection_rate": 0.6,
+  "mean_latency_seconds": 11.844886159999987,
+  "outputs": [
+    {
+      "id": "8be14f11e25b5bbf",
+      "target": [
+        0
+      ],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 10.510987300000124
+    },
+    {
+      "id": "0cb7b2c571a96e30",
+      "target": [
+        0
+      ],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 12.335801100000026
+    },
+    {
+      "id": "8b3cbbba09355c50",
+      "target": [
+        0
+      ],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 11.52686839999933
+    },
+    {
+      "id": "da9ea2ee6fb955a2",
+      "target": [
+        1
+      ],
+      "prediction": [
+        2
+      ],
+      "raw": "[2]",
+      "schema_valid": true,
+      "exact_match": false,
+      "latency_seconds": 11.604439099999581
+    },
+    {
+      "id": "a74c8212546d5951",
+      "target": [],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": false,
+      "latency_seconds": 12.399323399999957
+    },
+    {
+      "id": "f655c24d5824fccf",
+      "target": [
+        2
+      ],
+      "prediction": [
+        2
+      ],
+      "raw": "[2]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 14.895436699999664
+    },
+    {
+      "id": "4f436547f3de596d",
+      "target": [
+        3
+      ],
+      "prediction": [
+        3
+      ],
+      "raw": "[3]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 11.696525000000292
+    },
+    {
+      "id": "ee8b0278a5b7008f",
+      "target": [
+        1
+      ],
+      "prediction": [
+        1
+      ],
+      "raw": "[1]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 11.805156099999294
+    },
+    {
+      "id": "40153217201819cb",
+      "target": [
+        0
+      ],
+      "prediction": [
+        3
+      ],
+      "raw": "[3]",
+      "schema_valid": true,
+      "exact_match": false,
+      "latency_seconds": 11.646956100000352
+    },
+    {
+      "id": "ae787755fe8511e8",
+      "target": [],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": false,
+      "latency_seconds": 11.602538199999799
+    },
+    {
+      "id": "df6976fabe045963",
+      "target": [
+        3
+      ],
+      "prediction": [
+        3
+      ],
+      "raw": "[3]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 11.297604400000637
+    },
+    {
+      "id": "b14101012d6e9218",
+      "target": [
+        0
+      ],
+      "prediction": [
+        3
+      ],
+      "raw": "[3]",
+      "schema_valid": true,
+      "exact_match": false,
+      "latency_seconds": 11.430199800000082
+    },
+    {
+      "id": "40a11b5192962df6",
+      "target": [
+        1
+      ],
+      "prediction": [
+        1
+      ],
+      "raw": "[1]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 11.476056600000447
+    },
+    {
+      "id": "907bae05f5dd362e",
+      "target": [
+        0
+      ],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": true,
+      "latency_seconds": 11.582076400000005
+    },
+    {
+      "id": "2cb215bbeb42964d",
+      "target": [],
+      "prediction": [
+        0
+      ],
+      "raw": "[0]",
+      "schema_valid": true,
+      "exact_match": false,
+      "latency_seconds": 11.863323800000217
+    }
+  ]
+}
