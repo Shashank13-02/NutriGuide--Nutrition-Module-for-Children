@@ -1,8 +1,9 @@
-"""NutriGuide Local Web Application Server
+"""NutriGuide Child Nutrition Screening & Caregiver Education Platform Server
 
 Serves a unified modern web UI on localhost with:
-1. NutriGuide SLM: Text Q&A grounded in WHO/CDC pediatric guidelines with SmolLM2-360M-Instruct.
-2. Meal Photo Companion: Meal image analysis using SmolVLM-500M-Instruct + Caregiver Confirmation & Safety Review.
+1. NutriGuide SLM: Text intake screening queries & caregiver education grounded in WHO/CDC guidelines with SmolLM2-360M-Instruct.
+2. Meal Photo Companion: Meal image observation using SmolVLM-500M-Instruct + Caregiver Confirmation & Safety Review.
+Target population: Children from birth through 6 completed years (0 to 72 completed months; 0 to 59 months currently implemented).
 """
 from __future__ import annotations
 
@@ -25,8 +26,18 @@ CACHE_DIR = BASE_DIR / ".hf_cache"
 if CACHE_DIR.exists():
     os.environ.setdefault("HF_HOME", str(CACHE_DIR))
 
-# Import domain logic
-from app import KB, MODEL_ID, SYSTEM, find_band, context_for, red_flag_gate
+# Import domain logic and screening constants
+from screening_constants import (
+    CURRENT_IMPLEMENTED_MAX_AGE_MONTHS,
+    MODULE_NAME,
+    MODULE_TYPE,
+    SCREENING_DISCLAIMER,
+    SCREENING_ENGINE_STATUS,
+    SUPPORTED_MIN_AGE_MONTHS,
+    TARGET_MAX_AGE_MONTHS,
+    VITAMIN_D_SCREENING_ENABLED,
+)
+from app import KB, MODEL_ID, SYSTEM, find_band, context_for, red_flag_gate, explain_screening_findings
 from meal_photo_app import (
     VLM_ID,
     ALLOWED_TEXTURES,
@@ -71,11 +82,11 @@ def get_pipeline():
             "text-generation",
             model=MODEL_ID,
             device=device,
-            dtype=torch.float16 if device == "mps" else torch.float32,
+            torch_dtype=torch.float16 if device == "mps" else torch.bfloat16,
         )
     except Exception as e:
         print(f"[!] Warning: SLM device-specific load fallback ({e})...")
-        pipe = pipeline("text-generation", model=MODEL_ID)
+        pipe = pipeline("text-generation", model=MODEL_ID, torch_dtype=torch.bfloat16)
         
     with _PIPELINE_LOCK:
         _PIPELINE = pipe
@@ -176,8 +187,8 @@ def parse_vision_output(generated_text: Any) -> dict:
     return draft
 
 def analyze_photo_bytes(image: Image.Image) -> dict:
-    prompt = """Analyze only the meal, plate, bowl, or tray. Do NOT infer anything about a child.
-Return JSON only with: visible_foods (up to 8 ordinary food names), texture_cues (only: smooth puree, mashed, soft pieces, finger food, mixed/unclear), uncertain (boolean), child_present (boolean). If a child or face is visible, set child_present true. If unclear, use empty foods and mixed/unclear."""
+    prompt = """Analyze only the meal, plate, bowl, or tray. Do NOT infer anything about a child, health status, or nutritional deficiency.
+Return candidate observations only as JSON with: visible_foods (up to 8 ordinary food names), texture_cues (only: smooth puree, mashed, soft pieces, finger food, mixed/unclear), uncertain (boolean), child_present (boolean). If a child or face is visible, set child_present true. If unclear, use empty foods and mixed/unclear."""
     messages = [{"role": "user", "content": [{"type": "image", "image": image}, {"type": "text", "text": prompt}]}]
     try:
         pipe = get_vision_pipeline()
@@ -188,33 +199,54 @@ Return JSON only with: visible_foods (up to 8 ordinary food names), texture_cues
         return {
             "status": f"Could not analyze the photo: {exc}",
             "raw_text": "",
+            "candidate_foods": [],
             "visible_foods": [],
+            "observations": ["mixed/unclear"],
             "texture_cues": ["mixed/unclear"],
+            "uncertain_items": [],
             "uncertain": True,
             "child_present": False,
+            "requires_confirmation": True,
+            "diagnostic": False,
+            "module_type": MODULE_TYPE,
+            "screening_notice": SCREENING_DISCLAIMER,
         }
 
     if draft["child_present"]:
         return {
             "status": "A child or face may be visible. Do not submit this photo. Crop it to the meal only and try again.",
             "raw_text": raw_text,
+            "candidate_foods": [],
             "visible_foods": [],
+            "observations": ["mixed/unclear"],
             "texture_cues": ["mixed/unclear"],
+            "uncertain_items": [],
             "uncertain": True,
             "child_present": True,
+            "requires_confirmation": True,
+            "diagnostic": False,
+            "module_type": MODULE_TYPE,
+            "screening_notice": SCREENING_DISCLAIMER,
         }
 
-    status = "Draft observations only — please correct them before continuing."
+    status = "Draft candidate observations only — requires caregiver confirmation before screening guidance."
     if draft["uncertain"]:
         status += " The model marked the photo as uncertain."
 
     return {
         "status": status,
         "raw_text": raw_text,
+        "candidate_foods": draft.get("candidate_foods", draft["visible_foods"]),
         "visible_foods": draft["visible_foods"],
+        "observations": draft.get("observations", draft["texture_cues"]),
         "texture_cues": draft["texture_cues"],
+        "uncertain_items": draft.get("uncertain_items", []),
         "uncertain": draft["uncertain"],
         "child_present": False,
+        "requires_confirmation": True,
+        "diagnostic": False,
+        "module_type": MODULE_TYPE,
+        "screening_notice": SCREENING_DISCLAIMER,
     }
 
 SOURCES_INFO = {
@@ -281,6 +313,15 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
         if path == "/api/health":
             self.send_json(200, {
                 "status": "ok",
+                "module_name": MODULE_NAME,
+                "module_type": MODULE_TYPE,
+                "scope": "children_0_to_6_years",
+                "target_scope": f"0_to_{TARGET_MAX_AGE_MONTHS}_months",
+                "implemented_rule_scope": f"0_to_{CURRENT_IMPLEMENTED_MAX_AGE_MONTHS}_months",
+                "screening_engine_status": SCREENING_ENGINE_STATUS,
+                "diagnostic": False,
+                "vitamin_d_screening_enabled": VITAMIN_D_SCREENING_ENABLED,
+                "screening_notice": SCREENING_DISCLAIMER,
                 "lm_model": MODEL_ID,
                 "lm_ready": _PIPELINE is not None,
                 "lm_loading": _PIPELINE_LOADING,
@@ -293,6 +334,11 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
 
         if path == "/api/bands":
             self.send_json(200, {
+                "module_type": MODULE_TYPE,
+                "diagnostic": False,
+                "screening_notice": SCREENING_DISCLAIMER,
+                "target_scope_months": TARGET_MAX_AGE_MONTHS,
+                "implemented_scope_months": CURRENT_IMPLEMENTED_MAX_AGE_MONTHS,
                 "age_bands": KB.get("age_bands", []),
                 "red_flags": KB.get("red_flags", []),
                 "sources": SOURCES_INFO,
@@ -301,6 +347,9 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
 
         if path == "/api/meal-meta":
             self.send_json(200, {
+                "module_type": MODULE_TYPE,
+                "diagnostic": False,
+                "screening_notice": SCREENING_DISCLAIMER,
                 "food_groups": list(FOOD_GROUPS),
                 "textures": list(TEXTURES),
                 "preparation_flags": list(PREPARATION_FLAGS),
@@ -333,8 +382,10 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
             question = data.get("question", "").strip()
             use_model = bool(data.get("use_model", False))
 
-            if age_months is None or not isinstance(age_months, int) or not (0 <= age_months <= 59):
-                self.send_json(400, {"error": "age_months must be an integer between 0 and 59."})
+            if age_months is None or not isinstance(age_months, int) or not (SUPPORTED_MIN_AGE_MONTHS <= age_months <= CURRENT_IMPLEMENTED_MAX_AGE_MONTHS):
+                self.send_json(400, {
+                    "error": f"age_months must be an integer between {SUPPORTED_MIN_AGE_MONTHS} and {CURRENT_IMPLEMENTED_MAX_AGE_MONTHS} for currently implemented screening bands (target scope: 0 to {TARGET_MAX_AGE_MONTHS} months; 60 to {TARGET_MAX_AGE_MONTHS} months screening rules planned for Phase 2)."
+                })
                 return
 
             if not question:
@@ -363,6 +414,10 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                     "context": context,
                     "sources": sources_meta,
                     "mode": "red_flag_gate",
+                    "module_type": MODULE_TYPE,
+                    "diagnostic": False,
+                    "screening_notice": SCREENING_DISCLAIMER,
+                    "screening_engine_status": SCREENING_ENGINE_STATUS,
                 })
                 return
 
@@ -375,6 +430,10 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                     "context": context,
                     "sources": sources_meta,
                     "mode": "curated_context",
+                    "module_type": MODULE_TYPE,
+                    "diagnostic": False,
+                    "screening_notice": SCREENING_DISCLAIMER,
+                    "screening_engine_status": SCREENING_ENGINE_STATUS,
                 })
                 return
 
@@ -395,6 +454,10 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                     "context": context,
                     "sources": sources_meta,
                     "mode": "slm_generated",
+                    "module_type": MODULE_TYPE,
+                    "diagnostic": False,
+                    "screening_notice": SCREENING_DISCLAIMER,
+                    "screening_engine_status": SCREENING_ENGINE_STATUS,
                 })
             except Exception as e:
                 self.send_json(500, {"error": f"Model inference error: {str(e)}"})
@@ -453,6 +516,45 @@ class NutriGuideHandler(SimpleHTTPRequestHandler):
                     "success": True,
                     "guidance": guidance_text,
                     "age_months": age_months,
+                    "module_type": MODULE_TYPE,
+                    "diagnostic": False,
+                    "screening_notice": SCREENING_DISCLAIMER,
+                    "screening_engine_status": SCREENING_ENGINE_STATUS,
+                })
+            except Exception as e:
+                self.send_json(400, {"error": str(e)})
+            return
+
+        elif parsed.path == "/api/explain-screening":
+            age_months = data.get("age_months", 12)
+            screening_result = data.get("screening_result", "LOW_SCREENING_CONCERN")
+            findings = data.get("findings", [])
+            use_model = bool(data.get("use_model", False))
+
+            if age_months is None or not isinstance(age_months, int) or not (SUPPORTED_MIN_AGE_MONTHS <= age_months <= CURRENT_IMPLEMENTED_MAX_AGE_MONTHS):
+                self.send_json(400, {
+                    "error": f"age_months must be an integer between {SUPPORTED_MIN_AGE_MONTHS} and {CURRENT_IMPLEMENTED_MAX_AGE_MONTHS} for currently implemented screening bands (target scope: 0 to {TARGET_MAX_AGE_MONTHS} months)."
+                })
+                return
+
+            try:
+                explanation = explain_screening_findings(
+                    screening_payload={
+                        "screening_result": screening_result,
+                        "findings": findings,
+                        "professional_review_flag": data.get("professional_review_flag", False),
+                    },
+                    age_months=age_months,
+                    use_model=use_model,
+                )
+                self.send_json(200, {
+                    "success": True,
+                    "screening_result": screening_result,
+                    "explanation": explanation,
+                    "age_months": age_months,
+                    "module_type": MODULE_TYPE,
+                    "diagnostic": False,
+                    "screening_notice": SCREENING_DISCLAIMER,
                 })
             except Exception as e:
                 self.send_json(400, {"error": str(e)})

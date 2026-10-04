@@ -1,0 +1,4998 @@
+[
+  {
+    "photo_id": "MEAL_PHOTO_001",
+    "child_age_months": 2,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Infant formula bottle",
+    "meal_context": "feeding_bottle",
+    "image_description": "Photo of Infant formula bottle on feeding_bottle for a 2-month-old child.",
+    "ground_truth_visible_foods": [
+      "Infant formula"
+    ],
+    "ground_truth_food_groups": [
+      "Breast milk"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Infant formula"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "2m milk feeding only; meal photos not evaluated for solids."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_002",
+    "child_age_months": 4,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Expressed breast milk in bottle",
+    "meal_context": "feeding_bottle",
+    "image_description": "Photo of Expressed breast milk in bottle on feeding_bottle for a 4-month-old child.",
+    "ground_truth_visible_foods": [
+      "Breast milk"
+    ],
+    "ground_truth_food_groups": [
+      "Breast milk"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Breast milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "4m exclusive breastfeeding support."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_003",
+    "child_age_months": 5,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Rice cereal puree attempt",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Rice cereal puree attempt on suction_bowl for a 5-month-old child.",
+    "ground_truth_visible_foods": [
+      "Rice cereal"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [
+      "premature_solid_under_6m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Rice cereal"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "5m premature solid food attempt; flags age boundary."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_004",
+    "child_age_months": 5,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Pureed pear in small cup",
+    "meal_context": "small_bowl",
+    "image_description": "Photo of Pureed pear in small cup on small_bowl for a 5-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed pear"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [
+      "premature_solid_under_6m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed pear"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "5m premature fruit puree; exclusive milk feeding indicated."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_005",
+    "child_age_months": 5,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Mashed banana on infant spoon",
+    "meal_context": "infant_spoon",
+    "image_description": "Photo of Mashed banana on infant spoon on infant_spoon for a 5-month-old child.",
+    "ground_truth_visible_foods": [
+      "Mashed banana"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [
+      "premature_solid_under_6m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Mashed banana"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "5m premature solid food; gut maturity guidance."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_006",
+    "child_age_months": 3,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Water bottle with nipple",
+    "meal_context": "water_bottle",
+    "image_description": "Photo of Water bottle with nipple on water_bottle for a 3-month-old child.",
+    "ground_truth_visible_foods": [
+      "Water"
+    ],
+    "ground_truth_food_groups": [],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "unnecessary_water_under_6m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Water"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 0,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "3m water introduction is inappropriate."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_007",
+    "child_age_months": 1,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Newborn breast milk bottle",
+    "meal_context": "nursing_bottle",
+    "image_description": "Photo of Newborn breast milk bottle on nursing_bottle for a 1-month-old child.",
+    "ground_truth_visible_foods": [
+      "Breast milk"
+    ],
+    "ground_truth_food_groups": [
+      "Breast milk"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Breast milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "1m exclusive breastfeeding standard."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_008",
+    "child_age_months": 5,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Cow's milk carton near baby bottle",
+    "meal_context": "feeding_table",
+    "image_description": "Photo of Cow's milk carton near baby bottle on feeding_table for a 5-month-old child.",
+    "ground_truth_visible_foods": [
+      "Cow's milk"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [
+      "cows_milk_beverage_under_12m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Cow's milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "Cow's milk beverage strictly prohibited under 12 months."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_009",
+    "child_age_months": 5,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Honey jar with spoon",
+    "meal_context": "kitchen_counter",
+    "image_description": "Photo of Honey jar with spoon on kitchen_counter for a 5-month-old child.",
+    "ground_truth_visible_foods": [
+      "Honey"
+    ],
+    "ground_truth_food_groups": [],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "botulism_spores_under_12m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Honey"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 0,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "Honey is strictly prohibited under 12 months."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_010",
+    "child_age_months": 5,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Avocado puree in infant dish",
+    "meal_context": "silicone_bowl",
+    "image_description": "Photo of Avocado puree in infant dish on silicone_bowl for a 5-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed avocado"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [
+      "premature_solid_under_6m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed avocado"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_premature_age_under_6m",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "5m solids check vs 6m complementary transition."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_011",
+    "child_age_months": 6,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Pureed sweet potato in small bowl",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Pureed sweet potato in small bowl on suction_bowl for a 6-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed sweet potato"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed sweet potato"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "6m early complementary feeding; smooth puree."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_012",
+    "child_age_months": 6,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Iron-fortified infant rice porridge",
+    "meal_context": "infant_bowl",
+    "image_description": "Photo of Iron-fortified infant rice porridge on infant_bowl for a 6-month-old child.",
+    "ground_truth_visible_foods": [
+      "Iron-fortified rice cereal"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Iron-fortified rice cereal"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "6m iron-rich complementary starter."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_013",
+    "child_age_months": 6,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Pureed red lentils (dal)",
+    "meal_context": "small_bowl",
+    "image_description": "Photo of Pureed red lentils (dal) on small_bowl for a 6-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed red lentils"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed red lentils"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "6m plant-based iron & protein source."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_014",
+    "child_age_months": 6,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Steamed apple puree",
+    "meal_context": "infant_dish",
+    "image_description": "Photo of Steamed apple puree on infant_dish for a 6-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed apple"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed apple"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "6m cooked fruit puree."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_015",
+    "child_age_months": 7,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Mashed banana and breast milk",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Mashed banana and breast milk on suction_bowl for a 7-month-old child.",
+    "ground_truth_visible_foods": [
+      "Mashed banana",
+      "Breast milk"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables",
+      "Breast milk"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree",
+      "Mashed"
+    ],
+    "ground_truth_preparations": [
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Mashed banana",
+        "Breast milk"
+      ],
+      "texture_cues": [
+        "Smooth puree",
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "7m complementary food mixed with breast milk."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_016",
+    "child_age_months": 7,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Finely pureed chicken and squash",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Finely pureed chicken and squash on suction_bowl for a 7-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed chicken",
+      "Pureed butternut squash"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed chicken",
+        "Pureed butternut squash"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "7m animal-source iron complementary meal."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_017",
+    "child_age_months": 7,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Smooth pea and carrot puree",
+    "meal_context": "infant_bowl",
+    "image_description": "Photo of Smooth pea and carrot puree on infant_bowl for a 7-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pureed green peas",
+      "Pureed carrots"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pureed green peas",
+        "Pureed carrots"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "7m vegetable puree combination."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_018",
+    "child_age_months": 7,
+    "boundary_pair": "5m_vs_6m",
+    "dish_name": "Oat porridge with thinned peanut paste",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Oat porridge with thinned peanut paste on suction_bowl for a 7-month-old child.",
+    "ground_truth_visible_foods": [
+      "Oatmeal",
+      "Thinned peanut butter"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Nut butter thinly spread"
+    ],
+    "allergens_present": [
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Oatmeal",
+        "Thinned peanut butter"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "7m safe allergen introduction; thinned peanut."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_019",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Mashed lentils and soft rice (khichdi)",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Mashed lentils and soft rice (khichdi) on suction_bowl for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Mashed lentils",
+      "Soft rice"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Mashed"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Mashed lentils",
+        "Soft rice"
+      ],
+      "texture_cues": [
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m classic complementary dish; mashed texture."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_020",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Steamed soft carrot batons on high-chair tray",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Steamed soft carrot batons on high-chair tray on high_chair_tray for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed carrot sticks"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food",
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed carrot sticks"
+      ],
+      "texture_cues": [
+        "Safe finger food",
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m soft finger food introduction; easily mashed by gums."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_021",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Mashed hard-boiled egg yolk",
+    "meal_context": "infant_dish",
+    "image_description": "Photo of Mashed hard-boiled egg yolk on infant_dish for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Mashed egg yolk"
+    ],
+    "ground_truth_food_groups": [
+      "Eggs"
+    ],
+    "ground_truth_textures": [
+      "Mashed"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Egg"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Mashed egg yolk"
+      ],
+      "texture_cues": [
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m egg allergen introduction & iron source."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_022",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Mashed avocado and pear",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Mashed avocado and pear on suction_bowl for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Mashed avocado",
+      "Mashed pear"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Mashed"
+    ],
+    "ground_truth_preparations": [
+      "Mashed/pureed"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Mashed avocado",
+        "Mashed pear"
+      ],
+      "texture_cues": [
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m mashed soft fruit texture."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_023",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Raw whole apple slice (hazard test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Raw whole apple slice (hazard test) on high_chair_tray for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Raw apple slice"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_raw_firm_apple"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Raw apple slice"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m raw hard apple is an acute choking hazard."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_024",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Honey drizzled on porridge (hazard test)",
+    "meal_context": "small_bowl",
+    "image_description": "Photo of Honey drizzled on porridge (hazard test) on small_bowl for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Oatmeal with honey"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Mashed"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [
+      "toxicological_honey_under_12m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Oatmeal with honey"
+      ],
+      "texture_cues": [
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m honey hazard; infant botulism risk."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_025",
+    "child_age_months": 8,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Thick spoon of sticky peanut butter",
+    "meal_context": "infant_spoon",
+    "image_description": "Photo of Thick spoon of sticky peanut butter on infant_spoon for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Peanut butter blob"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Mashed"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [
+      "choking_hazard_thick_glob_nut_butter"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Peanut butter blob"
+      ],
+      "texture_cues": [
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "8m thick sticky globs are choking hazards; must be thinned."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_026",
+    "child_age_months": 9,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Soft cooked spiral pasta & tomato sauce",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Soft cooked spiral pasta & tomato sauce on divided_plate for a 9-month-old child.",
+    "ground_truth_visible_foods": [
+      "Cooked spiral pasta",
+      "Stewed tomato sauce"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces",
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Cooked spiral pasta",
+        "Stewed tomato sauce"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces",
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "9m finger food transition; lumpy texture."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_027",
+    "child_age_months": 9,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Finely minced chicken with soft rice",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Finely minced chicken with soft rice on suction_bowl for a 9-month-old child.",
+    "ground_truth_visible_foods": [
+      "Minced chicken",
+      "Soft rice"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Minced chicken",
+        "Soft rice"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "9m progression to minced meat and lumpy textures."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_028",
+    "child_age_months": 9,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Steamed broccoli florets & sweet potato cubes",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Steamed broccoli florets & sweet potato cubes on high_chair_tray for a 9-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed broccoli florets",
+      "Soft sweet potato cubes"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed broccoli florets",
+        "Soft sweet potato cubes"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "9m self-feeding finger food pincer grasp."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_029",
+    "child_age_months": 9,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Soft scrambled egg pieces & avocado slices",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Soft scrambled egg pieces & avocado slices on divided_plate for a 9-month-old child.",
+    "ground_truth_visible_foods": [
+      "Scrambled egg curds",
+      "Soft avocado pieces"
+    ],
+    "ground_truth_food_groups": [
+      "Eggs",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food",
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Egg"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Scrambled egg curds",
+        "Soft avocado pieces"
+      ],
+      "texture_cues": [
+        "Safe finger food",
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "9m healthy breakfast finger foods."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_030",
+    "child_age_months": 9,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Soft tofu cubes and cooked green beans",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Soft tofu cubes and cooked green beans on suction_bowl for a 9-month-old child.",
+    "ground_truth_visible_foods": [
+      "Soft tofu cubes",
+      "Cooked green beans"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Soy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Soft tofu cubes",
+        "Cooked green beans"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "9m plant protein and varied texture."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_031",
+    "child_age_months": 10,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Mashed lentils, soft rice, and steamed spinach",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Mashed lentils, soft rice, and steamed spinach on suction_bowl for a 10-month-old child.",
+    "ground_truth_visible_foods": [
+      "Lentils",
+      "Soft rice",
+      "Steamed spinach"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Mashed",
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Lentils",
+        "Soft rice",
+        "Steamed spinach"
+      ],
+      "texture_cues": [
+        "Mashed",
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "10m nutrient-dense meal with iron and Vitamin A."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_032",
+    "child_age_months": 10,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Oatmeal with mashed blueberries and yogurt",
+    "meal_context": "infant_bowl",
+    "image_description": "Photo of Oatmeal with mashed blueberries and yogurt on infant_bowl for a 10-month-old child.",
+    "ground_truth_visible_foods": [
+      "Oatmeal",
+      "Mashed blueberries",
+      "Plain yogurt"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Other fruits and vegetables",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Oatmeal",
+        "Mashed blueberries",
+        "Plain yogurt"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "10m pasteurized yogurt and fruit mash."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_033",
+    "child_age_months": 10,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Whole round grapes on tray (choking test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Whole round grapes on tray (choking test) on high_chair_tray for a 10-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole seedless grapes"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_uncut_grapes"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole seedless grapes"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "10m whole grapes test; must be quartered lengthwise."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_034",
+    "child_age_months": 10,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Quartered grapes on tray (safe prep check)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Quartered grapes on tray (safe prep check) on high_chair_tray for a 10-month-old child.",
+    "ground_truth_visible_foods": [
+      "Quartered grapes"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Round foods cut lengthwise/quartered"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Quartered grapes"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "10m quartered grapes conform to CDC safety standards."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_035",
+    "child_age_months": 10,
+    "boundary_pair": "8m_vs_9m",
+    "dish_name": "Whole cherry tomatoes on tray (choking test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Whole cherry tomatoes on tray (choking test) on high_chair_tray for a 10-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole cherry tomatoes"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_uncut_cherry_tomatoes"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole cherry tomatoes"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "10m uncut cherry tomatoes are airway obstruction risks."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_036",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Toast strips with honey (honey test <12m)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Toast strips with honey (honey test <12m) on high_chair_tray for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Toast with honey"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [
+      "toxicological_honey_under_12m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Toast with honey"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m honey ingestion; infant botulism danger."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_037",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Cow's milk in open sippy cup (<12m beverage)",
+    "meal_context": "sippy_cup",
+    "image_description": "Photo of Cow's milk in open sippy cup (<12m beverage) on sippy_cup for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Cow's milk"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [
+      "cows_milk_beverage_under_12m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Cow's milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m cow's milk as beverage discouraged before 12m."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_038",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Unpasteurized brie cheese (<12m food safety)",
+    "meal_context": "plate",
+    "image_description": "Photo of Unpasteurized brie cheese (<12m food safety) on plate for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Raw milk soft cheese"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [
+      "unpasteurized_dairy_listeria_risk"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Raw milk soft cheese"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m unpasteurized cheese carries listeriosis risk."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_039",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Flaked salmon with mashed potato & peas",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Flaked salmon with mashed potato & peas on divided_plate for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Flaked salmon",
+      "Mashed potato",
+      "Soft peas"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Peeled or pits/bones removed"
+    ],
+    "allergens_present": [
+      "Fish/shellfish"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Flaked salmon",
+        "Mashed potato",
+        "Soft peas"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m omega-3 and iron-rich meal with debossed fish."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_040",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Soft cooked lentil soup with bread crust",
+    "meal_context": "bowl",
+    "image_description": "Photo of Soft cooked lentil soup with bread crust on bowl for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Lentil soup",
+      "Soft bread crust"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces",
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Lentil soup",
+        "Soft bread crust"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces",
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m self-feeding finger food soup dipping."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_041",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Hard raw baby carrot sticks (choking test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Hard raw baby carrot sticks (choking test) on high_chair_tray for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Raw baby carrots"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_raw_carrots"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Raw baby carrots"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m raw carrots cannot be chewed safely with gums."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_042",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Steamed grated carrots (safe prep check)",
+    "meal_context": "suction_bowl",
+    "image_description": "Photo of Steamed grated carrots (safe prep check) on suction_bowl for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed grated carrots"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed grated carrots"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m steamed grated carrots are safe."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_043",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Whole peanuts on high chair (choking test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Whole peanuts on high chair (choking test) on high_chair_tray for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole peanuts"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [
+      "choking_hazard_whole_nuts"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole peanuts"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m whole nuts are strictly contraindicated."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_044",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Thin peanut butter on soft bread strip",
+    "meal_context": "plate",
+    "image_description": "Photo of Thin peanut butter on soft bread strip on plate for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Bread strip with thin peanut butter"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Nut butter thinly spread"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Bread strip with thin peanut butter"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m thinly spread peanut butter is safe."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_045",
+    "child_age_months": 11,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Diverse lunch: Dal, rice, pumpkin, egg, pear",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Diverse lunch: Dal, rice, pumpkin, egg, pear on divided_plate for a 11-month-old child.",
+    "ground_truth_visible_foods": [
+      "Dal",
+      "Rice",
+      "Mashed pumpkin",
+      "Boiled egg",
+      "Soft pear"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers",
+      "Vitamin-A-rich fruits and vegetables",
+      "Eggs",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Mashed",
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Egg"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Dal",
+        "Rice",
+        "Mashed pumpkin",
+        "Boiled egg",
+        "Soft pear"
+      ],
+      "texture_cues": [
+        "Mashed",
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 5,
+      "mdd_achieved": true,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "11m 5 of 8 food groups achieved on plate."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_046",
+    "child_age_months": 12,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Whole grain toast with honey (safe after 12m)",
+    "meal_context": "plate",
+    "image_description": "Photo of Whole grain toast with honey (safe after 12m) on plate for a 12-month-old child.",
+    "ground_truth_visible_foods": [
+      "Toast with honey"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Toast with honey"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "12m honey transition; botulism barrier established."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_047",
+    "child_age_months": 12,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Whole cow's milk in toddler cup",
+    "meal_context": "open_cup",
+    "image_description": "Photo of Whole cow's milk in toddler cup on open_cup for a 12-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole pasteurized cow's milk"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole pasteurized cow's milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "12m pasteurized whole cow's milk permitted."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_048",
+    "child_age_months": 12,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Quartered grapes and cheddar cheese cubes",
+    "meal_context": "snack_bowl",
+    "image_description": "Photo of Quartered grapes and cheddar cheese cubes on snack_bowl for a 12-month-old child.",
+    "ground_truth_visible_foods": [
+      "Quartered grapes",
+      "Cheddar cheese cubes"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Round foods cut lengthwise/quartered",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Quartered grapes",
+        "Cheddar cheese cubes"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "12m safe snack; grapes quartered, pasteurized cheese."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_049",
+    "child_age_months": 12,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Scrambled egg, soft toast, sliced strawberries",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Scrambled egg, soft toast, sliced strawberries on divided_plate for a 12-month-old child.",
+    "ground_truth_visible_foods": [
+      "Scrambled egg",
+      "Soft toast",
+      "Sliced strawberries"
+    ],
+    "ground_truth_food_groups": [
+      "Eggs",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Egg",
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Scrambled egg",
+        "Soft toast",
+        "Sliced strawberries"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "12m balanced toddler breakfast."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_050",
+    "child_age_months": 14,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Steamed carrots and oatmeal with mashed berries",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Steamed carrots and oatmeal with mashed berries on divided_plate for a 14-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed carrots",
+      "Oatmeal",
+      "Mashed berries"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed carrots",
+        "Oatmeal",
+        "Mashed berries"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "14m sample meal 2 in repository."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_051",
+    "child_age_months": 14,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Soft chicken meatballs, mashed potato, peas",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Soft chicken meatballs, mashed potato, peas on divided_plate for a 14-month-old child.",
+    "ground_truth_visible_foods": [
+      "Chicken meatballs",
+      "Mashed potatoes",
+      "Green peas"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture",
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Chicken meatballs",
+        "Mashed potatoes",
+        "Green peas"
+      ],
+      "texture_cues": [
+        "Family-food texture",
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "14m protein and fiber rich toddler lunch."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_052",
+    "child_age_months": 15,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Sugar-coated chocolate donuts (sugar test <24m)",
+    "meal_context": "plate",
+    "image_description": "Photo of Sugar-coated chocolate donuts (sugar test <24m) on plate for a 15-month-old child.",
+    "ground_truth_visible_foods": [
+      "Chocolate glazed donuts"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Wheat",
+      "Dairy",
+      "Egg"
+    ],
+    "choking_hazards": [
+      "added_sugars_under_24m"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Chocolate glazed donuts"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "15m added sugar violation (<24m zero sugar policy)."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_053",
+    "child_age_months": 15,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Uncut hot dog cylinder (choking test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Uncut hot dog cylinder (choking test) on high_chair_tray for a 15-month-old child.",
+    "ground_truth_visible_foods": [
+      "Uncut hot dog cylinder"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_uncut_hotdog"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Uncut hot dog cylinder"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "15m uncut hot dog is an extreme choking hazard."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_054",
+    "child_age_months": 16,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Soft macaroni with mild cheese and steamed broccoli",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Soft macaroni with mild cheese and steamed broccoli on divided_plate for a 16-month-old child.",
+    "ground_truth_visible_foods": [
+      "Macaroni pasta",
+      "Cheddar cheese",
+      "Steamed broccoli"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Dairy",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Macaroni pasta",
+        "Cheddar cheese",
+        "Steamed broccoli"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "16m comfortable family table food."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_055",
+    "child_age_months": 18,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "UNICEF MDD 5+ meal: Fish, rice, dal, carrots, yogurt",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of UNICEF MDD 5+ meal: Fish, rice, dal, carrots, yogurt on divided_plate for a 18-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed fish",
+      "Brown rice",
+      "Lentil soup",
+      "Cooked carrots",
+      "Plain yogurt"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds",
+      "Vitamin-A-rich fruits and vegetables",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Peeled or pits/bones removed",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Fish/shellfish",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed fish",
+        "Brown rice",
+        "Lentil soup",
+        "Cooked carrots",
+        "Plain yogurt"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 5,
+      "mdd_achieved": true,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "18m 5 of 8 UNICEF MDD achieved on plate."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_056",
+    "child_age_months": 18,
+    "boundary_pair": "11m_vs_12m",
+    "dish_name": "Low diversity plate: Plain white bread and water",
+    "meal_context": "plate",
+    "image_description": "Photo of Low diversity plate: Plain white bread and water on plate for a 18-month-old child.",
+    "ground_truth_visible_foods": [
+      "Plain white bread"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Plain white bread"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "18m poor diversity (1 of 8 groups); educational review."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_057",
+    "child_age_months": 20,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Turkey chili with soft beans and diced avocado",
+    "meal_context": "bowl",
+    "image_description": "Photo of Turkey chili with soft beans and diced avocado on bowl for a 20-month-old child.",
+    "ground_truth_visible_foods": [
+      "Ground turkey",
+      "Black beans",
+      "Diced avocado",
+      "Cornmeal bread"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Pulses, nuts and seeds",
+      "Other fruits and vegetables",
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Ground turkey",
+        "Black beans",
+        "Diced avocado",
+        "Cornmeal bread"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "20m iron-rich pulses and meat meal."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_058",
+    "child_age_months": 20,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Whole hard jawbreaker candy (choking hazard)",
+    "meal_context": "tray",
+    "image_description": "Photo of Whole hard jawbreaker candy (choking hazard) on tray for a 20-month-old child.",
+    "ground_truth_visible_foods": [
+      "Hard jawbreaker candies"
+    ],
+    "ground_truth_food_groups": [],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_hard_candy"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Hard jawbreaker candies"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 0,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "20m hard candy choking risk."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_059",
+    "child_age_months": 22,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Soft scrambled eggs with spinach and cheese toast",
+    "meal_context": "plate",
+    "image_description": "Photo of Soft scrambled eggs with spinach and cheese toast on plate for a 22-month-old child.",
+    "ground_truth_visible_foods": [
+      "Scrambled eggs",
+      "Steamed spinach",
+      "Cheddar cheese",
+      "Whole wheat toast"
+    ],
+    "ground_truth_food_groups": [
+      "Eggs",
+      "Vitamin-A-rich fruits and vegetables",
+      "Dairy",
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Egg",
+      "Dairy",
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Scrambled eggs",
+        "Steamed spinach",
+        "Cheddar cheese",
+        "Whole wheat toast"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "22m nutrient-dense breakfast."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_060",
+    "child_age_months": 22,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Can of carbonated cola (<24m sugar check)",
+    "meal_context": "tray",
+    "image_description": "Photo of Can of carbonated cola (<24m sugar check) on tray for a 22-month-old child.",
+    "ground_truth_visible_foods": [
+      "Cola soda can"
+    ],
+    "ground_truth_food_groups": [],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "added_sugars_under_24m",
+      "caffeine_in_toddler"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Cola soda can"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 0,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "22m caffeinated sweet beverage prohibited."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_061",
+    "child_age_months": 23,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "End of 1000 days meal: Salmon, quinoa, mango, dal, milk",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of End of 1000 days meal: Salmon, quinoa, mango, dal, milk on divided_plate for a 23-month-old child.",
+    "ground_truth_visible_foods": [
+      "Salmon",
+      "Quinoa",
+      "Mango",
+      "Lentils",
+      "Whole milk"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Vitamin-A-rich fruits and vegetables",
+      "Pulses, nuts and seeds",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Peeled or pits/bones removed",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Fish/shellfish",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Salmon",
+        "Quinoa",
+        "Mango",
+        "Lentils",
+        "Whole milk"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 5,
+      "mdd_achieved": true,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "23m 5 of 8 MDD achieved; excellent diversity."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_062",
+    "child_age_months": 23,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Whole marshmallows on high-chair (choking check)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Whole marshmallows on high-chair (choking check) on high_chair_tray for a 23-month-old child.",
+    "ground_truth_visible_foods": [
+      "Marshmallows"
+    ],
+    "ground_truth_food_groups": [],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_marshmallows"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Marshmallows"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 0,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "23m marshmallows compress and occlude airway."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_063",
+    "child_age_months": 23,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Whole cherry tomatoes uncut (choking test)",
+    "meal_context": "high_chair_tray",
+    "image_description": "Photo of Whole cherry tomatoes uncut (choking test) on high_chair_tray for a 23-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole cherry tomatoes"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_uncut_cherry_tomatoes"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole cherry tomatoes"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "23m uncut cherry tomatoes hazard."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_064",
+    "child_age_months": 23,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Steamed zucchini sticks & chicken strips",
+    "meal_context": "plate",
+    "image_description": "Photo of Steamed zucchini sticks & chicken strips on plate for a 23-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed zucchini",
+      "Cooked chicken strips"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables",
+      "Flesh foods"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed zucchini",
+        "Cooked chicken strips"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "23m safe finger foods."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_065",
+    "child_age_months": 23,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Plain whole milk in open cup",
+    "meal_context": "cup",
+    "image_description": "Photo of Plain whole milk in open cup on cup for a 23-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole cow's milk"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole cow's milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "23m whole milk appropriate before 24m."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_066",
+    "child_age_months": 24,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Low-fat 1% milk in toddler cup (milestone test)",
+    "meal_context": "cup",
+    "image_description": "Photo of Low-fat 1% milk in toddler cup (milestone test) on cup for a 24-month-old child.",
+    "ground_truth_visible_foods": [
+      "Low-fat 1% cow's milk"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Low-fat 1% cow's milk"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "24m low-fat milk transition allowed at 2 years."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_067",
+    "child_age_months": 24,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Whole wheat rotis with mixed vegetable sabzi",
+    "meal_context": "plate",
+    "image_description": "Photo of Whole wheat rotis with mixed vegetable sabzi on plate for a 24-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole wheat rotis",
+      "Mixed vegetable sabzi"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole wheat rotis",
+        "Mixed vegetable sabzi"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "24m family table food; chewable pieces."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_068",
+    "child_age_months": 24,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Cooked tofu cubes, brown rice, steamed edamame",
+    "meal_context": "bowl",
+    "image_description": "Photo of Cooked tofu cubes, brown rice, steamed edamame on bowl for a 24-month-old child.",
+    "ground_truth_visible_foods": [
+      "Tofu cubes",
+      "Brown rice",
+      "Steamed edamame"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Soy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Tofu cubes",
+        "Brown rice",
+        "Steamed edamame"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "24m healthy plant-protein bowl."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_069",
+    "child_age_months": 24,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Birthday cupcake with frosting (moderate sugar)",
+    "meal_context": "plate",
+    "image_description": "Photo of Birthday cupcake with frosting (moderate sugar) on plate for a 24-month-old child.",
+    "ground_truth_visible_foods": [
+      "Vanilla cupcake with frosting"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy",
+      "Egg"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Vanilla cupcake with frosting"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "24m occasional treat acceptable under 2-5y guidelines."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_070",
+    "child_age_months": 26,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Vegetable pasta spirals, chicken strips, sliced peaches",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Vegetable pasta spirals, chicken strips, sliced peaches on divided_plate for a 26-month-old child.",
+    "ground_truth_visible_foods": [
+      "Vegetable pasta",
+      "Chicken breast strips",
+      "Sliced peaches"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Vegetable pasta",
+        "Chicken breast strips",
+        "Sliced peaches"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "26m balanced lunch with protein, carbs, fruit."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_071",
+    "child_age_months": 28,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Bowl of whole pecans & walnuts (hazard test)",
+    "meal_context": "snack_bowl",
+    "image_description": "Photo of Bowl of whole pecans & walnuts (hazard test) on snack_bowl for a 28-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole pecans and walnuts"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [
+      "choking_hazard_whole_tree_nuts"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole pecans and walnuts"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "28m whole tree nuts are choking hazard under 4y."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_072",
+    "child_age_months": 28,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Crushed walnuts mixed in warm oatmeal (safe check)",
+    "meal_context": "bowl",
+    "image_description": "Photo of Crushed walnuts mixed in warm oatmeal (safe check) on bowl for a 28-month-old child.",
+    "ground_truth_visible_foods": [
+      "Oatmeal with finely crushed walnuts"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Lumpy/soft pieces"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Oatmeal with finely crushed walnuts"
+      ],
+      "texture_cues": [
+        "Lumpy/soft pieces"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "28m finely crushed nuts in oatmeal are safe."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_073",
+    "child_age_months": 30,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "Pancake with sliced banana and peanut butter swirl",
+    "meal_context": "plate",
+    "image_description": "Photo of Pancake with sliced banana and peanut butter swirl on plate for a 30-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pancake",
+      "Banana slices",
+      "Peanut butter"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Other fruits and vegetables",
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Nut butter thinly spread"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Egg",
+      "Dairy",
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pancake",
+        "Banana slices",
+        "Peanut butter"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "30m safe breakfast with thinly spread peanut butter."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_074",
+    "child_age_months": 30,
+    "boundary_pair": "23m_vs_24m",
+    "dish_name": "French fries and chicken nuggets only (low diversity)",
+    "meal_context": "fast_food_tray",
+    "image_description": "Photo of French fries and chicken nuggets only (low diversity) on fast_food_tray for a 30-month-old child.",
+    "ground_truth_visible_foods": [
+      "French fries",
+      "Chicken nuggets"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "French fries",
+        "Chicken nuggets"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "30m ultra-processed fast food meal lacking produce."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_075",
+    "child_age_months": 32,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Steamed fish, mashed sweet potatoes, steamed asparagus",
+    "meal_context": "plate",
+    "image_description": "Photo of Steamed fish, mashed sweet potatoes, steamed asparagus on plate for a 32-month-old child.",
+    "ground_truth_visible_foods": [
+      "White fish fillet",
+      "Sweet potato",
+      "Asparagus spears"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Vitamin-A-rich fruits and vegetables",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Peeled or pits/bones removed"
+    ],
+    "allergens_present": [
+      "Fish/shellfish"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "White fish fillet",
+        "Sweet potato",
+        "Asparagus spears"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "32m diverse nutrient-dense dinner."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_076",
+    "child_age_months": 32,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Popcorn in plastic bowl (choking hazard test)",
+    "meal_context": "bowl",
+    "image_description": "Photo of Popcorn in plastic bowl (choking hazard test) on bowl for a 32-month-old child.",
+    "ground_truth_visible_foods": [
+      "Unbuttered popcorn"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_popcorn_under_4y"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Unbuttered popcorn"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "32m popcorn is an unchewable airway aspiration risk under 4y."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_077",
+    "child_age_months": 34,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Rice noodles with ground pork and shredded cabbage",
+    "meal_context": "bowl",
+    "image_description": "Photo of Rice noodles with ground pork and shredded cabbage on bowl for a 34-month-old child.",
+    "ground_truth_visible_foods": [
+      "Rice noodles",
+      "Ground pork",
+      "Shredded cabbage"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Rice noodles",
+        "Ground pork",
+        "Shredded cabbage"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "34m chewable noodle meal."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_078",
+    "child_age_months": 35,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Raw hard carrot chunks (chewing fatigue test)",
+    "meal_context": "snack_cup",
+    "image_description": "Photo of Raw hard carrot chunks (chewing fatigue test) on snack_cup for a 35-month-old child.",
+    "ground_truth_visible_foods": [
+      "Raw carrot chunks"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_raw_carrots"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Raw carrot chunks"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "35m chewing fatigue hazard on raw hard carrots."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_079",
+    "child_age_months": 35,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Steamed carrot coins cooked tender (safe check)",
+    "meal_context": "snack_cup",
+    "image_description": "Photo of Steamed carrot coins cooked tender (safe check) on snack_cup for a 35-month-old child.",
+    "ground_truth_visible_foods": [
+      "Steamed soft carrot coins"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Steamed soft carrot coins"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "35m tender steamed carrots are safe."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_080",
+    "child_age_months": 35,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Full toddler thali: Rice, dal, sabzi, curd, papaya",
+    "meal_context": "thali_plate",
+    "image_description": "Photo of Full toddler thali: Rice, dal, sabzi, curd, papaya on thali_plate for a 35-month-old child.",
+    "ground_truth_visible_foods": [
+      "Rice",
+      "Yellow dal",
+      "Spinach sabzi",
+      "Curd",
+      "Papaya slices"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds",
+      "Vitamin-A-rich fruits and vegetables",
+      "Dairy",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Rice",
+        "Yellow dal",
+        "Spinach sabzi",
+        "Curd",
+        "Papaya slices"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 5,
+      "mdd_achieved": true,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "35m 5 of 8 food groups achieved on thali."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_081",
+    "child_age_months": 36,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "3-year birthday milestone meal: Pasta, meatballs, salad",
+    "meal_context": "family_table",
+    "image_description": "Photo of 3-year birthday milestone meal: Pasta, meatballs, salad on family_table for a 36-month-old child.",
+    "ground_truth_visible_foods": [
+      "Penne pasta",
+      "Beef meatballs",
+      "Cucumber tomato salad"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Penne pasta",
+        "Beef meatballs",
+        "Cucumber tomato salad"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "36m 3-year preschool milestone table food."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_082",
+    "child_age_months": 36,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Whole hard jawbreaker on table (preschool hazard test)",
+    "meal_context": "table",
+    "image_description": "Photo of Whole hard jawbreaker on table (preschool hazard test) on table for a 36-month-old child.",
+    "ground_truth_visible_foods": [
+      "Jawbreaker hard candy"
+    ],
+    "ground_truth_food_groups": [],
+    "ground_truth_textures": [],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "choking_hazard_hard_candy"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Jawbreaker hard candy"
+      ],
+      "texture_cues": [],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 0,
+      "mdd_achieved": false,
+      "expected_screening_category": "HIGH_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "36m hard candies remain hazardous for 3-year-olds."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_083",
+    "child_age_months": 38,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Grilled chicken breast strips with roasted corn and peas",
+    "meal_context": "plate",
+    "image_description": "Photo of Grilled chicken breast strips with roasted corn and peas on plate for a 38-month-old child.",
+    "ground_truth_visible_foods": [
+      "Grilled chicken",
+      "Roasted corn",
+      "Green peas"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Grilled chicken",
+        "Roasted corn",
+        "Green peas"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "38m preschool balanced lunch."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_084",
+    "child_age_months": 40,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Cottage cheese with pineapple chunks and flaxseed",
+    "meal_context": "bowl",
+    "image_description": "Photo of Cottage cheese with pineapple chunks and flaxseed on bowl for a 40-month-old child.",
+    "ground_truth_visible_foods": [
+      "Cottage cheese",
+      "Pineapple chunks",
+      "Ground flaxseed"
+    ],
+    "ground_truth_food_groups": [
+      "Dairy",
+      "Other fruits and vegetables",
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Cottage cheese",
+        "Pineapple chunks",
+        "Ground flaxseed"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "40m nutrient-dense protein snack."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_085",
+    "child_age_months": 42,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Oat porridge, hard-boiled egg, orange slices",
+    "meal_context": "divided_plate",
+    "image_description": "Photo of Oat porridge, hard-boiled egg, orange slices on divided_plate for a 42-month-old child.",
+    "ground_truth_visible_foods": [
+      "Oat porridge",
+      "Hard-boiled egg",
+      "Orange slices"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Eggs",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Egg"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Oat porridge",
+        "Hard-boiled egg",
+        "Orange slices"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "42m breakfast with complete protein and Vitamin C."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_086",
+    "child_age_months": 44,
+    "boundary_pair": "35m_vs_36m",
+    "dish_name": "Packaged potato crisps and soda can (snack test)",
+    "meal_context": "tray",
+    "image_description": "Photo of Packaged potato crisps and soda can (snack test) on tray for a 44-month-old child.",
+    "ground_truth_visible_foods": [
+      "Potato crisps",
+      "Lemonade soda"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [],
+    "choking_hazards": [
+      "high_sodium_low_diversity"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Potato crisps",
+        "Lemonade soda"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "44m high sodium low nutrient snack."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_087",
+    "child_age_months": 48,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "Preschool lunchbox: Turkey wrap, bell pepper, grapes",
+    "meal_context": "lunchbox",
+    "image_description": "Photo of Preschool lunchbox: Turkey wrap, bell pepper, grapes on lunchbox for a 48-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole wheat turkey wrap",
+      "Bell pepper strips",
+      "Quartered grapes",
+      "Yogurt tube"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Other fruits and vegetables",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Round foods cut lengthwise/quartered",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole wheat turkey wrap",
+        "Bell pepper strips",
+        "Quartered grapes",
+        "Yogurt tube"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "48m balanced packed lunch."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_088",
+    "child_age_months": 50,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "Vegetable stir-fry with tofu and brown rice",
+    "meal_context": "bowl",
+    "image_description": "Photo of Vegetable stir-fry with tofu and brown rice on bowl for a 50-month-old child.",
+    "ground_truth_visible_foods": [
+      "Tofu cubes",
+      "Brown rice",
+      "Broccoli",
+      "Carrots"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Soy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Tofu cubes",
+        "Brown rice",
+        "Broccoli",
+        "Carrots"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "50m balanced plant-forward dinner."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_089",
+    "child_age_months": 52,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "Bean burrito with salsa and sliced avocado",
+    "meal_context": "plate",
+    "image_description": "Photo of Bean burrito with salsa and sliced avocado on plate for a 52-month-old child.",
+    "ground_truth_visible_foods": [
+      "Bean and cheese burrito",
+      "Mild tomato salsa",
+      "Avocado slices"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds",
+      "Dairy",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Bean and cheese burrito",
+        "Mild tomato salsa",
+        "Avocado slices"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "52m fiber and iron rich preschool lunch."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_090",
+    "child_age_months": 54,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "Whole peanuts on plate (choking hazard at 4.5y)",
+    "meal_context": "plate",
+    "image_description": "Photo of Whole peanuts on plate (choking hazard at 4.5y) on plate for a 54-month-old child.",
+    "ground_truth_visible_foods": [
+      "Whole roasted peanuts"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Peanut/tree nut"
+    ],
+    "choking_hazards": [
+      "choking_hazard_whole_nuts"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Whole roasted peanuts"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "54m whole nuts require active supervision."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_091",
+    "child_age_months": 56,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "Salmon fillet, quinoa pilaf, steamed broccoli, strawberries",
+    "meal_context": "family_plate",
+    "image_description": "Photo of Salmon fillet, quinoa pilaf, steamed broccoli, strawberries on family_plate for a 56-month-old child.",
+    "ground_truth_visible_foods": [
+      "Salmon",
+      "Quinoa",
+      "Broccoli",
+      "Strawberries"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Peeled or pits/bones removed"
+    ],
+    "allergens_present": [
+      "Fish/shellfish"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Salmon",
+        "Quinoa",
+        "Broccoli",
+        "Strawberries"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "56m complete dinner plate."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_092",
+    "child_age_months": 58,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "Lentil soup, brown rice, sauteed kale, yogurt, apple",
+    "meal_context": "thali_plate",
+    "image_description": "Photo of Lentil soup, brown rice, sauteed kale, yogurt, apple on thali_plate for a 58-month-old child.",
+    "ground_truth_visible_foods": [
+      "Lentil soup",
+      "Brown rice",
+      "Sauteed kale",
+      "Yogurt",
+      "Apple slices"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers",
+      "Vitamin-A-rich fruits and vegetables",
+      "Dairy",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Lentil soup",
+        "Brown rice",
+        "Sauteed kale",
+        "Yogurt",
+        "Apple slices"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 5,
+      "mdd_achieved": true,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "58m 5 of 8 food groups achieved on preschool plate."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_093",
+    "child_age_months": 59,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "59m upper active rule boundary: Chicken sandwich, melon, milk",
+    "meal_context": "lunchbox",
+    "image_description": "Photo of 59m upper active rule boundary: Chicken sandwich, melon, milk on lunchbox for a 59-month-old child.",
+    "ground_truth_visible_foods": [
+      "Chicken breast sandwich",
+      "Cantaloupe melon cubes",
+      "Low-fat milk"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Vitamin-A-rich fruits and vegetables",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Chicken breast sandwich",
+        "Cantaloupe melon cubes",
+        "Low-fat milk"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "59m highest age in currently implemented rules."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_094",
+    "child_age_months": 59,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "59m ultra-processed snack: Sweet cookies and fruit drink",
+    "meal_context": "snack_tray",
+    "image_description": "Photo of 59m ultra-processed snack: Sweet cookies and fruit drink on snack_tray for a 59-month-old child.",
+    "ground_truth_visible_foods": [
+      "Sugar cookies",
+      "Fruit drink box"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [
+      "high_added_sugars"
+    ],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Sugar cookies",
+        "Fruit drink box"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "MODERATE_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "59m high sugar snack pattern."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_095",
+    "child_age_months": 59,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "59m single meal limitation test plate",
+    "meal_context": "plate",
+    "image_description": "Photo of 59m single meal limitation test plate on plate for a 59-month-old child.",
+    "ground_truth_visible_foods": [
+      "Pasta with marinara and ground beef"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Pasta with marinara and ground beef"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "allow_review",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "LOW_SCREENING_CONCERN"
+    },
+    "boundary_testing_note": "59m single-meal limitation affirmed."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_096",
+    "child_age_months": 60,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "60m kindergarten lunch: Turkey sandwich, baby carrots, apple",
+    "meal_context": "school_lunchbox",
+    "image_description": "Photo of 60m kindergarten lunch: Turkey sandwich, baby carrots, apple on school_lunchbox for a 60-month-old child.",
+    "ground_truth_visible_foods": [
+      "Turkey sandwich",
+      "Steamed baby carrots",
+      "Apple"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Vitamin-A-rich fruits and vegetables",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Turkey sandwich",
+        "Steamed baby carrots",
+        "Apple"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "60m transition to Phase 2 school-age scope."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_097",
+    "child_age_months": 60,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "60m school cafeteria tray: Fish sticks, peas, mashed potatoes, milk",
+    "meal_context": "cafeteria_tray",
+    "image_description": "Photo of 60m school cafeteria tray: Fish sticks, peas, mashed potatoes, milk on cafeteria_tray for a 60-month-old child.",
+    "ground_truth_visible_foods": [
+      "Fish sticks",
+      "Green peas",
+      "Mashed potatoes",
+      "Milk carton"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Other fruits and vegetables",
+      "Grains, roots and tubers",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Fish/shellfish",
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Fish sticks",
+        "Green peas",
+        "Mashed potatoes",
+        "Milk carton"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "60m school cafeteria plate; Phase 2 deferred scope."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_098",
+    "child_age_months": 62,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "62m bean burrito and orange wedges",
+    "meal_context": "lunchbox",
+    "image_description": "Photo of 62m bean burrito and orange wedges on lunchbox for a 62-month-old child.",
+    "ground_truth_visible_foods": [
+      "Bean burrito",
+      "Orange wedges"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Pulses, nuts and seeds",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Bean burrito",
+        "Orange wedges"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "62m school-age transition plate."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_099",
+    "child_age_months": 64,
+    "boundary_pair": "59m_vs_60m",
+    "dish_name": "64m chicken fried rice with mixed vegetables",
+    "meal_context": "bowl",
+    "image_description": "Photo of 64m chicken fried rice with mixed vegetables on bowl for a 64-month-old child.",
+    "ground_truth_visible_foods": [
+      "Chicken fried rice",
+      "Peas",
+      "Carrots",
+      "Egg"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables",
+      "Eggs"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Egg",
+      "Soy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Chicken fried rice",
+        "Peas",
+        "Carrots",
+        "Egg"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 5,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "64m school-age diverse stir-fry."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_100",
+    "child_age_months": 66,
+    "boundary_pair": "71m_vs_72m",
+    "dish_name": "66m whole grain bagel with cream cheese and strawberries",
+    "meal_context": "plate",
+    "image_description": "Photo of 66m whole grain bagel with cream cheese and strawberries on plate for a 66-month-old child.",
+    "ground_truth_visible_foods": [
+      "Bagel",
+      "Cream cheese",
+      "Strawberries"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Dairy",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Bagel",
+        "Cream cheese",
+        "Strawberries"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "66m school-age breakfast."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_101",
+    "child_age_months": 68,
+    "boundary_pair": "71m_vs_72m",
+    "dish_name": "68m lentil dal, basmati rice, cucumber raita, mango",
+    "meal_context": "thali_plate",
+    "image_description": "Photo of 68m lentil dal, basmati rice, cucumber raita, mango on thali_plate for a 68-month-old child.",
+    "ground_truth_visible_foods": [
+      "Dal",
+      "Rice",
+      "Cucumber raita",
+      "Mango"
+    ],
+    "ground_truth_food_groups": [
+      "Pulses, nuts and seeds",
+      "Grains, roots and tubers",
+      "Dairy",
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Dal",
+        "Rice",
+        "Cucumber raita",
+        "Mango"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 5,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "68m diverse family meal."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_102",
+    "child_age_months": 70,
+    "boundary_pair": "71m_vs_72m",
+    "dish_name": "70m grilled salmon, steamed broccoli, roasted sweet potato",
+    "meal_context": "plate",
+    "image_description": "Photo of 70m grilled salmon, steamed broccoli, roasted sweet potato on plate for a 70-month-old child.",
+    "ground_truth_visible_foods": [
+      "Salmon",
+      "Broccoli",
+      "Sweet potato"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Other fruits and vegetables",
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Peeled or pits/bones removed"
+    ],
+    "allergens_present": [
+      "Fish/shellfish"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Salmon",
+        "Broccoli",
+        "Sweet potato"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "70m pre-6th birthday meal."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_103",
+    "child_age_months": 71,
+    "boundary_pair": "71m_vs_72m",
+    "dish_name": "71m 5 years 11 months target scope boundary lunchbox",
+    "meal_context": "lunchbox",
+    "image_description": "Photo of 71m 5 years 11 months target scope boundary lunchbox on lunchbox for a 71-month-old child.",
+    "ground_truth_visible_foods": [
+      "Ham and cheese sandwich",
+      "Celery sticks",
+      "Grapes",
+      "Milk carton"
+    ],
+    "ground_truth_food_groups": [
+      "Flesh foods",
+      "Grains, roots and tubers",
+      "Dairy",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Ham and cheese sandwich",
+        "Celery sticks",
+        "Grapes",
+        "Milk carton"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 4,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "71m near target scope boundary (0-72m)."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_104",
+    "child_age_months": 72,
+    "boundary_pair": "71m_vs_72m",
+    "dish_name": "72m exact 6-year target platform upper boundary meal",
+    "meal_context": "family_table",
+    "image_description": "Photo of 72m exact 6-year target platform upper boundary meal on family_table for a 72-month-old child.",
+    "ground_truth_visible_foods": [
+      "Spaghetti bolognese",
+      "Steamed green beans",
+      "Water"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [
+      "Wheat"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Spaghetti bolognese",
+        "Steamed green beans",
+        "Water"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 3,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "72m exact platform upper limit (6 completed years)."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_105",
+    "child_age_months": 72,
+    "boundary_pair": "71m_vs_72m",
+    "dish_name": "72m diverse 5-group birthday thali",
+    "meal_context": "thali_plate",
+    "image_description": "Photo of 72m diverse 5-group birthday thali on thali_plate for a 72-month-old child.",
+    "ground_truth_visible_foods": [
+      "Roti",
+      "Chicken curry",
+      "Yellow dal",
+      "Spinach sabzi",
+      "Yogurt"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods",
+      "Pulses, nuts and seeds",
+      "Vitamin-A-rich fruits and vegetables",
+      "Dairy"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened",
+      "Pasteurized"
+    ],
+    "allergens_present": [
+      "Wheat",
+      "Dairy"
+    ],
+    "choking_hazards": [],
+    "child_or_face_present": false,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Roti",
+        "Chicken curry",
+        "Yellow dal",
+        "Spinach sabzi",
+        "Yogurt"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": false
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "defer_phase_2_school_age",
+      "expected_diversity_count": 5,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "72m boundary validation."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_106",
+    "child_age_months": 10,
+    "boundary_pair": "standard",
+    "dish_name": "Baby face clearly visible eating oatmeal",
+    "meal_context": "high_chair",
+    "image_description": "Photo of Baby face clearly visible eating oatmeal on high_chair for a 10-month-old child.",
+    "ground_truth_visible_foods": [
+      "Oatmeal"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers"
+    ],
+    "ground_truth_textures": [
+      "Mashed"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": true,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Oatmeal"
+      ],
+      "texture_cues": [
+        "Mashed"
+      ],
+      "uncertain": false,
+      "child_present": true
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_child_face",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "Privacy gate: baby face detected in photo; must be blocked."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_107",
+    "child_age_months": 14,
+    "boundary_pair": "standard",
+    "dish_name": "Toddler smile holding carrot stick",
+    "meal_context": "high_chair",
+    "image_description": "Photo of Toddler smile holding carrot stick on high_chair for a 14-month-old child.",
+    "ground_truth_visible_foods": [
+      "Carrot stick"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Safe finger food"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": true,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Carrot stick"
+      ],
+      "texture_cues": [
+        "Safe finger food"
+      ],
+      "uncertain": false,
+      "child_present": true
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_child_face",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "Privacy gate: child face in frame; request meal only."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_108",
+    "child_age_months": 24,
+    "boundary_pair": "standard",
+    "dish_name": "Family dinner selfie with 2-year-old child",
+    "meal_context": "family_table",
+    "image_description": "Photo of Family dinner selfie with 2-year-old child on family_table for a 24-month-old child.",
+    "ground_truth_visible_foods": [
+      "Rice",
+      "Chicken"
+    ],
+    "ground_truth_food_groups": [
+      "Grains, roots and tubers",
+      "Flesh foods"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": true,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Rice",
+        "Chicken"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": true
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_child_face",
+      "expected_diversity_count": 2,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "Privacy gate: person detected in photo."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_109",
+    "child_age_months": 36,
+    "boundary_pair": "standard",
+    "dish_name": "Preschooler seated close-up behind soup bowl",
+    "meal_context": "kitchen_table",
+    "image_description": "Photo of Preschooler seated close-up behind soup bowl on kitchen_table for a 36-month-old child.",
+    "ground_truth_visible_foods": [
+      "Vegetable soup"
+    ],
+    "ground_truth_food_groups": [
+      "Other fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Family-food texture"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": true,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Vegetable soup"
+      ],
+      "texture_cues": [
+        "Family-food texture"
+      ],
+      "uncertain": false,
+      "child_present": true
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_child_face",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "Privacy gate: facial features detected."
+  },
+  {
+    "photo_id": "MEAL_PHOTO_110",
+    "child_age_months": 8,
+    "boundary_pair": "standard",
+    "dish_name": "High chair close-up showing baby torso and eyes",
+    "meal_context": "high_chair",
+    "image_description": "Photo of High chair close-up showing baby torso and eyes on high_chair for a 8-month-old child.",
+    "ground_truth_visible_foods": [
+      "Mashed sweet potato"
+    ],
+    "ground_truth_food_groups": [
+      "Vitamin-A-rich fruits and vegetables"
+    ],
+    "ground_truth_textures": [
+      "Smooth puree"
+    ],
+    "ground_truth_preparations": [
+      "Cooked/softened"
+    ],
+    "allergens_present": [],
+    "choking_hazards": [],
+    "child_or_face_present": true,
+    "candidate_vlm_output": {
+      "visible_foods": [
+        "Mashed sweet potato"
+      ],
+      "texture_cues": [
+        "Smooth puree"
+      ],
+      "uncertain": false,
+      "child_present": true
+    },
+    "caregiver_confirmation_required": true,
+    "expected_evaluation": {
+      "workflow_gate": "block_child_face",
+      "expected_diversity_count": 1,
+      "mdd_achieved": false,
+      "expected_screening_category": "INSUFFICIENT_DATA"
+    },
+    "boundary_testing_note": "Privacy gate: infant presence detected."
+  }
+]

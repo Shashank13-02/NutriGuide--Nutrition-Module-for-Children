@@ -11,8 +11,11 @@ venv/
 ENV/
 env/
 
-# Hugging Face Model Cache (weights should be downloaded on-demand)
+# Hugging Face Model Cache & Large Weights (weights should be downloaded/trained on-demand)
 .hf_cache/
+models/**/*.safetensors
+models/**/*.bin
+models/**/*.pt
 
 # OS Specific
 .DS_Store

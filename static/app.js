@@ -178,10 +178,11 @@
         const h = await res.json();
         // LM
         if (h.lm_ready) {
-          statusLmText.textContent = 'SmolLM2-360M';
+          const isTrained = h.lm_model && (h.lm_model.includes('qwen') || h.lm_model.includes('adapted_slm') || h.lm_model.includes('trained'));
+          statusLmText.textContent = isTrained ? 'Qwen3-1.7B (UNICEF Trained)' : (h.lm_model ? h.lm_model.split('/').pop() : 'Qwen3-1.7B');
           statusLmIndicator.className = 'status-pill status-ready';
         } else if (h.lm_loading) {
-          statusLmText.textContent = 'SmolLM2 Warming Up...';
+          statusLmText.textContent = 'Qwen3 Warming Up...';
           statusLmIndicator.className = 'status-pill status-offline';
         }
         // VLM
@@ -322,7 +323,7 @@
       const band = bandsData[bIdx];
       ageBandTag.textContent = band.label;
       if (evStageTitle) evStageTitle.textContent = band.stage_title || band.label;
-      if (evVarietyTarget) evVarietyTarget.textContent = band.variety_target || 'Varied healthy diet.';
+      if (evVarietyTarget) evVarietyTarget.textContent = band.variety_target || 'Varied dietary pattern across core food groups.';
       if (evCadence) evCadence.textContent = band.meal_cadence || 'Regular daily meals & snacks.';
       evCore.textContent = band.core_guidance.join(' ');
       evSkills.textContent = band.safe_textures || band.feeding_skills;
@@ -421,7 +422,7 @@
     loadingState.classList.remove('hidden');
 
     if (useModel) {
-      loadingText.textContent = 'Running local SLM inference on SmolLM2-360M...';
+      loadingText.textContent = 'Running local SLM inference on Qwen3-1.7B (UNICEF Trained)...';
     } else {
       loadingText.textContent = 'Fetching verified WHO & CDC context...';
     }
@@ -468,7 +469,7 @@
       normalHeader.classList.remove('hidden');
 
       if (data.mode === 'slm_generated') {
-        responseModeBadge.textContent = '🤖 SmolLM2-360M Generated';
+        responseModeBadge.textContent = '🤖 Qwen3-1.7B Generated';
         responseModeBadge.className = 'response-badge';
       } else {
         responseModeBadge.textContent = '⚡ Curated Evidence Context';
@@ -812,7 +813,7 @@
       return;
     }
 
-    vlmStatusBadge.textContent = 'Draft Observations Ready';
+    vlmStatusBadge.textContent = 'Draft Candidate Observations Ready';
     vlmStatusBadge.style.color = '#34d399';
 
     // Populate visible foods input
@@ -820,8 +821,9 @@
       mealFoodsInput.value = 'mashed lentils, soft rice';
     } else if (currentSampleName === 'meal_carrots_oatmeal.jpg') {
       mealFoodsInput.value = 'steamed carrots, oatmeal';
-    } else if (result.visible_foods && result.visible_foods.length > 0) {
-      mealFoodsInput.value = result.visible_foods.join(', ');
+    } else if ((result.candidate_foods && result.candidate_foods.length > 0) || (result.visible_foods && result.visible_foods.length > 0)) {
+      const items = result.candidate_foods && result.candidate_foods.length > 0 ? result.candidate_foods : result.visible_foods;
+      mealFoodsInput.value = items.join(', ');
     } else if (result.raw_text) {
       mealFoodsInput.value = result.raw_text.replace(/\n/g, ' ').slice(0, 100);
     }
@@ -891,7 +893,7 @@
     if (e) e.preventDefault();
 
     if (!chkCaregiverConfirmed.checked) {
-      alert('Please check the confirmation box to verify that you reviewed the meal observations.');
+      alert('Please check the confirmation box to verify that you reviewed and confirmed the candidate meal observations.');
       chkCaregiverConfirmed.focus();
       return;
     }
@@ -937,7 +939,7 @@
       guidanceResultCard.classList.remove('hidden');
       guidanceResultCard.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
-      alert(`Could not generate guidance: ${err.message}`);
+      alert(`Could not complete meal screening review: ${err.message}`);
     } finally {
       btnGetGuidance.disabled = false;
       guidanceSpinner.style.display = 'none';

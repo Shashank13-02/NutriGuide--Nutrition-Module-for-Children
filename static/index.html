@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriGuide SLM + Meal Photo Companion</title>
-  <meta name="description" content="Local, auditable Small Language & Vision Model application for pediatric nutrition (0–59 months) grounded in WHO and CDC guidelines.">
+  <title>NutriGuide: Child Nutrition Screening & Caregiver Education Platform</title>
+  <meta name="description" content="Pediatric nutrition intake screening and caregiver educational platform for children aged 0–6 years (0–72 completed months; 0–59m currently implemented) grounded in WHO and CDC guidelines.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -26,8 +26,8 @@
           </svg>
         </div>
         <div>
-          <h1 class="logo-title">NutriGuide <span class="logo-badge">SLM + Vision</span></h1>
-          <p class="logo-subtitle">Evidence-Grounded Local AI for Child Nutrition (0–59 Months)</p>
+          <h1 class="logo-title">NutriGuide <span class="logo-badge">Screening & Guidance</span></h1>
+          <p class="logo-subtitle">Pediatric Nutrition Intake Screening & Caregiver Education (Target: 0–6 Years)</p>
         </div>
       </div>
 
@@ -35,12 +35,12 @@
       <nav class="app-nav" aria-label="Application Sections">
         <button type="button" class="nav-tab active" id="tab-btn-chat" data-target="view-chat">
           <span class="nav-tab-icon">💬</span>
-          <span class="nav-tab-label">Nutrition Assistant</span>
-          <span class="nav-tab-badge">SmolLM2-360M</span>
+          <span class="nav-tab-label">Nutrition Intake Assistant</span>
+          <span class="nav-tab-badge">Qwen3-1.7B (UNICEF Trained)</span>
         </button>
         <button type="button" class="nav-tab" id="tab-btn-photo" data-target="view-photo">
           <span class="nav-tab-icon">📸</span>
-          <span class="nav-tab-label">Meal Photo Companion</span>
+          <span class="nav-tab-label">Meal Photo Review</span>
           <span class="nav-tab-badge">SmolVLM-500M</span>
         </button>
       </nav>
@@ -52,7 +52,7 @@
         </button>
         <div class="status-pill status-ready" id="status-lm-indicator" title="Language Model Status">
           <span class="status-dot"></span>
-          <span id="status-lm-text">SmolLM2-360M</span>
+          <span id="status-lm-text">Qwen3-1.7B</span>
         </div>
         <div class="status-pill status-ready" id="status-vlm-indicator" title="Vision Model Status">
           <span class="status-dot"></span>
@@ -85,7 +85,7 @@
           </div>
           <div>
             <h2 class="card-title">Completed Age</h2>
-            <p class="card-desc">Select child age to retrieve verified guidelines</p>
+            <p class="card-desc">Select child age to retrieve screening guidance (0–59m implemented; 0–72m target scope)</p>
           </div>
         </div>
 
@@ -214,8 +214,8 @@
               <input type="radio" name="inference-mode" id="mode-slm" value="slm" checked>
               <span class="mode-icon">🤖</span>
               <span class="mode-info">
-                <strong>SmolLM2-360M</strong>
-                <small>Local SLM Generation</small>
+                <strong>Qwen3-1.7B</strong>
+                <small>UNICEF-Trained SLM</small>
               </span>
             </label>
             <label class="mode-radio" id="label-mode-context">
@@ -279,7 +279,7 @@
 
           <div class="loading-state hidden" id="loading-state" aria-live="polite">
             <div class="loader-pulse"></div>
-            <p class="loading-title" id="loading-text">Running local SLM inference on SmolLM2-360M...</p>
+            <p class="loading-title" id="loading-text">Running local SLM inference on Qwen3-1.7B (UNICEF Trained)...</p>
             <p class="loading-sub">Retrieving age guidelines → Checking red flags → Generating constrained response</p>
           </div>
 
@@ -294,7 +294,7 @@
 
             <div class="response-header" id="normal-response-header">
               <div class="response-meta">
-                <span class="response-badge" id="response-mode-badge">SmolLM2-360M Generated</span>
+                <span class="response-badge" id="response-mode-badge">Qwen3-1.7B Generated</span>
                 <span class="response-age" id="response-age-badge">For 9–11 Months</span>
               </div>
               <button type="button" class="btn-copy" id="btn-copy" aria-label="Copy response to clipboard">
@@ -337,11 +337,11 @@
     <div class="policy-banner" role="note">
       <div class="policy-icon" aria-hidden="true">🛡️</div>
       <div class="policy-content">
-        <h3 class="policy-title">Meal Photo Safety & Privacy Policy</h3>
+        <h3 class="policy-title">Meal Photo Safety & Screening Policy</h3>
         <p class="policy-text">
           Upload only a photo of the <strong>meal, plate, bowl, or tray—never the child</strong>. 
-          This tool does not assess a child’s body, face, health, growth, feeding ability, or nutritional status. 
-          Vision-model observations are drafts that the caregiver must confirm or correct before guidance is displayed.
+          This screening tool does not diagnose disease or assess a child’s body, face, health, growth, feeding ability, or nutritional status. 
+          Vision-model candidate observations are drafts that the caregiver must confirm or correct before screening guidance is displayed.
         </p>
       </div>
     </div>
@@ -428,8 +428,8 @@
             </svg>
           </div>
           <div>
-            <h2 class="card-title">Caregiver Review & Educational Guidance</h2>
-            <p class="card-desc">Confirm or correct all model observations before viewing guidance</p>
+            <h2 class="card-title">Caregiver Review & Screening Guidance</h2>
+            <p class="card-desc">Confirm or correct all model observations before viewing screening guidance</p>
           </div>
         </div>
 
@@ -453,6 +453,7 @@
             <div class="form-label-row">
               <label for="meal-age-slider" class="form-label">
                 <strong>Child Age in completed months:</strong>
+                <small class="form-help">(0–59m implemented; 0–72m target scope)</small>
               </label>
               <span class="meal-age-badge" id="meal-age-badge">12 Months</span>
             </div>
@@ -536,7 +537,7 @@
 
           <!-- SUBMIT GUIDANCE BUTTON -->
           <button type="submit" class="btn btn-primary btn-block" id="btn-get-guidance">
-            <span class="btn-text">8. Get Age-Specific Educational Guidance</span>
+            <span class="btn-text">8. Review Meal Screening Guidance</span>
             <span class="spinner" id="guidance-spinner" aria-hidden="true"></span>
           </button>
         </form>
@@ -544,7 +545,7 @@
         <!-- GUIDANCE RESULTS DISPLAY -->
         <article class="guidance-result-card hidden" id="guidance-result-card">
           <div class="guidance-header">
-            <span class="guidance-badge">Educational Meal Guidance</span>
+            <span class="guidance-badge">Meal Screening Guidance</span>
             <button type="button" class="btn-copy" id="btn-copy-guidance">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -632,12 +633,12 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-disclaimer">
-        <strong>Educational Safety Notice:</strong> NutriGuide is a demonstration of Small Language & Vision Model safety bounding. 
-        It is not medical diagnostic software and must not be used for emergency care, growth faltering, allergy diagnosis, or individual prescriptions. 
-        Consult a pediatrician for medical evaluation.
+        <strong>Screening & Educational Notice:</strong> NutriGuide supports pediatric nutrition intake screening and caregiver education for children aged 0 to 6 years (0–72 completed months; 0–59m currently implemented). 
+        It does not diagnose malnutrition, nutrient deficiency, disease, or medical conditions. It is not medical diagnostic software and must not be used for emergency care, growth faltering, allergy diagnosis, or individual prescriptions. 
+        Consult a pediatrician or qualified healthcare professional for medical evaluation.
       </div>
       <div class="footer-links">
-        <span>Built with Hugging Face SmolLM2-360M + SmolVLM-500M</span>
+        <span>Built with Qwen3-1.7B (UNICEF Trained) + SmolVLM-500M</span>
         <span>•</span>
         <span>WHO, CDC & UNICEF Guidelines</span>
       </div>

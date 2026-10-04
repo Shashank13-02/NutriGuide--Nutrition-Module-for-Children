@@ -1,0 +1,12 @@
+{
+  "base_model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "epochs": 2,
+  "trainable_parameters": 19664640,
+  "total_parameters": 361821120,
+  "dataset_samples": 70,
+  "initial_loss": 2.9983,
+  "final_loss": 2.6152,
+  "total_duration_sec": 674.7,
+  "role": "communication_and_explanation",
+  "timestamp": "2026-10-03 08:29:45"
+}

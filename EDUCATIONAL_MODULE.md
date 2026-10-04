@@ -1,17 +1,24 @@
-# Educational nutrition module: children 0–59 months
+# Caregiver Education & Guidance Module (0–6 Years Target Scope)
 
-## Purpose and boundary
+## Purpose and Product Boundary
 
-This is a food-literacy and caregiver-education module. It explains evidence-linked, age-appropriate feeding principles after the caregiver confirms the meal record. It is **not** a diagnostic tool, calorie/portion calculator, growth assessor, allergy evaluator, or treatment system.
+This educational component serves as a downstream explanation and caregiver-support layer within the **Child Nutrition Screening Platform**. 
 
-## Learning flow
+The conceptual flow of the platform is:
+$$\text{Dietary Information} \longrightarrow \text{Screening Engine} \longrightarrow \text{Structured Findings} \longrightarrow \text{Caregiver-Friendly Explanation}$$
 
-1. Select the child's completed age in months.
-2. Learn the age-stage foundations: milk feeding, starting complementary foods, texture progression, family-food adaptation, or family eating.
-3. Upload a **meal-only** image, if applicable. The vision model makes a draft visual description only.
+The educational assistant explains evidence-linked, age-appropriate feeding principles after dietary information is confirmed by the caregiver. It is **not** a clinical diagnostic tool, calorie/portion calculator, growth assessor, allergy evaluator, or treatment system.
+
+Target population for the screening platform is **children aged 0 to 6 years (0 to 72 completed months)**; the current educational knowledge base is implemented for 0 to 59 completed months, with 60 to 72 months scheduled for subsequent phases.
+
+## Learning & Screening Support Flow
+
+1. Select the child's completed age in months (0–59 months currently implemented; 0–72 months target scope).
+2. Review age-stage foundations: milk feeding, starting complementary foods, texture progression, family-food adaptation, or family eating.
+3. Upload a **meal-only** image, if applicable. The vision model generates candidate food and texture observations only.
 4. Confirm the foods, food groups, textures, preparation, and possible allergens yourself.
-5. Review transparent, age-specific educational and safety prompts with sources.
-6. Escalate red flags to a clinician or emergency care; do not ask the model to decide.
+5. Review transparent, age-specific screening prompts and educational guidance with auditable source citations.
+6. Escalate red flags or clinical concerns to a clinician or emergency care; do not rely on AI models to evaluate medical emergencies.
 
 ## Taxonomy
 

@@ -1,5 +1,5 @@
 {
-  "scope": "Educational nutrition guidance for generally healthy children from birth through 59 completed months. It is not a diagnostic, feeding-prescription, or emergency service.",
+  "scope": "Child nutrition screening and caregiver education support for children from birth through 59 completed months (target platform scope: 0 to 72 completed months; 60 to 72 months screening rules planned for Phase 2). It does not diagnose malnutrition, nutrient deficiency, disease, or medical conditions, and is not a prescription or emergency service.",
   "age_bands": [
     {
       "id": "0_5_months",
